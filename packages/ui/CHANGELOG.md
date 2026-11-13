@@ -1,5 +1,11 @@
 # @gbgabiola/ui
 
+## 0.3.0
+
+### Minor Changes
+
+- 71567e2: Add theme-aware Hero, SiteFooter, and ContentCard blocks with configurable headings, link groups, and media and action slots.
+
 ## 0.2.0
 
 ### Minor Changes
