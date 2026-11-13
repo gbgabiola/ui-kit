@@ -12,7 +12,26 @@ pnpm install --frozen-lockfile
 pnpm storybook
 ```
 
-Open [Storybook](http://localhost:6006). Run `pnpm typecheck` to check the library and stories, and `pnpm build:storybook` to generate the static catalog. After editing the library, rerun `pnpm build` to refresh its compiled exports in the preview.
+Open [Storybook](http://localhost:6006). **Guides** includes the MDX setup guide, **Components** groups forms and theme controls, **Blocks** contains the navbar, and **Examples** includes the palette playground. Each public component has a generated Docs page.
+
+Storybook resolves the UI package from source, so edits appear without rebuilding the package. Run `pnpm build` to verify or generate the distributable package.
+
+## Test and publish Storybook
+
+```sh
+pnpm --filter ui-kit-storybook exec playwright install chromium
+pnpm typecheck
+pnpm test
+pnpm test:coverage
+pnpm build:storybook
+pnpm test:visual
+```
+
+On Linux, add `--with-deps` to the Chromium install command if system libraries are missing. Run visual comparisons on Linux with DejaVu Sans installed to match CI. When a visual change is intentional, run `pnpm test:visual --update-snapshots`, inspect the PNG changes, and commit the updated baselines.
+
+Vitest runs the stories and their interactions in Chromium. Axe accessibility violations fail the tests. Open `apps/storybook/coverage/index.html` for source coverage, or use the LCOV report in the same directory. GitHub Actions runs the checks on pull requests and pushes to `main`, and uploads the coverage and static Storybook artifacts.
+
+I recommend [Chromatic](https://www.chromatic.com/docs/github-actions/) for hosted Storybook and visual review. Connect this repo to a Chromatic project and add its token as the `CHROMATIC_PROJECT_TOKEN` GitHub Actions secret. The next push to `main` or manual run on `main` publishes the verified static build and runs Chromatic snapshots. Review and accept intended visual changes in Chromatic. The Storybook **Visual Tests** panel can also run and review builds once connected.
 
 ## Use the library
 
