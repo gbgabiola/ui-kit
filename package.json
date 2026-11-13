@@ -1,0 +1,17 @@
+{
+  "name": "ui-kit-workspace",
+  "private": true,
+  "packageManager": "pnpm@11.25.0",
+  "engines": { "node": "^22.13.0 || >=24.0.0" },
+  "scripts": {
+    "build": "pnpm --filter @gbgabiola/ui build",
+    "typecheck": "pnpm build && pnpm --filter ui-kit-storybook typecheck",
+    "storybook": "pnpm build && pnpm --filter ui-kit-storybook dev",
+    "build:storybook": "pnpm build && pnpm --filter ui-kit-storybook build",
+    "changeset": "changeset",
+    "version:packages": "changeset version"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.0"
+  }
+}

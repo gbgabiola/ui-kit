@@ -1,0 +1,145 @@
+.uik-theme {
+  color: var(--uik-text, #172033);
+  background: var(--uik-surface, #fff);
+  color-scheme: light;
+}
+
+.uik-theme[data-theme='dark'] {
+  --uik-surface: #172033;
+  --uik-text: #f3f5fa;
+  --uik-muted: #bac4d6;
+  --uik-border: #8796b0;
+  --uik-accent: #b1cbff;
+  --uik-danger: #ffb4b4;
+  color-scheme: dark;
+}
+
+.uik-field,
+.uik-navbar {
+  color: var(--uik-text, #172033);
+  font-family: system-ui, sans-serif;
+}
+
+.uik-field {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.uik-field label,
+.uik-brand {
+  font-weight: 650;
+}
+
+.uik-input,
+.uik-button {
+  box-sizing: border-box;
+  border: 1px solid var(--uik-border, #68778d);
+  border-radius: var(--uik-radius, 0.5rem);
+  background: var(--uik-surface, #fff);
+  color: var(--uik-text, #172033);
+  font: inherit;
+  padding: 0.625rem 0.75rem;
+}
+
+.uik-input {
+  width: 100%;
+  min-width: 0;
+}
+
+.uik-input[aria-invalid='true'] {
+  border-color: var(--uik-danger, #a51c30);
+}
+
+.uik-input:focus-visible,
+.uik-button:focus-visible,
+.uik-navbar a:focus-visible {
+  outline: 2px solid var(--uik-accent, #254bb3);
+  outline-offset: 3px;
+}
+
+.uik-input:disabled,
+.uik-button:disabled {
+  opacity: 0.65;
+}
+
+.uik-button {
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+}
+
+.uik-button:disabled {
+  cursor: default;
+}
+
+.uik-hint,
+.uik-error {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.uik-hint {
+  color: var(--uik-muted, #475569);
+}
+
+.uik-error {
+  color: var(--uik-danger, #a51c30);
+}
+
+.uik-navbar,
+.uik-nav-content,
+.uik-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.uik-navbar {
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--uik-surface, #fff);
+  border-bottom: 1px solid var(--uik-border, #68778d);
+}
+
+.uik-nav-links {
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.uik-navbar a {
+  color: inherit;
+}
+
+.uik-navbar a[aria-current='page'] {
+  color: var(--uik-accent, #254bb3);
+  font-weight: 650;
+}
+
+.uik-menu-toggle {
+  display: none;
+}
+
+@media (max-width: 40rem) {
+  .uik-navbar {
+    flex-wrap: wrap;
+  }
+
+  .uik-menu-toggle {
+    display: inline-block;
+  }
+
+  .uik-nav-content,
+  .uik-nav-links {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .uik-nav-content {
+    flex-basis: 100%;
+  }
+
+  .uik-nav-content[data-open='false'] {
+    display: none;
+  }
+}
