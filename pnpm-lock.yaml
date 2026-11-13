@@ -57,6 +57,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: ^4.1.12
         version: 4.1.12(@vitest/browser@4.1.12)(vitest@4.1.12)
+      chromatic:
+        specifier: 18.14.3
+        version: 18.14.3
       storybook:
         specifier: 10.6.7
         version: 10.6.7(@types/react@19.3.0)(prettier@2.8.8)(react@19.3.1)

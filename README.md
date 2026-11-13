@@ -31,7 +31,9 @@ On Linux, add `--with-deps` to the Chromium install command if system libraries 
 
 Vitest runs the stories and their interactions in Chromium. Axe accessibility violations fail the tests. Open `apps/storybook/coverage/index.html` for source coverage, or use the LCOV report in the same directory. GitHub Actions runs the checks on pull requests and pushes to `main`, and uploads the coverage and static Storybook artifacts.
 
-I recommend [Chromatic](https://www.chromatic.com/docs/github-actions/) for hosted Storybook and visual review. Connect this repo to a Chromatic project and add its token as the `CHROMATIC_PROJECT_TOKEN` GitHub Actions secret. The next push to `main` or manual run on `main` publishes the verified static build and runs Chromatic snapshots. Review and accept intended visual changes in Chromatic. The Storybook **Visual Tests** panel can also run and review builds once connected.
+[Chromatic](https://www.chromatic.com/docs/github-actions/) hosts Storybook and runs visual tests against the published stories. To publish locally, set the project token in your shell as `CHROMATIC_PROJECT_TOKEN`, then run `pnpm publish:storybook` from the repository root. The command builds Storybook and uploads the static output. Keep the token in your shell environment or a secret store.
+
+For CI, add the same token as the `CHROMATIC_PROJECT_TOKEN` GitHub Actions secret. A successful push or manual workflow run on `main` publishes the verified static build and runs Chromatic snapshots. Review intended visual changes in Chromatic. The Storybook **Visual Tests** panel can also run and review builds once connected.
 
 ## Use the library
 

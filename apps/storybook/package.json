@@ -8,7 +8,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:visual": "playwright test"
+    "test:visual": "playwright test",
+    "chromatic": "chromatic --storybook-build-dir storybook-static"
   },
   "dependencies": {
     "@gbgabiola/ui": "workspace:*",
@@ -27,6 +28,7 @@
     "@types/react-dom": "^19.0.0",
     "@vitest/browser-playwright": "^4.1.12",
     "@vitest/coverage-v8": "^4.1.12",
+    "chromatic": "18.14.3",
     "storybook": "10.6.7",
     "typescript": "~5.9.3",
     "vite": "^7.3.8",

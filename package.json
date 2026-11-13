@@ -11,6 +11,7 @@
     "test": "pnpm --filter ui-kit-storybook test",
     "test:coverage": "pnpm --filter ui-kit-storybook test:coverage",
     "test:visual": "pnpm --filter ui-kit-storybook test:visual",
+    "publish:storybook": "pnpm build:storybook && pnpm --filter ui-kit-storybook chromatic",
     "changeset": "changeset",
     "version:packages": "changeset version"
   },
