@@ -1,5 +1,11 @@
 # @gbgabiola/ui
 
+## 0.4.0
+
+### Minor Changes
+
+- aeb5324: Add native Textarea, Select, and Checkbox components with accessible labels, hints, and errors that match TextInput.
+
 ## 0.3.0
 
 ### Minor Changes
