@@ -1,13 +1,17 @@
 import { useState } from 'react';
-import { ThemeToggle, type Theme } from '@gbgabiola/ui';
+import { ThemeToggle, type ThemeToggleProps } from '@gbgabiola/ui';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-function ThemeExample({ initialTheme }: { initialTheme: Theme }) {
+type ThemeExampleProps = Pick<ThemeToggleProps, 'variant' | 'disabled'> & {
+  initialTheme: ThemeToggleProps['theme'];
+};
+
+function ThemeExample({ initialTheme, ...props }: ThemeExampleProps) {
   const [theme, setTheme] = useState(initialTheme);
 
   return (
     <div className="uik-theme" data-theme={theme} style={{ padding: '1rem' }}>
-      <ThemeToggle theme={theme} onThemeChange={setTheme} />
+      <ThemeToggle {...props} theme={theme} onThemeChange={setTheme} />
       <p>Current theme: {theme}</p>
     </div>
   );
@@ -20,3 +24,5 @@ type Story = StoryObj<typeof meta>;
 
 export const Light: Story = { args: { initialTheme: 'light' } };
 export const Dark: Story = { args: { initialTheme: 'dark' } };
+export const Compact: Story = { args: { initialTheme: 'light', variant: 'icon' } };
+export const Disabled: Story = { args: { initialTheme: 'dark', disabled: true } };

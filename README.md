@@ -39,6 +39,8 @@ export function App() {
 }
 ```
 
+The default theme switch shows both light and dark icons and highlights the active theme. Set `variant="icon"` for a compact round button that shows the theme it will switch to.
+
 The app owns theme state and can persist it when needed. For custom colors, override the `--uik-surface`, `--uik-text`, `--uik-muted`, `--uik-border`, `--uik-accent`, and `--uik-danger` CSS variables on the theme wrapper. Set `--uik-radius` to adjust the control radius.
 
 ## Release a version
