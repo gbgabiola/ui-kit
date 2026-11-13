@@ -42,3 +42,30 @@ test('Plum palette in dark mode', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Dark mode' })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('#storybook-root')).toHaveScreenshot('plum-dark.png', screenshotOptions);
 });
+
+for (const viewport of [
+  { name: 'desktop', width: 1120, height: 800 },
+  { name: 'mobile', width: 390, height: 650 },
+]) {
+  test(`site blocks in the dark Walnut palette on ${viewport.name}`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.goto('/iframe.html?id=examples-site-blocks--studio&viewMode=story');
+    const hero = page.getByRole('region', { name: 'Make room for what matters.' });
+    await expect(hero).toBeVisible();
+    await expect(page.getByRole('contentinfo')).toBeVisible();
+    const media = hero.locator('.uik-block-media');
+    const copy = hero.getByRole('heading');
+    const mediaBox = await media.boundingBox();
+    const copyBox = await copy.boundingBox();
+    expect(mediaBox).not.toBeNull();
+    expect(copyBox).not.toBeNull();
+    if (viewport.name === 'desktop') {
+      expect(mediaBox!.x).toBeGreaterThan(copyBox!.x + copyBox!.width);
+    } else {
+      expect(mediaBox!.y).toBeGreaterThan(copyBox!.y + copyBox!.height);
+    }
+    await expect(page.locator('#storybook-root')).toHaveScreenshot(
+      `site-blocks-${viewport.name}.png`, screenshotOptions,
+    );
+  });
+}
