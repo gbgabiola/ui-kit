@@ -1,10 +1,7 @@
-import { useId, type ComponentPropsWithRef } from 'react';
+import type { ComponentPropsWithRef } from 'react';
+import { FieldMessages, useFieldDescription, type FieldText } from './field.js';
 
-export type TextInputProps = ComponentPropsWithRef<'input'> & {
-  label: string;
-  hint?: string;
-  error?: string;
-};
+export type TextInputProps = ComponentPropsWithRef<'input'> & FieldText;
 
 export function TextInput({
   label,
@@ -16,11 +13,7 @@ export function TextInput({
   'aria-invalid': invalid,
   ...inputProps
 }: TextInputProps) {
-  const generatedId = useId();
-  const inputId = id ?? generatedId;
-  const hintId = `${inputId}-hint`;
-  const errorId = `${inputId}-error`;
-  const description = [describedBy, hint && hintId, error && errorId].filter(Boolean).join(' ');
+  const { inputId, hintId, errorId, description } = useFieldDescription(id, describedBy, hint, error);
 
   return (
     <div className="uik-field">
@@ -29,11 +22,10 @@ export function TextInput({
         {...inputProps}
         id={inputId}
         className={className ? `uik-input ${className}` : 'uik-input'}
-        aria-describedby={description || undefined}
+        aria-describedby={description}
         aria-invalid={error ? true : invalid}
       />
-      {hint && <p id={hintId} className="uik-hint">{hint}</p>}
-      {error && <p id={errorId} className="uik-error">{error}</p>}
+      <FieldMessages hint={hint} error={error} hintId={hintId} errorId={errorId} />
     </div>
   );
 }

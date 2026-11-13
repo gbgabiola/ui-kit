@@ -5,3 +5,6 @@ export { Navbar, type NavbarLink, type NavbarProps } from './blocks/navbar.js';
 export { Hero, type HeroProps } from './blocks/hero.js';
 export { SiteFooter, type SiteFooterLink, type SiteFooterLinkGroup, type SiteFooterProps } from './blocks/site-footer.js';
 export { ContentCard, type ContentCardProps } from './blocks/content-card.js';
+export { Textarea, type TextareaProps } from './components/textarea.js';
+export { Select, type SelectProps } from './components/select.js';
+export { Checkbox, type CheckboxProps } from './components/checkbox.js';
