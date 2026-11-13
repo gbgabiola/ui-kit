@@ -20,19 +20,21 @@ Run `pnpm --filter @gbgabiola/ui pack` from the repo root to build a versioned t
 
 ```tsx
 import { useState } from 'react';
-import { Navbar, TextInput, ThemeToggle, type Theme } from '@gbgabiola/ui';
+import { Navbar, TextInput, ThemePaletteSelect, ThemeToggle, type Theme, type ThemePalette } from '@gbgabiola/ui';
 import '@gbgabiola/ui/styles.css';
 
 export function App() {
   const [theme, setTheme] = useState<Theme>('light');
+  const [palette, setPalette] = useState<ThemePalette>('classic');
 
   return (
-    <div className="uik-theme" data-theme={theme}>
+    <div className="uik-theme" data-theme={theme} data-palette={palette}>
       <Navbar
         brand="Acme"
         links={[{ href: '/', label: 'Home', current: true }]}
         actions={<ThemeToggle theme={theme} onThemeChange={setTheme} />}
       />
+      <ThemePaletteSelect palette={palette} onPaletteChange={setPalette} />
       <TextInput label="Email" type="email" name="email" autoComplete="email" />
     </div>
   );
@@ -41,7 +43,26 @@ export function App() {
 
 The default theme switch shows both light and dark icons and highlights the active theme. Set `variant="icon"` for a compact round button that shows the theme it will switch to.
 
-The app owns theme state and can persist it when needed. For custom colors, override the `--uik-surface`, `--uik-text`, `--uik-muted`, `--uik-border`, `--uik-accent`, and `--uik-danger` CSS variables on the theme wrapper. Set `--uik-radius` to adjust the control radius.
+### Theme colors
+
+Every palette works in light and dark mode. Pass the selected value to the theme wrapper as `data-palette`; `ThemePaletteSelect` lets users change it without changing modes. The app owns both settings and can persist them when needed.
+
+| Palette | Colors and inspiration |
+| --- | --- |
+| Classic (default) | Neutral slate with a blue accent |
+| Ocean | Cool blue surfaces and a marine accent |
+| Teal | Neutral surfaces with the teal accent from the [Next.js portfolio](https://github.com/gbgabiola/gbgabiola.github.io/blob/feat/nextjs-v4/src/app/globals.css) |
+| Forest | Green surfaces with a leafy accent |
+| Plum | Cream and plum with gold in dark mode, from [FBCSI](https://github.com/gbgabiola/fbcsi/blob/main/app/globals.css) |
+| Walnut | Warm ivory and brown with muted gold, from [EM Carpentry](https://github.com/gbgabiola/em-carpentry/blob/main/src/app/globals.css) |
+| Ember | Espresso and cream from [Caffeinawa](https://caffeinawa.pages.dev/) with an orange accent inspired by [Omnifood](https://github.com/gbgabiola/omnifood/blob/master/resources/css/style.css) |
+| Crimson | Cool charcoal and red inspired by [Uniflix](https://github.com/gbgabiola/uniflix/blob/main/style.css) |
+
+The [original portfolio](https://github.com/gbgabiola/gbgabiola.github.io/blob/main/src/components/Layout/theme.js) uses red in light mode and teal in dark mode. Crimson and Teal cover those accents as separate choices.
+
+The theme switch follows the palette accent by default. To give it a separate accent, set `--uik-switch-accent` on the theme wrapper or a closer ancestor. For the pill, pair it with `--uik-switch-on-accent` if the default active icon color does not contrast with your accent.
+
+For custom palette colors, override the `--uik-surface`, `--uik-text`, `--uik-muted`, `--uik-border`, `--uik-accent`, and `--uik-danger` CSS variables on the theme wrapper. Set `--uik-radius` to adjust the control radius.
 
 ## Release a version
 

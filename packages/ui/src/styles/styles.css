@@ -4,6 +4,18 @@
   color-scheme: light;
 }
 
+.uik-theme[data-palette='classic']:not([data-theme='dark']) {
+  --uik-surface: #fff;
+  --uik-text: #172033;
+  --uik-muted: #475569;
+  --uik-border: #68778d;
+  --uik-accent: #254bb3;
+}
+
+.uik-theme[data-palette]:not([data-theme='dark']) {
+  --uik-danger: #a51c30;
+}
+
 .uik-theme[data-theme='dark'] {
   --uik-surface: #172033;
   --uik-text: #f3f5fa;
@@ -12,6 +24,118 @@
   --uik-accent: #b1cbff;
   --uik-danger: #ffb4b4;
   color-scheme: dark;
+}
+
+.uik-theme[data-palette='ocean'] {
+  --uik-surface: #f2f9ff;
+  --uik-text: #153350;
+  --uik-muted: #43617a;
+  --uik-border: #617f97;
+  --uik-accent: #075a8b;
+}
+
+.uik-theme[data-palette='ocean'][data-theme='dark'] {
+  --uik-surface: #102439;
+  --uik-text: #e9f6ff;
+  --uik-muted: #abc7de;
+  --uik-border: #7799b4;
+  --uik-accent: #7cd4ff;
+}
+
+.uik-theme[data-palette='teal'] {
+  --uik-surface: #fafaf8;
+  --uik-text: #1b2530;
+  --uik-muted: #4f5d6c;
+  --uik-border: #78838f;
+  --uik-accent: #006a60;
+}
+
+.uik-theme[data-palette='teal'][data-theme='dark'] {
+  --uik-surface: #20262f;
+  --uik-text: #f3f5f7;
+  --uik-muted: #b1bbc8;
+  --uik-border: #73808f;
+  --uik-accent: #5fe2d1;
+}
+
+.uik-theme[data-palette='forest'] {
+  --uik-surface: #f3faf4;
+  --uik-text: #193924;
+  --uik-muted: #456650;
+  --uik-border: #617d68;
+  --uik-accent: #216036;
+}
+
+.uik-theme[data-palette='forest'][data-theme='dark'] {
+  --uik-surface: #14291e;
+  --uik-text: #ecf8ee;
+  --uik-muted: #b6cebe;
+  --uik-border: #789783;
+  --uik-accent: #99dda9;
+}
+
+.uik-theme[data-palette='plum'] {
+  --uik-surface: #fffcf7;
+  --uik-text: #322331;
+  --uik-muted: #634b5d;
+  --uik-border: #9a758b;
+  --uik-accent: #552146;
+}
+
+.uik-theme[data-palette='plum'][data-theme='dark'] {
+  --uik-surface: #2d202b;
+  --uik-text: #fff0f8;
+  --uik-muted: #dac1d0;
+  --uik-border: #a37e94;
+  --uik-accent: #ffd49b;
+}
+
+.uik-theme[data-palette='walnut'] {
+  --uik-surface: #fffdf9;
+  --uik-text: #34271f;
+  --uik-muted: #68594c;
+  --uik-border: #8c7863;
+  --uik-accent: #78551c;
+}
+
+.uik-theme[data-palette='walnut'][data-theme='dark'] {
+  --uik-surface: #2c241e;
+  --uik-text: #f7f0e5;
+  --uik-muted: #c9bba9;
+  --uik-border: #a28b73;
+  --uik-accent: #e0bb76;
+}
+
+.uik-theme[data-palette='ember'] {
+  --uik-surface: #fffdf9;
+  --uik-text: #352219;
+  --uik-muted: #736357;
+  --uik-border: #927b68;
+  --uik-accent: #a4521c;
+}
+
+.uik-theme[data-palette='ember'][data-theme='dark'] {
+  --uik-surface: #2c1f19;
+  --uik-text: #fff2e5;
+  --uik-muted: #d9bda8;
+  --uik-border: #a78974;
+  --uik-accent: #ffac68;
+}
+
+.uik-theme[data-palette='crimson'] {
+  --uik-surface: #fff9fa;
+  --uik-text: #24212c;
+  --uik-muted: #5d556b;
+  --uik-border: #837891;
+  --uik-accent: #b42332;
+}
+
+.uik-theme[data-palette='crimson'][data-theme='dark'] {
+  --uik-surface: #11111b;
+  --uik-text: #ffffff;
+  --uik-muted: #a1a1b5;
+  --uik-border: #74748a;
+  --uik-accent: #ff5260;
 }
 
 .uik-field,
@@ -26,6 +150,7 @@
 }
 
 .uik-field label,
+.uik-field-label,
 .uik-brand {
   font-weight: 650;
 }
@@ -72,6 +197,7 @@
 }
 
 .uik-theme-toggle {
+  --_uik-switch-accent: var(--uik-switch-accent, var(--uik-accent, #254bb3));
   display: inline-grid;
   flex: 0 0 auto;
   place-items: center;
@@ -79,12 +205,12 @@
   height: 2.75rem;
   padding: 0;
   border-radius: 999px;
-  color: var(--uik-accent, #254bb3);
+  color: var(--_uik-switch-accent);
   vertical-align: middle;
 }
 
 .uik-theme-toggle:hover:not(:disabled) {
-  border-color: var(--uik-accent, #254bb3);
+  border-color: var(--_uik-switch-accent);
 }
 
 .uik-theme-toggle svg {
@@ -114,7 +240,7 @@
   left: 0.25rem;
   width: calc(50% - 0.25rem);
   border-radius: 999px;
-  background: var(--uik-text, #172033);
+  background: var(--_uik-switch-accent);
   transition: transform 160ms ease;
 }
 
@@ -124,7 +250,7 @@
 
 .uik-theme-toggle[data-variant='pill'][aria-pressed='false'] .uik-theme-sun,
 .uik-theme-toggle[data-variant='pill'][aria-pressed='true'] .uik-theme-moon {
-  color: var(--uik-surface, #fff);
+  color: var(--uik-switch-on-accent, var(--uik-surface, #fff));
 }
 
 @media (prefers-reduced-motion: reduce) {
