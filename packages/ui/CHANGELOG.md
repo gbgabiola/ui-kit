@@ -1,5 +1,12 @@
 # @gbgabiola/ui
 
+## 0.2.0
+
+### Minor Changes
+
+- 62c7cac: Add Classic, Ocean, Teal, Forest, Plum, Walnut, Ember, and Crimson palettes for light and dark mode, plus a controlled ThemePaletteSelect. ThemeToggle uses the active palette's accent by default and supports optional color overrides through CSS variables.
+- bd1b8e0: Show light and dark icons together in the default ThemeToggle, with a sliding indicator for the active theme. Use `variant="icon"` for a compact round button.
+
 ## 0.1.0
 
 - Added `TextInput` with hint, error, and native input states.
