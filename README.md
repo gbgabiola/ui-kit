@@ -1,6 +1,6 @@
 # UI Kit
 
-`@gbgabiola/ui` is a React 19 and TypeScript component library. Version `0.1.0` includes `TextInput`, `ThemeToggle`, and `Navbar`.
+`@gbgabiola/ui` is a React 19 and TypeScript component library. It includes `TextInput`, `ThemeToggle`, `ThemePaletteSelect`, and `Navbar`.
 
 ## Local development
 
@@ -37,7 +37,7 @@ For CI, add the same token as the `CHROMATIC_PROJECT_TOKEN` GitHub Actions secre
 
 ## Use the library
 
-Run `pnpm --filter @gbgabiola/ui pack` from the repo root to build a versioned tarball in the repo root. In another React 19 app, install the resulting file with `pnpm add /path/to/gbgabiola-ui-0.1.0.tgz`.
+Run `pnpm --filter @gbgabiola/ui pack` from the repo root to build a versioned tarball in the repo root. In another React 19 app, install the resulting file with `pnpm add /path/to/gbgabiola-ui-0.2.0.tgz`.
 
 ```tsx
 import { useState } from 'react';
@@ -85,11 +85,15 @@ The theme switch follows the palette accent by default. To give it a separate ac
 
 For custom palette colors, override the `--uik-surface`, `--uik-text`, `--uik-muted`, `--uik-border`, `--uik-accent`, and `--uik-danger` CSS variables on the theme wrapper. Set `--uik-radius` to adjust the control radius.
 
+## Development workflow
+
+Start short-lived branches such as `feat/component-name` or `fix/issue-name` from the latest `main`. Open a pull request into `main` and wait for **Test and build Storybook** to pass before merging. Add a Changeset to the same pull request when the change affects library consumers. Storybook tooling and documentation changes only need a Changeset if they affect the package.
+
 ## Release a version
 
-1. Run `pnpm changeset` for changes that affect library consumers. Commit the resulting Markdown with the change.
-2. Run `pnpm version:packages` on the release branch. Changesets updates the version in `packages/ui/package.json` and its `CHANGELOG.md`.
-3. Run `pnpm typecheck`, `pnpm build:storybook`, and `pnpm --filter @gbgabiola/ui pack`.
-4. Commit the release changes. Tag that commit with the package version, for example `git tag -a v0.2.0 -m "Release v0.2.0"`. Push the commit and tag when a remote is configured.
+1. Once the changes for a release are on `main`, create a branch such as `release/v0.2.0`.
+2. Run `pnpm version:packages` to apply the pending Changesets and update the package version and changelog.
+3. Verify the release with `pnpm typecheck`, `pnpm test:coverage`, `pnpm build:storybook`, `pnpm test:visual`, and `pnpm --filter @gbgabiola/ui pack`. Commit the version changes and open a pull request into `main`.
+4. After merging and confirming the `main` workflow passed, tag the merged release commit and push that tag. For example, use `git tag -a v0.2.0 <release-commit> -m "Release v0.2.0"` and `git push origin v0.2.0`.
 
 During initial development, use patch bumps for compatible fixes and minor bumps for features or breaking changes. Record breaking changes and migration steps in the changelog. After `1.0.0`, use major bumps for breaking changes to documented exports, props, or theme variables. The package starts private and is available as a tarball.
