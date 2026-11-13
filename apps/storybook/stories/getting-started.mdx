@@ -1,0 +1,25 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as PaletteStories from './theme-palettes.stories';
+
+<Meta title="Guides/Getting started" />
+
+# Getting started
+
+Import the components and stylesheet in your React app.
+
+```tsx
+import { TextInput } from '@gbgabiola/ui';
+import '@gbgabiola/ui/styles.css';
+
+export function EmailField() {
+  return <TextInput label="Email" type="email" autoComplete="email" />;
+}
+```
+
+## Set the theme
+
+Apply `className="uik-theme"` to a wrapper. Set `data-theme` to `light` or `dark` and `data-palette` to a palette such as `classic` or `teal`. Use `ThemeToggle` and `ThemePaletteSelect` to change the two settings independently.
+
+<Canvas of={PaletteStories.Playground} />
+
+Use the Docs page next to each component's stories to see its props and examples.

@@ -5,8 +5,9 @@
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
     "strict": true,
+    "paths": { "@gbgabiola/ui": ["../../packages/ui/src/index.ts"] },
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": [".storybook", "stories"]
+  "include": [".storybook", "stories", "*.config.ts", "tests"]
 }

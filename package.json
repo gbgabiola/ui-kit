@@ -5,9 +5,12 @@
   "engines": { "node": "^22.13.0 || >=24.0.0" },
   "scripts": {
     "build": "pnpm --filter @gbgabiola/ui build",
-    "typecheck": "pnpm build && pnpm --filter ui-kit-storybook typecheck",
-    "storybook": "pnpm build && pnpm --filter ui-kit-storybook dev",
-    "build:storybook": "pnpm build && pnpm --filter ui-kit-storybook build",
+    "typecheck": "pnpm --filter ui-kit-storybook typecheck",
+    "storybook": "pnpm --filter ui-kit-storybook dev",
+    "build:storybook": "pnpm --filter ui-kit-storybook build",
+    "test": "pnpm --filter ui-kit-storybook test",
+    "test:coverage": "pnpm --filter ui-kit-storybook test:coverage",
+    "test:visual": "pnpm --filter ui-kit-storybook test:visual",
     "changeset": "changeset",
     "version:packages": "changeset version"
   },

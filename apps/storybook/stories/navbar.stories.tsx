@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navbar, ThemeToggle, type NavbarProps, type Theme } from '@gbgabiola/ui';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect } from 'storybook/test';
 
 function NavbarExample(props: NavbarProps) {
   const [theme, setTheme] = useState<Theme>('light');
@@ -13,6 +14,8 @@ function NavbarExample(props: NavbarProps) {
 }
 
 const meta = {
+  title: 'Blocks/Navbar',
+  id: 'navbar',
   component: Navbar,
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof Navbar>;
@@ -30,4 +33,8 @@ export const Default: Story = {
     ],
   },
   render: (args) => <NavbarExample {...args} />,
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('navigation', { name: 'Main' })).toBeVisible();
+    await expect(canvas.getByRole('link', { name: 'Home' })).toHaveAttribute('aria-current', 'page');
+  },
 };
