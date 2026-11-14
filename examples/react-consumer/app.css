@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+}
+
+.playground {
+  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+}
+
+.playground-main {
+  max-width: 68rem;
+  margin-inline: auto;
+}
+
+.playground-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(1rem, 4vw, 3rem);
+  padding: 0 clamp(1.5rem, 5vw, 4rem) 3rem;
+}
+
+.playground-grid section,
+.playground-grid form {
+  display: grid;
+  gap: 1rem;
+}
+
+.playground-grid h2,
+.playground-grid p[role='status'] {
+  margin: 0;
+}
+
+.playground-grid .uik-button {
+  justify-self: start;
+}
+
+@media (max-width: 42rem) {
+  .playground-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

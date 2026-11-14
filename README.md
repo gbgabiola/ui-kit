@@ -41,6 +41,10 @@ Download the package tarball from [GitHub Releases](https://github.com/gbgabiola
 
 Run `pnpm test:package` to pack and verify the current source in a standalone React consumer. To check a downloaded archive, pass its path to `pnpm test:package`.
 
+### React consumer playground
+
+Run `pnpm example:react` from the repo root after installing workspace dependencies. Open [http://localhost:5173](http://localhost:5173) to try the controls, change palettes, and submit a sample form locally. To test a published version, pass the downloaded archive path, for example `pnpm example:react ./gbgabiola-ui-0.4.0.tgz`. The playground installs the archive in a temporary React app and removes that app when the server stops.
+
 ```tsx
 import { useState } from 'react';
 import { Navbar, TextInput, ThemePaletteSelect, ThemeToggle, type Theme, type ThemePalette } from '@gbgabiola/ui';
