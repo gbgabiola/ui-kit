@@ -1,5 +1,11 @@
 # @gbgabiola/ui
 
+## 0.7.0
+
+### Minor Changes
+
+- 4a09e8b: Add a theme-aware Sidebar with collapsible navigation, a current-page indicator, and keyboard dismissal that restores focus to its toggle.
+
 ## 0.6.0
 
 ### Minor Changes
