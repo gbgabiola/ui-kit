@@ -10,3 +10,4 @@ export { Select, type SelectProps } from './components/select.js';
 export { Checkbox, type CheckboxProps } from './components/checkbox.js';
 export { PricingTable, type PricingPlan, type PricingTableProps } from './blocks/pricing-table.js';
 export { ProgressBar, type ProgressBarProps } from './components/progress-bar.js';
+export { Sidebar, type SidebarLink, type SidebarProps } from './blocks/sidebar.js';

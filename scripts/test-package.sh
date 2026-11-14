@@ -80,6 +80,7 @@ for (const key of [
 if (process.env.UI_KIT_LOCAL_PACK === 'true') {
   assert.equal(typeof ui.PricingTable, 'function', 'Missing runtime export: PricingTable');
   assert.equal(typeof ui.ProgressBar, 'function', 'Missing runtime export: ProgressBar');
+  assert.equal(typeof ui.Sidebar, 'function', 'Missing runtime export: Sidebar');
 }
 assert(statSync(fileURLToPath(import.meta.resolve('@gbgabiola/ui/styles.css'))).size > 0);
 JS
