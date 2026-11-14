@@ -1,5 +1,11 @@
 # @gbgabiola/ui
 
+## 0.5.0
+
+### Minor Changes
+
+- a9f4f3b: Add a responsive PricingTable for displaying plans, formatted prices, feature lists, highlighted options, and caller-supplied links or buttons styled as calls to action.
+
 ## 0.4.0
 
 ### Minor Changes
