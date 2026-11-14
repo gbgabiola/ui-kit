@@ -3,6 +3,7 @@ set -euo pipefail
 
 repo=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 mode=test
+local_pack=false
 if [[ ${1:-} == --dev ]]; then
   mode=dev
   shift
@@ -20,6 +21,7 @@ consumer=$(mktemp -d)
 trap 'rm -r -- "$consumer"' EXIT
 
 if [[ $# -eq 0 ]]; then
+  local_pack=true
   pnpm --filter @gbgabiola/ui pack --pack-destination "$consumer"
   version=$(node -p "require('./packages/ui/package.json').version")
   archive="$consumer/gbgabiola-ui-$version.tgz"
@@ -63,7 +65,7 @@ fi
 "$repo/apps/storybook/node_modules/.bin/tsc" --noEmit --strict \
   --target ES2022 --module NodeNext --moduleResolution NodeNext \
   --jsx react-jsx --types vite/client --noUncheckedSideEffectImports app.tsx
-node --input-type=module <<'JS'
+UI_KIT_LOCAL_PACK="$local_pack" node --input-type=module <<'JS'
 import assert from 'node:assert/strict';
 import { statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -74,6 +76,9 @@ for (const key of [
   'Textarea', 'TextInput', 'ThemePaletteSelect', 'ThemeToggle',
 ]) {
   assert.equal(typeof ui[key], 'function', `Missing runtime export: ${key}`);
+}
+if (process.env.UI_KIT_LOCAL_PACK === 'true') {
+  assert.equal(typeof ui.PricingTable, 'function', 'Missing runtime export: PricingTable');
 }
 assert(statSync(fileURLToPath(import.meta.resolve('@gbgabiola/ui/styles.css'))).size > 0);
 JS
