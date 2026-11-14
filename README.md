@@ -94,6 +94,14 @@ Start short-lived branches such as `feat/component-name` or `fix/issue-name` fro
 1. Once the changes for a release are on `main`, create a branch such as `release/v0.2.0`.
 2. Run `pnpm version:packages` to apply the pending Changesets and update the package version and changelog.
 3. Verify the release with `pnpm typecheck`, `pnpm test:coverage`, `pnpm build:storybook`, `pnpm test:visual`, and `pnpm --filter @gbgabiola/ui pack`. Commit the version changes and open a pull request into `main`.
-4. After merging and confirming the `main` workflow passed, tag the merged release commit and push that tag. For example, use `git tag -a v0.2.0 <release-commit> -m "Release v0.2.0"` and `git push origin v0.2.0`.
+4. After merging, confirm that the Storybook workflow passed on the merged commit on `main`. Replace `MERGED_RELEASE_SHA` and the example version below.
+
+   ```sh
+   git fetch origin main
+   git tag -a v0.5.0 MERGED_RELEASE_SHA -m "Release v0.5.0"
+   git push origin refs/tags/v0.5.0
+   ```
+
+5. Check **Actions → Publish UI package release** and verify that the tarball downloads from the GitHub release. If the release already exists and needs its tarball, run the workflow manually from `main` and enter the existing tag. It builds the package from that tag and attaches the tarball.
 
 During initial development, use patch bumps for compatible fixes and minor bumps for features or breaking changes. Record breaking changes and migration steps in the changelog. After `1.0.0`, use major bumps for breaking changes to documented exports, props, or theme variables. The package starts private and is available as a tarball.
