@@ -5,6 +5,7 @@ import { defineConfig, mergeConfig } from 'vitest/config';
 import viteConfig from './vite.config';
 
 export default mergeConfig(viteConfig, defineConfig({
+  optimizeDeps: { include: ['chromatic/isChromatic'] },
   plugins: [
     storybookTest({
       configDir: fileURLToPath(new URL('.storybook', import.meta.url)),

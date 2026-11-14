@@ -1,3 +1,4 @@
+import isChromatic from 'chromatic/isChromatic';
 import { ProgressBar } from '@gbgabiola/ui';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
@@ -23,6 +24,27 @@ export const Determinate: Story = {
 
 export const Indeterminate: Story = {
   args: { label: 'Preparing upload' },
+  decorators: [(Story) => isChromatic() ? (
+    <div className="progress-snapshot">
+      <style>{`
+        .progress-snapshot progress {
+          appearance: none;
+          border: 0;
+          border-radius: 0.25rem;
+          background: linear-gradient(90deg, var(--uik-accent, #254bb3) 30%, var(--uik-border, #68778d) 30%);
+        }
+
+        .progress-snapshot progress::-webkit-progress-inner-element {
+          visibility: hidden;
+        }
+
+        .progress-snapshot progress::-moz-progress-bar {
+          visibility: hidden;
+        }
+      `}</style>
+      <Story />
+    </div>
+  ) : <Story />],
   play: async ({ args, canvas }) => {
     const bar = canvas.getByRole('progressbar', { name: args.label });
     await expect(bar).not.toHaveAttribute('value');
