@@ -1,0 +1,88 @@
+name: Publish UI package release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag (for example, v0.4.0)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ui-release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.event_name == 'push' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      actions: read
+      contents: write
+    env:
+      RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check release tag
+        shell: bash
+        run: |
+          if [[ ! "$RELEASE_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo "::error::Expected a stable version tag such as v0.4.0."
+            exit 1
+          fi
+          git switch --detach "refs/tags/$RELEASE_TAG"
+          if ! git merge-base --is-ancestor HEAD origin/main; then
+            echo "::error::The release tag must point to a commit on main."
+            exit 1
+          fi
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          cache: pnpm
+      - name: Verify version and Storybook checks
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          actual_version=$(node -p "require('./packages/ui/package.json').version")
+          if [[ "$RELEASE_TAG" != "v$actual_version" ]]; then
+            echo "::error::Tag $RELEASE_TAG does not match @gbgabiola/ui $actual_version."
+            exit 1
+          fi
+          run_count=$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/workflows/storybook.yml/runs" \
+            -f branch=main -f head_sha="$(git rev-parse HEAD)" -f status=success -f per_page=1 \
+            --jq '.total_count')
+          if [[ "$run_count" -eq 0 ]]; then
+            echo "::error::The tagged commit must pass the Storybook workflow on main."
+            exit 1
+          fi
+      - run: pnpm install --frozen-lockfile
+      - name: Pack UI package
+        run: pnpm --filter @gbgabiola/ui pack --pack-destination "$RUNNER_TEMP"
+      - name: Publish release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          asset="$RUNNER_TEMP/gbgabiola-ui-${RELEASE_TAG#v}.tgz"
+          if gh release view "$RELEASE_TAG" --json assets > "$RUNNER_TEMP/release-assets.json"; then
+            if jq -e --arg name "${asset##*/}" '.assets | any(.name == $name and .state == "uploaded")' "$RUNNER_TEMP/release-assets.json" >/dev/null; then
+              echo "The release already includes ${asset##*/}."
+            else
+              gh release upload "$RELEASE_TAG" "$asset"
+            fi
+          else
+            gh release create "$RELEASE_TAG" "$asset" --verify-tag \
+              --title "@gbgabiola/ui $RELEASE_TAG" --generate-notes
+          fi
