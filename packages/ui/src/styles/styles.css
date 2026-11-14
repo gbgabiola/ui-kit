@@ -611,3 +611,9 @@
   opacity: 0.65;
   cursor: default;
 }
+
+.uik-progress {
+  inline-size: 100%;
+  block-size: 1rem;
+  accent-color: var(--uik-accent, #254bb3);
+}
