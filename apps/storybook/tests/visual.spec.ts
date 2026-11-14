@@ -69,3 +69,16 @@ for (const viewport of [
     );
   });
 }
+
+for (const viewport of [
+  { name: 'desktop', width: 900, height: 600 },
+  { name: 'mobile', width: 390, height: 650 },
+]) {
+  test(`pricing plans on ${viewport.name}`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.goto('/iframe.html?id=pricing-table--dark-walnut&viewMode=story');
+    const pricing = page.getByRole('region', { name: 'Choose a plan' });
+    await expect(pricing.getByRole('article')).toHaveCount(3);
+    await expect(pricing).toHaveScreenshot(`pricing-table-${viewport.name}.png`, screenshotOptions);
+  });
+}

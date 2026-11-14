@@ -8,3 +8,4 @@ export { ContentCard, type ContentCardProps } from './blocks/content-card.js';
 export { Textarea, type TextareaProps } from './components/textarea.js';
 export { Select, type SelectProps } from './components/select.js';
 export { Checkbox, type CheckboxProps } from './components/checkbox.js';
+export { PricingTable, type PricingPlan, type PricingTableProps } from './blocks/pricing-table.js';

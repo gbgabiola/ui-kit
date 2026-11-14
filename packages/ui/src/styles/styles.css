@@ -511,3 +511,103 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+.uik-pricing {
+  padding: clamp(1.5rem, 5vw, 4rem);
+  background: var(--uik-surface, #fff);
+  color: var(--uik-text, #172033);
+  font-family: system-ui, sans-serif;
+  overflow-wrap: anywhere;
+}
+
+.uik-pricing-header {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.uik-pricing-header > :is(h1, h2, h3),
+.uik-pricing-plan > :is(h2, h3, h4),
+.uik-pricing-cost,
+.uik-pricing-features {
+  margin: 0;
+}
+
+.uik-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1rem;
+}
+
+.uik-pricing-plan {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border: 1px solid var(--uik-border, #68778d);
+  border-radius: var(--uik-radius, 0.5rem);
+}
+
+.uik-pricing-plan[data-highlighted='true'] {
+  border-color: var(--uik-accent, #254bb3);
+  box-shadow: inset 0 2px var(--uik-accent, #254bb3);
+}
+
+.uik-pricing-cost strong {
+  font-size: 1.75rem;
+}
+
+.uik-pricing-cost span {
+  color: var(--uik-muted, #475569);
+}
+
+.uik-pricing-features {
+  display: grid;
+  gap: 0.375rem;
+  padding-inline-start: 1.25rem;
+}
+
+.uik-pricing-action {
+  --_uik-pricing-cta: var(--uik-accent, #254bb3);
+  margin-top: auto;
+  padding-top: 0.25rem;
+}
+
+:where(.uik-pricing-action) > :is(a[href], button) {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 2.75rem;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--_uik-pricing-cta);
+  border-radius: var(--uik-radius, 0.5rem);
+  background: var(--uik-surface, #fff);
+  color: var(--_uik-pricing-cta);
+  font: inherit;
+  font-weight: 650;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+:where(.uik-pricing-plan[data-highlighted='true'] .uik-pricing-action) > :is(a[href], button),
+:where(.uik-pricing-action) > :is(a[href], button:enabled):hover {
+  background: var(--_uik-pricing-cta);
+  color: var(--uik-surface, #fff);
+}
+
+:where(.uik-pricing-plan[data-highlighted='true'] .uik-pricing-action) > :is(a[href], button:enabled):hover {
+  background: var(--uik-surface, #fff);
+  color: var(--_uik-pricing-cta);
+}
+
+:where(.uik-pricing-action) > :is(a[href], button):focus-visible {
+  outline: 2px solid var(--_uik-pricing-cta);
+  outline-offset: 3px;
+}
+
+:where(.uik-pricing-action) > button:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
