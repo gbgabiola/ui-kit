@@ -9,5 +9,5 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": [".storybook", "stories", "*.config.ts", "tests"]
+  "include": [".storybook", "stories", "*.config.ts", "tests", "consumer-tests"]
 }

@@ -79,3 +79,7 @@ assert(statSync(fileURLToPath(import.meta.resolve('@gbgabiola/ui/styles.css'))).
 JS
 # Resolve actual package exports in the consumer build, without Storybook aliases.
 ./node_modules/.bin/vite build
+
+# Exercise the production bundle before the temporary consumer is removed.
+cd "$repo/apps/storybook"
+UI_KIT_CONSUMER_DIR="$consumer" ./node_modules/.bin/playwright test --config playwright.consumer.config.ts
