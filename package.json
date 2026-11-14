@@ -10,6 +10,7 @@
     "build:storybook": "pnpm --filter ui-kit-storybook build",
     "test": "pnpm --filter ui-kit-storybook test",
     "test:coverage": "pnpm --filter ui-kit-storybook test:coverage",
+    "test:package": "bash scripts/test-package.sh",
     "test:visual": "pnpm --filter ui-kit-storybook test:visual",
     "publish:storybook": "pnpm build:storybook && pnpm --filter ui-kit-storybook chromatic",
     "changeset": "changeset",

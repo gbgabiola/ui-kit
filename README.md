@@ -37,7 +37,9 @@ For CI, add the same token as the `CHROMATIC_PROJECT_TOKEN` GitHub Actions secre
 
 ## Use the library
 
-Run `pnpm --filter @gbgabiola/ui pack` from the repo root to build a versioned tarball in the repo root. In another React 19 app, install the resulting file with `pnpm add /path/to/gbgabiola-ui-0.2.0.tgz`.
+Download the package tarball from [GitHub Releases](https://github.com/gbgabiola/ui-kit/releases). Install it in a React 19 app with `pnpm add ./gbgabiola-ui-0.4.0.tgz`. You can also build an archive locally with `pnpm --filter @gbgabiola/ui pack`.
+
+Run `pnpm test:package` to pack and verify the current source in a standalone React consumer. To check a downloaded archive, pass its path to `pnpm test:package`.
 
 ```tsx
 import { useState } from 'react';
