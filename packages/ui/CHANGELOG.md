@@ -1,5 +1,11 @@
 # @gbgabiola/ui
 
+## 0.6.0
+
+### Minor Changes
+
+- 0a56d1a: Add a theme-aware ProgressBar for determinate and indeterminate work.
+
 ## 0.5.0
 
 ### Minor Changes
