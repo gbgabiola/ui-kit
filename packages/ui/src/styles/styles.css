@@ -568,15 +568,46 @@
 }
 
 .uik-pricing-action {
+  --_uik-pricing-cta: var(--uik-accent, #254bb3);
   margin-top: auto;
   padding-top: 0.25rem;
 }
 
-:where(.uik-pricing-action) a {
-  color: var(--uik-accent, #254bb3);
+:where(.uik-pricing-action) > :is(a[href], button) {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 2.75rem;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--_uik-pricing-cta);
+  border-radius: var(--uik-radius, 0.5rem);
+  background: var(--uik-surface, #fff);
+  color: var(--_uik-pricing-cta);
+  font: inherit;
+  font-weight: 650;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.uik-pricing-action a:focus-visible {
-  outline: 2px solid var(--uik-accent, #254bb3);
+:where(.uik-pricing-plan[data-highlighted='true'] .uik-pricing-action) > :is(a[href], button),
+:where(.uik-pricing-action) > :is(a[href], button:enabled):hover {
+  background: var(--_uik-pricing-cta);
+  color: var(--uik-surface, #fff);
+}
+
+:where(.uik-pricing-plan[data-highlighted='true'] .uik-pricing-action) > :is(a[href], button:enabled):hover {
+  background: var(--uik-surface, #fff);
+  color: var(--_uik-pricing-cta);
+}
+
+:where(.uik-pricing-action) > :is(a[href], button):focus-visible {
+  outline: 2px solid var(--_uik-pricing-cta);
   outline-offset: 3px;
+}
+
+:where(.uik-pricing-action) > button:disabled {
+  opacity: 0.65;
+  cursor: default;
 }

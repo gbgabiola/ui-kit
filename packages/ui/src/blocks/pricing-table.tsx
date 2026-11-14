@@ -8,6 +8,7 @@ export interface PricingPlan {
   description?: ReactNode;
   features?: readonly string[];
   highlight?: string;
+  /** Direct links and buttons receive the plan’s call-to-action styles. */
   action?: ReactNode;
 }
 

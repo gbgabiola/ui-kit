@@ -1,6 +1,6 @@
 import { PricingTable, type PricingPlan } from '@gbgabiola/ui';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 
 const plans: readonly PricingPlan[] = [
   {
@@ -61,4 +61,24 @@ export const DarkWalnut: Story = {
 
 export const SinglePlan: Story = {
   args: { headingLevel: 3, plans: [{ id: 'studio', name: 'Studio', price: '$24', period: 'per month' }] },
+};
+
+const requestQuote = fn();
+
+export const ButtonAction: Story = {
+  args: {
+    plans: [{
+      id: 'business',
+      name: 'Business',
+      price: 'Custom pricing',
+      action: <button type="button" onClick={requestQuote}>Request a quote</button>,
+    }],
+  },
+  play: async ({ canvas, userEvent }) => {
+    requestQuote.mockClear();
+    await userEvent.tab();
+    await expect(canvas.getByRole('button', { name: 'Request a quote' })).toHaveFocus();
+    await userEvent.keyboard('[Space]');
+    await expect(requestQuote).toHaveBeenCalledTimes(1);
+  },
 };
