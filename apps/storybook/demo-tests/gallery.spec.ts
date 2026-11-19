@@ -127,6 +127,17 @@ test('mobile gallery fits the viewport', async ({ page }) => {
   await page.goto('./');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await expect(page.getByRole('link', { name: /Open Blog post card/i })).toBeVisible();
+  const themeToggle = page.getByRole('button', { name: 'Dark mode', exact: true });
+  await expect(themeToggle).toBeVisible();
+  const brand = await page.locator('.uik-brand').boundingBox();
+  const toggle = await themeToggle.boundingBox();
+  expect(toggle!.x).toBeGreaterThan(brand!.x + brand!.width);
+  expect(brand!.x).toBeLessThan(30);
+  expect(toggle!.x + toggle!.width).toBeGreaterThan(350);
+  await page.getByRole('button', { name: 'Menu', exact: true }).click();
+  await expect(page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Storybook', exact: true })).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(themeToggle).toBeVisible();
   const footer = page.getByRole('contentinfo');
   await expect(footer).toContainText(`© 2018–${new Date().getUTCFullYear()} gbgabiola`);
   await expect(footer.getByRole('link', { name: 'gbgabiola', exact: true })).toHaveAttribute('href', 'https://gbgabiola.vercel.app/');
