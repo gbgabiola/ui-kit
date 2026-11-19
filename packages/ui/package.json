@@ -1,6 +1,7 @@
 {
   "name": "@gbgabiola/ui",
   "version": "0.7.0",
+  "license": "MIT",
   "private": true,
   "description": "Reusable React components for forms, theming, and navigation.",
   "type": "module",
