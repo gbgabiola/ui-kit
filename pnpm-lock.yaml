@@ -12,6 +12,31 @@ importers:
         specifier: ^2.29.0
         version: 2.31.1(@types/node@24.19.2)
 
+  apps/demo:
+    dependencies:
+      '@gbgabiola/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      react:
+        specifier: ^19.0.0
+        version: 19.3.1
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.3.1(react@19.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.3.0
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.3.0(@types/react@19.3.0)
+      typescript:
+        specifier: ~5.9.3
+        version: 5.9.3
+      vite:
+        specifier: ^7.3.8
+        version: 7.3.8(@types/node@24.19.2)
+
   apps/storybook:
     dependencies:
       '@gbgabiola/ui':
