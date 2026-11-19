@@ -127,9 +127,10 @@ test('mobile gallery fits the viewport', async ({ page }) => {
   await page.goto('./');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await expect(page.getByRole('link', { name: /Open Blog post card/i })).toBeVisible();
-  const footer = page.getByRole('contentinfo');
+  const footer = page.locator('.compact-footer').getByRole('contentinfo');
   await expect(footer).toContainText(`© 2018–${new Date().getUTCFullYear()} gbgabiola`);
   await expect(footer.getByRole('link', { name: 'gbgabiola', exact: true })).toHaveAttribute('href', 'https://gbgabiola.vercel.app/');
+  await expect(footer.getByRole('link', { name: 'Articles', exact: true })).toHaveAttribute('href', 'https://gbgabiola.vercel.app/blog');
   await expect(footer.getByRole('navigation', { name: 'Footer', exact: true })).toBeVisible();
   await expect(footer.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/gbgabiola');
   await expect(footer.getByRole('link', { name: 'Get in touch' })).toHaveAttribute('href', 'https://gbgabiola.vercel.app/contact');
