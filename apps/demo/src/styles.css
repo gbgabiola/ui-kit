@@ -17,7 +17,7 @@ body {
   --gallery-background: var(--uik-surface);
   --gallery-border: var(--uik-border);
   --gallery-container: 1240px;
-  --gallery-gutter: clamp(1.25rem, 4vw, 2rem);
+  --gallery-gutter: 1.25rem;
   --uik-radius: .6rem;
   display: flex;
   flex-direction: column;
@@ -51,6 +51,7 @@ body {
 }
 
 .gallery .uik-navbar {
+  width: 100%;
   max-width: var(--gallery-container);
   margin-inline: auto;
   padding: 1rem var(--gallery-gutter);
@@ -97,9 +98,9 @@ body {
 
 .intro {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr);
   align-items: center;
-  gap: clamp(1.5rem, 5vw, 4rem);
+  gap: 3rem;
   padding-block: clamp(2rem, 6vw, 4rem);
 }
 
@@ -315,11 +316,11 @@ body {
 
 .gallery .uik-site-footer {
   gap: 1.5rem;
-  padding: 2rem max(1.25rem, calc((100vw - 1200px) / 2));
+  padding: 2rem max(1.25rem, calc((100vw - 1200px) / 2)) 0;
   border-top: 1px solid var(--gallery-border);
   background: var(--uik-surface);
 }
-.gallery .uik-footer-bottom { padding-top: 1rem; border-top: 1px solid var(--gallery-border); }
+.gallery .uik-footer-bottom { padding-block: .65rem; border-top: 1px solid var(--gallery-border); }
 .gallery .gallery-footer-inner { max-width: none; padding: 0; font-size: .8rem; }
 
 .gallery-footer-inner {
@@ -411,4 +412,19 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+}
+
+.gallery .uik-nav-content { margin-inline-start: auto; }
+@media (max-width: 640px) {
+  .gallery .uik-navbar { display: grid; grid-template-columns: 1fr auto auto; }
+  .gallery .uik-brand { justify-self: start; }
+  .gallery .uik-menu-toggle { grid-column: 2; grid-row: 1; }
+  .gallery .uik-nav-content { display: contents; }
+  .gallery .uik-nav-actions { grid-column: 3; grid-row: 1; }
+  .gallery .uik-nav-links { grid-column: 1 / -1; grid-row: 2; align-items: flex-end; }
+  .gallery .uik-nav-content[data-open='false'] .uik-nav-links { display: none; }
+}
+@media (max-height: 600px) {
+  .gallery .uik-footer-bottom { padding-block: .45rem; }
+  .gallery .gallery-footer-inner { padding-block: 0; }
 }
