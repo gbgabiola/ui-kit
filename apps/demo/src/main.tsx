@@ -53,17 +53,18 @@ function Gallery() {
   return (
     <div className="uik-theme gallery" data-theme={appearance.theme} data-palette={appearance.palette}>
       <a className="skip-link" href="#main">Skip to content</a>
-      <Navbar brand="UI Kit" homeHref={import.meta.env.BASE_URL}
-        links={[{ href: '#demos', label: 'Demos' }, { href: storybook, label: 'Storybook' },
-          { href: 'https://github.com/gbgabiola/ui-kit', label: 'GitHub' }]}
-        actions={<ThemeToggle theme={appearance.theme} onThemeChange={(theme) => setAppearance({ ...appearance, theme })} />} />
+      <header className="gallery-header">
+        <Navbar brand="UI Kit" homeHref={import.meta.env.BASE_URL}
+          links={[{ href: '#demos', label: 'Demos' }, { href: storybook, label: 'Storybook' },
+            { href: 'https://github.com/gbgabiola/ui-kit', label: 'GitHub' }]}
+          actions={<ThemeToggle theme={appearance.theme} onThemeChange={(theme) => setAppearance({ ...appearance, theme })} />} />
+      </header>
       <main id="main" className="gallery-main">
         <section className="intro">
           <Hero eyebrow="Components, layouts & experiments" title="Small pieces. Working ideas."
             description="Try reusable React components, explore frontend layouts, and play with interactive demos."
             actions={<><a className="uik-button" href="#demos">Explore demos</a><a className="uik-button secondary" href={storybook}>Browse components</a></>} />
           <section className="preview" aria-labelledby="preview-title">
-            <p className="eyebrow">Try the library</p>
             <h2 id="preview-title">Make it your own</h2>
             <ThemePaletteSelect palette={appearance.palette} onPaletteChange={(palette) => setAppearance({ ...appearance, palette })} />
             <ProgressBar label="Sample progress" value={progress} />
@@ -72,7 +73,7 @@ function Gallery() {
           </section>
         </section>
         <section id="demos" aria-labelledby="demos-title">
-          <div className="catalog-heading"><div><p className="eyebrow">The collection</p><h2 id="demos-title">Explore the demos</h2></div>
+          <div className="catalog-heading"><h2 id="demos-title">Explore the demos</h2>
             <div className="search"><TextInput ref={search} label="Search demos" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Try pricing, games, or forms" /></div>
           </div>
           <div className="filters" role="group" aria-label="Filter demos by category">
@@ -86,10 +87,17 @@ function Gallery() {
           {visible.length === 0 && <div className="empty"><p>No demos match these filters.</p><button type="button" className="uik-button" onClick={() => { setQuery(''); setCategory('All demos'); }}>Clear filters</button></div>}
         </section>
       </main>
-      <SiteFooter brand="UI Kit" description="Reusable components and frontend experiments by Genesis Gabiola."
-        linkGroups={[{ label: 'Explore', links: [{ href: '#demos', label: 'Demos' }, { href: storybook, label: 'Component documentation' }] },
-          { label: 'Elsewhere', links: [{ href: 'https://github.com/gbgabiola/ui-kit', label: 'Source code' }, { href: 'https://gbgabiola.vercel.app/', label: 'Portfolio' }] }]}
-        bottom={<p>© {new Date().getFullYear()} Genesis Gabiola</p>} />
+      <SiteFooter bottom={
+        <div className="gallery-footer-inner">
+          <p>© 2018–{new Date().getUTCFullYear()}{' '}
+            <a className="gallery-footer-brand" href="https://gbgabiola.vercel.app/">gbgabiola</a>
+          </p>
+          <nav aria-label="Footer" className="gallery-footer-links">
+            <a href="https://github.com/gbgabiola">GitHub <span aria-hidden="true">↗</span></a>
+            <a href="https://gbgabiola.vercel.app/contact">Get in touch</a>
+          </nav>
+        </div>
+      } />
     </div>
   );
 }
