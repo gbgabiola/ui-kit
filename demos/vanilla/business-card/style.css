@@ -1,0 +1,127 @@
+:root {
+  --text-accent: #2b6cb0;
+  --text-muted: #4a5568;
+  --border-divider: rgba(0, 0, 0, 0.08);
+
+  --font-size-meta: 14px;
+  --font-size-sub: 13px;
+  --transition-rules: 0.2s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: rosybrown;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+a {
+  text-decoration: none;
+  transition: opacity var(--transition-rules);
+}
+
+a:hover {
+  opacity: 0.75;
+}
+
+hr {
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid var(--border-divider);
+}
+
+.business-card {
+  width: 300px;
+  background-color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid var(--border-divider);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.profile-image {
+  max-width: 100%;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.full-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a202c;
+  letter-spacing: -0.02em;
+}
+
+.designation {
+  font-size: var(--font-size-meta);
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+.company {
+  font-size: var(--font-size-meta);
+  color: #718096;
+}
+
+.contact-text {
+  font-size: var(--font-size-meta);
+  color: var(--text-muted);
+}
+
+.portfolio-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 700;
+  color: var(--text-accent);
+  font-size: var(--font-size-meta);
+}
+
+.social-media {
+  margin-top: 5px;
+}
+
+.social-media h2 {
+  font-size: var(--font-size-sub);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #a0aec0;
+  margin-bottom: 12px;
+}
+
+.social-media a {
+  margin: 0 8px;
+  font-size: var(--font-size-sub);
+  font-weight: 700;
+  color: var(--text-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a {
+    transition: none;
+  }
+}

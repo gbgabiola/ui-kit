@@ -1,0 +1,153 @@
+:root {
+  --primary-accent: #4f46e5;
+  --text-main: #1f2937;
+  --text-muted: #4b5563;
+  --border-default: #cbd5e1;
+  --radius-ui: 12px;
+}
+
+body {
+  color: var(--text-main);
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  margin-bottom: 24px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.pricing-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  gap: 24px;
+  width: 90%;
+  max-width: 1000px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 0 0 200px;
+  border: 2px solid black;
+
+  background: #ffffff;
+  padding: 30px 20px;
+  text-align: center;
+  border-radius: var(--radius-ui);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-4px);
+}
+
+.price {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 16px 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.features {
+  list-style-type: none;
+  padding: 0;
+  margin: 16px 0;
+  text-align: left;
+}
+
+.features li {
+  padding: 6px 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.check,
+.cross {
+  font-weight: bold;
+  margin-right: 8px;
+}
+.check {
+  color: #059669;
+}
+.cross {
+  color: #dc2626;
+}
+
+.basic-plan {
+  order: 0;
+  border-color: var(--border-default);
+}
+
+.pro-plan {
+  order: 1;
+  flex-grow: 2;
+  background: #f8fafc;
+  border-color: var(--primary-accent);
+}
+
+.pro-plan h2 {
+  color: var(--primary-accent);
+}
+
+.premium-plan {
+  order: 2;
+  border-color: var(--border-default);
+}
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #1d4ed8;
+}
+.pro-plan .btn {
+  background-color: var(--primary-accent);
+}
+.pro-plan .btn:hover {
+  background-color: #4338ca;
+}
+
+@media screen and (max-width: 1000px) {
+  .pricing-container {
+    height: auto;
+    justify-content: center;
+  }
+  .pricing-card {
+    flex: 1 1 200px;
+  }
+}
