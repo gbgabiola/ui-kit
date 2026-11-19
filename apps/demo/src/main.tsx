@@ -89,10 +89,7 @@ function Gallery() {
       <SiteFooter brand="UI Kit" description="Reusable components and frontend experiments by Genesis Gabiola."
         linkGroups={[{ label: 'Explore', links: [{ href: '#demos', label: 'Demos' }, { href: storybook, label: 'Component documentation' }] },
           { label: 'Elsewhere', links: [{ href: 'https://github.com/gbgabiola/ui-kit', label: 'Source code' }, { href: 'https://gbgabiola.vercel.app/', label: 'Portfolio' }] }]}
-        bottom={<p>© {new Date().getFullYear()} Genesis Gabiola</p>} />
-      <div className="compact-footer">
-      <SiteFooter bottom={
-        <div className="gallery-footer-inner">
+        bottom={        <div className="gallery-footer-inner">
           <p>© 2018–{new Date().getUTCFullYear()}{' '}
             <a className="gallery-footer-brand" href="https://gbgabiola.vercel.app/">gbgabiola</a>
           </p>
@@ -101,9 +98,8 @@ function Gallery() {
             <a href="https://gbgabiola.vercel.app/blog">Articles</a>
             <a href="https://gbgabiola.vercel.app/contact">Get in touch</a>
           </nav>
-        </div>
-      } />
-      </div>
+        </div>} />
+
     </div>
   );
 }
