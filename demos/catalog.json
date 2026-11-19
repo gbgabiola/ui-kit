@@ -1,0 +1,104 @@
+[
+  {
+    "slug": "blog-post-card",
+    "title": "Blog post card",
+    "category": "Layouts",
+    "description": "An article preview with a cover image and reading link."
+  },
+  {
+    "slug": "business-card",
+    "title": "Business card",
+    "category": "Layouts",
+    "description": "A compact profile and contact layout."
+  },
+  {
+    "slug": "confidential-email",
+    "title": "Confidential email",
+    "category": "Layouts",
+    "description": "A typographic email layout with redacted details."
+  },
+  {
+    "slug": "dicee",
+    "title": "Dicee",
+    "category": "Games",
+    "description": "Roll two dice and compare the results."
+  },
+  {
+    "slug": "drum-kit",
+    "title": "Drum kit",
+    "category": "Games",
+    "description": "Play drum sounds with buttons or your keyboard."
+  },
+  {
+    "slug": "fcc-survey-form",
+    "title": "Survey form",
+    "category": "Forms",
+    "description": "A responsive survey with several input types."
+  },
+  {
+    "slug": "feature-selection",
+    "title": "Feature selection",
+    "category": "Forms",
+    "description": "Choose features using selectable controls."
+  },
+  {
+    "slug": "ghibli-api",
+    "title": "Ghibli characters",
+    "category": "Tools",
+    "description": "Explore character details loaded from the Ghibli API."
+  },
+  {
+    "slug": "hover-effect",
+    "title": "Hover effects",
+    "category": "Layouts",
+    "description": "Explore image and pointer interaction treatments."
+  },
+  {
+    "slug": "loan-calculator",
+    "title": "Loan calculator",
+    "category": "Tools",
+    "description": "Estimate payments, including interest-free loans."
+  },
+  {
+    "slug": "number-guesser",
+    "title": "Number guesser",
+    "category": "Games",
+    "description": "Guess a number and follow the feedback."
+  },
+  {
+    "slug": "pricing-plans",
+    "title": "Pricing plans",
+    "category": "Layouts",
+    "description": "Compare service tiers in a responsive layout."
+  },
+  {
+    "slug": "pricing-table",
+    "title": "Pricing table",
+    "category": "Layouts",
+    "description": "Compare features across pricing tiers."
+  },
+  {
+    "slug": "progress-bar",
+    "title": "Progress bar",
+    "category": "Tools",
+    "description": "Start and reset an accessible progress indicator."
+  },
+  {
+    "slug": "simon-game",
+    "title": "Simon game",
+    "category": "Games",
+    "description": "Repeat an increasingly long sequence of sounds and colors."
+  },
+  {
+    "slug": "task-list",
+    "title": "Task list",
+    "category": "Tools",
+    "description": "Add, filter, and remove tasks saved in this browser."
+  },
+  {
+    "slug": "toggle-sidebar",
+    "title": "Toggle sidebar",
+    "category": "Layouts",
+    "description": "Open and close navigation with a keyboard or pointer."
+  }
+]

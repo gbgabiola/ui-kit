@@ -1,0 +1,371 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+:root {
+  --primary-color: #5fe2d1;
+  --primary-glow: rgba(95, 226, 209, 0.15);
+  --base-color: #ffffff;
+  --text-muted: #a0aec0;
+
+  --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #242424 50%, #121212 100%);
+  --header-bg: rgba(26, 26, 26, 0.75);
+  --footer-bg: rgba(22, 22, 22, 0.85);
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-hover-border: rgba(95, 226, 209, 0.4);
+  --input-bg: rgba(255, 255, 255, 0.04);
+  --input-focus-bg: rgba(255, 255, 255, 0.07);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.12);
+}
+
+html[data-theme='light'] {
+  --primary-color: #0d9488;
+  --primary-glow: rgba(13, 148, 136, 0.1);
+  --base-color: #1e293b;
+  --text-muted: #64748b;
+  --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+  --header-bg: rgba(248, 250, 252, 0.85);
+  --footer-bg: rgba(241, 245, 249, 0.9);
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.06);
+  --card-hover-border: rgba(13, 148, 136, 0.4);
+  --input-bg: rgba(0, 0, 0, 0.03);
+  --input-focus-bg: #ffffff;
+  --scrollbar-thumb: rgba(0, 0, 0, 0.15);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-gradient);
+  color: var(--base-color);
+  font-family:
+    'Lato',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+/* ==========================================================================
+   Theme Switch
+   ========================================================================== */
+.theme-toggle {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 2000;
+  padding: 0.6rem;
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 50%;
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.08);
+  border-color: var(--primary-color);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* ==========================================================================
+   Header & Search
+   ========================================================================== */
+header {
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 3rem 2rem 1.5rem;
+  background: var(--header-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--card-border);
+  text-align: center;
+  transition:
+    background 0.3s ease,
+    border 0.3s ease;
+}
+
+h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.05em;
+  background: linear-gradient(to right, var(--base-color), var(--primary-color));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.search-wrapper {
+  max-width: 500px;
+  width: 100%;
+  margin: 1.5rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#searchBar {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--base-color);
+  font: inherit;
+  outline: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+#searchBar:focus {
+  background: var(--input-focus-bg);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 12px var(--primary-glow);
+}
+
+.search-counter {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: right;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   Cards Container
+   ========================================================================== */
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0.5rem 2rem;
+  flex: 1 0 auto;
+}
+
+ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0.5rem;
+}
+
+li {
+  position: relative;
+}
+
+li a {
+  display: block;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  color: var(--base-color);
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 700;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    color 0.3s ease;
+}
+
+li a::after {
+  content: '→';
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.8rem;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease,
+    opacity 0.3s ease;
+  opacity: 0.6;
+}
+
+li a:hover {
+  color: var(--primary-color);
+  border-color: var(--card-hover-border);
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 20px rgba(0, 0, 0, 0.08),
+    0 0 15px var(--primary-glow);
+}
+
+li a:hover::after {
+  color: var(--primary-color);
+  transform: translateX(4px);
+  opacity: 1;
+}
+
+li a:active {
+  transform: translateY(-1px);
+}
+
+.no-results-hidden {
+  display: none;
+}
+
+.no-results-visible {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+}
+
+.project-item.hidden-item {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+footer {
+  flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  padding: 2rem;
+  border-top: 1px solid var(--card-border);
+  background: var(--footer-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 0.95rem;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-tagline {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* ==========================================================================
+   Responsive Adaptation & Accessibility
+   ========================================================================== */
+@media (max-width: 768px) {
+  header {
+    padding: 2rem 1.5rem 1rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .container {
+    padding: 1.5rem 1.25rem;
+  }
+
+  ul {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  li a {
+    padding: 1.5rem;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .footer-links {
+    gap: 1.5rem;
+  }
+
+  .theme-toggle {
+    top: 0.75rem;
+    right: 0.75rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}

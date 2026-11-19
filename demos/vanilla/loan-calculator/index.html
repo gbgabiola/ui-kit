@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+    integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <style>
+    #loading,
+    #results {
+      display: none;
+    }
+  </style>
+  <title>Loan Calculator</title>
+  <link rel="stylesheet" href="../demo.css">
+</head>
+
+<body class="bg-dark">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div class="card card-body text-center mt-5">
+          <h1 class="heading display-5 pb-3">Loan Calculator</h1>
+          <form id="loan-form">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <label for="amount">Loan amount</label><input type="number" min="0.01" step="0.01" required class="form-control" id="amount" placeholder="Loan Amount">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">%</span>
+                <label for="interest">Annual interest (%)</label><input type="number" min="0" step="0.01" required class="form-control" id="interest" placeholder="Interest">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="years">Years to repay</label><input type="number" min="1" step="1" required class="form-control" id="years" placeholder="Years To Repay">
+            </div>
+            <div class="forn-group">
+              <input type="submit" value="Calculate" class="btn btn-dark btn-block">
+            </div>
+          </form>
+          <p id="error" role="alert"></p>
+          <!-- LOADER -->
+          <div id="loading">
+            <img src="img/loading.gif" alt="">
+          </div>
+
+          <!-- RESULTS -->
+          <div id="results" class="pt-4" role="status">
+            <h2>Results</h2>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Monthly Payment</span>
+                <input type="text" class="form-control" id="monthly-payment" aria-label="Monthly payment" readonly>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Total Payment</span>
+                <input type="text" class="form-control" id="total-payment" aria-label="Total payment" readonly>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Total Interest</span>
+                <input type="text" class="form-control" id="total-interest" aria-label="Total interest" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+
+<nav class="demo-navigation" aria-label="Demo navigation"><a href="../../">← All demos</a><a href="https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/loan-calculator">View source</a></nav>
+</body>
+
+</html>

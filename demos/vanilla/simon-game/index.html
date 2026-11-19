@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <title>The Simon Game</title>
+  <link rel="stylesheet" href="../demo.css">
+</head>
+<body>
+  <h1 id="level-title">Repeat the sequence</h1>
+
+  <button id="start" type="button">Start game</button><p id="game-status" role="status">Press Start game, then repeat the highlighted colors.</p>
+  <div class="container">
+    <div class="row">
+      <button type="button" id="green" class="btn green" aria-label="Green" disabled></button>
+      <button type="button" id="red" class="btn red" aria-label="Red" disabled></button>
+    </div>
+
+    <div class="row">
+      <button type="button" id="yellow" class="btn yellow" aria-label="Yellow" disabled></button>
+      <button type="button" id="blue" class="btn blue" aria-label="Blue" disabled></button>
+    </div>
+  </div>
+
+  <footer>www 🟥 <a href="https://genesisgabiola.netlify.com/">genesisgabiola</a> 🟦 com</footer>
+
+  <script src="game.js"></script>
+<nav class="demo-navigation" aria-label="Demo navigation"><a href="../../">← All demos</a><a href="https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/simon-game">View source</a></nav>
+</body>
+</html>

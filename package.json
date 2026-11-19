@@ -2,7 +2,9 @@
   "name": "ui-kit-workspace",
   "private": true,
   "packageManager": "pnpm@11.25.0",
-  "engines": { "node": "^22.13.0 || >=24.0.0" },
+  "engines": {
+    "node": "^22.13.0 || >=24.0.0"
+  },
   "scripts": {
     "build": "pnpm --filter @gbgabiola/ui build",
     "typecheck": "pnpm --filter ui-kit-storybook typecheck",
@@ -15,7 +17,11 @@
     "test:visual": "pnpm --filter ui-kit-storybook test:visual",
     "publish:storybook": "pnpm build:storybook && pnpm --filter ui-kit-storybook chromatic",
     "changeset": "changeset",
-    "version:packages": "changeset version"
+    "version:packages": "changeset version",
+    "demo": "pnpm build && pnpm --filter ui-kit-demo dev",
+    "build:demo": "pnpm build && pnpm --filter ui-kit-demo build",
+    "test:demo": "pnpm --filter ui-kit-demo typecheck && pnpm --filter ui-kit-storybook exec playwright test --config playwright.demo.config.ts",
+    "verify:demo-history": "node scripts/verify-demo-history.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.0"
