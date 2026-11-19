@@ -2,8 +2,6 @@
 
 A sleek, professional, and minimalist digital business card component designed to present essential professional contact information and social networking links.
 
-![Repository Views](https://visitor-badge.laobi.icu/badge?page_id=gbgabiola.sandbox)
-
 ## 🛠️ Tech Stack
 
 * HTML5
@@ -13,9 +11,9 @@ A sleek, professional, and minimalist digital business card component designed t
 
 ## 📸 Preview
 
-[![Business Card Preview](./img/screenshot.png "Business Card Preview")](https://gbgabiola.github.io/sandbox/business-card)
+[![Business Card Preview](./img/screenshot.png "Business Card Preview")](https://gbgabiola.github.io/ui-kit/vanilla/business-card)
 
-Visit the [Live Preview](https://gbgabiola.github.io/sandbox/business-card)
+Visit the [Live Preview](https://gbgabiola.github.io/ui-kit/vanilla/business-card)
 
 ## 🚀 Getting Started
 
@@ -23,11 +21,11 @@ To explore, run, or debug the project locally on your machine:
 
 1. **Clone this workspace:**
    ```sh
-   git clone https://github.com/gbgabiola/sandbox.git
+   git clone https://github.com/gbgabiola/ui-kit.git
    ```
 2. **Change into this directory:**
    ```sh
-   cd sandbox/business-card
+   cd ui-kit/demos/vanilla/business-card
    ```
 3. **Run a local server:**<br />
    Open the root workspace using VS Code and launch the **Live Server** extension, or open individual `index.html` files directly inside your preferred web browser.
@@ -42,7 +40,7 @@ Contributions and suggestions are welcome.
 
 If you find a bug or have an idea for improvement, open an issue in the project's GitHub repository:
 
-[Open an Issue](https://github.com/gbgabiola/sandbox/issues/new)
+[Open an Issue](https://github.com/gbgabiola/ui-kit/issues/new)
 
 When reporting an issue, please include:
 

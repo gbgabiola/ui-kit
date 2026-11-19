@@ -10,7 +10,7 @@ Diceee is a game that can be used to settle all your family arguments and any so
 
 ![Dicee Screenshot](img/screenshot.png "Dicee Screenshot")
 
-Visit the [live preview](https://genesisgabiola.github.io/sandbox/dicee).
+Visit the [live preview](https://gbgabiola.github.io/ui-kit/vanilla/dicee).
 
 ## Future Improvements:
 
@@ -23,7 +23,7 @@ Visit the [live preview](https://genesisgabiola.github.io/sandbox/dicee).
 
 Choose what you prefer:
 
-- Open an issue [here](https://github.com/genesisgabiola/sandbox/issues).
+- Open an issue [here](https://github.com/gbgabiola/ui-kit/issues).
 - Contact me on [twitter](http://twitter.com/genesisgabiola).
 
 Any queries, suggestions, issues to report or critics are welcome :) You can freely connect to me.

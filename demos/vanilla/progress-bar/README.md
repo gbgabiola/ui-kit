@@ -11,7 +11,7 @@ Progress Bar is a custom built progress bar and independent component that can b
 
 ![Progress Bar Preview](img/preview.gif "Progress Bar Preview")
 
-Visit the [live site](https://genesisgabiola.github.io/sandbox/progress-bar).  
+Visit the [live site](https://gbgabiola.github.io/ui-kit/vanilla/progress-bar).
 Check the project in [CodePen](https://codepen.io/genesisgabiola/full/gOpdmjw).
 
 
@@ -19,7 +19,7 @@ Check the project in [CodePen](https://codepen.io/genesisgabiola/full/gOpdmjw).
 
 Choose what you prefer:
 
-- Open an [issue](https://github.com/genesisgabiola/sandbox/issues).
+- Open an [issue](https://github.com/gbgabiola/ui-kit/issues).
 - Contact me on [twitter](http://twitter.com/genesisgabiola).
 
 Any queries, suggestions, issues to report or critics are welcome :) You can freely connect to me.
