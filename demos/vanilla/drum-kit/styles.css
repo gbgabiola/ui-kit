@@ -60,3 +60,5 @@ a:hover { border-bottom: 2px solid #da0463; }
   border: 10px solid #404b69;
   border-radius: 15px;
 }
+h1 { font-size: clamp(2rem, 10vw, 5rem); }
+.drum { cursor: pointer; }

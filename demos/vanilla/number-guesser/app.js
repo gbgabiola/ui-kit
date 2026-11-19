@@ -1,96 +1,44 @@
-/**
- * GAME FUNCTION:
- * - Player must guess a number between a min and max
- * - Player gets a certain amount of guesses
- * - Notify player of guesses remaining
- * - Notify the player of the correct answer if lose
- * - Let player choose to play again
- **/
-
-// Game values
-let min = 1;
-let max = 10;
-let winningNum = getRandomNum(min, max);
-let guessesLeft = 3;
-// console.log(winningNum);
-
-// UI Elements
-const game = document.querySelector('#game');
-const minNum = document.querySelector('.min-num');
-const maxNum = document.querySelector('.max-num');
-const guessBtn = document.querySelector('#guess-btn');
+const min = 1;
+const max = 10;
+const guessButton = document.querySelector('#guess-btn');
 const guessInput = document.querySelector('#guess-input');
 const message = document.querySelector('.message');
+let answer;
+let attempts;
+let finished;
 
-// Play again event listener
-game.addEventListener('mousedown', function(e) {
-  if (e.target.className === 'play-again') {
-    window.location.reload();
+document.querySelector('.min-num').textContent = min;
+document.querySelector('.max-num').textContent = max;
+function reset() {
+  answer = Math.floor(Math.random() * (max - min + 1)) + min;
+  attempts = 3;
+  finished = false;
+  guessInput.disabled = false;
+  guessInput.value = '';
+  guessButton.value = 'Submit guess';
+  message.textContent = 'You have three attempts.';
+}
+function submitGuess() {
+  if (finished) { reset(); guessInput.focus(); return; }
+  const guess = Number(guessInput.value);
+  if (!Number.isInteger(guess) || guess < min || guess > max) {
+    message.textContent = `Enter a whole number between ${min} and ${max}.`;
+    return;
   }
-});
-
-// Assign UI min and max
-minNum.textContent = min;
-maxNum.textContent = max;
-
-guessBtn.addEventListener('click', function() {
-  let guess = parseInt(guessInput.value);
-  // console.log(guessInput.value);
-
-  // Check if won
-  if (guess === winningNum) {
-    // Game over - won
-    gameOver(true, `${winningNum} is correct, YOU WON!`);
+  attempts -= 1;
+  if (guess === answer || attempts === 0) {
+    finished = true;
+    guessInput.disabled = true;
+    guessButton.value = 'Play again';
+    message.textContent = guess === answer ? `You won! ${answer} is correct.` : `Game over. The correct number was ${answer}.`;
   } else {
-    guessesLeft -= 1; // Wrong guess
-
-    if (guessesLeft === 0) {
-      // Game over - lost
-      gameOver(
-        false,
-        `Game Over, YOU LOST! The correct number was ${winningNum}.`
-      );
-    } else {
-      // Game continues - answer wrong
-      guessInput.value = ''; // Clear input
-      guessInput.style.borderColor = 'red';
-      setMessage(
-        `${guess} is not correct, ${guessesLeft} guesses left.`,
-        'red'
-      );
-    }
+    message.textContent = `${guess} is incorrect. ${attempts} attempts left.`;
+    guessInput.value = '';
+    guessInput.focus();
   }
-
-  // Validate input
-  if (isNaN(guess) || guess < min || guess > max) {
-    setMessage(`Please enter a number between ${min} and ${max}`, 'red');
-  }
+}
+guessButton.addEventListener('click', submitGuess);
+guessInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') { event.preventDefault(); submitGuess(); }
 });
-
-// Game over
-function gameOver(won, msg) {
-  let color;
-  won === true ? (color = 'green') : (color = 'red');
-
-  guessInput.disabled = true; // Disable input
-  guessInput.style.borderColor = color;
-  message.style.color = color;
-  guessBtn.style.backgroundColor = color;
-  guessBtn.style.color = '#fff';
-  setMessage(msg);
-
-  // Play again?
-  guessBtn.value = 'Play Again?';
-  guessBtn.className += 'play-again';
-}
-
-// Get winning number
-function getRandomNum(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-// Set message
-function setMessage(msg, color) {
-  message.style.color = color;
-  message.textContent = msg;
-}
+reset();

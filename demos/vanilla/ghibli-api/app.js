@@ -1,46 +1,34 @@
-const app = document.getElementById('root');
-
-const container = document.createElement('div');
-container.setAttribute('class', 'container');
-
-app.appendChild(container);
-
-const request = new XMLHttpRequest();
-request.open('GET', 'https://ghibliapi.herokuapp.com/people', true);
-request.onload = function () {
-  const data = JSON.parse(this.response);
-
-  if (request.status >= 200 && request.status < 400) {
-    data.forEach(person => {
-      const card = document.createElement('div');
-      card.setAttribute('class', 'card');
-
-      const name = document.createElement('h1');
-      name.textContent = person.name;
-
-      const ul = document.createElement('ul');
-
-      function createMenuItem(item) {
-        const li = document.createElement('li');
-        li.textContent = item;
-        return li;
+const root = document.querySelector('#root');
+const status = document.querySelector('#status');
+const retry = document.querySelector('#retry');
+async function loadCharacters() {
+  retry.hidden = true;
+  status.textContent = 'Loading characters…';
+  root.replaceChildren();
+  try {
+    const response = await fetch('https://ghibliapi.vercel.app/people', { signal: AbortSignal.timeout(10000) });
+    if (!response.ok) throw new Error('Request failed');
+    const characters = await response.json();
+    if (!Array.isArray(characters) || !characters.every((person) => person && typeof person.name === 'string')) throw new Error('Invalid data');
+    for (const person of characters) {
+      const card = document.createElement('article');
+      card.className = 'card';
+      const heading = document.createElement('h2');
+      heading.textContent = person.name;
+      const details = document.createElement('ul');
+      for (const [label, value] of [['Gender', person.gender], ['Age', person.age], ['Eye color', person.eye_color], ['Hair color', person.hair_color]]) {
+        const item = document.createElement('li');
+        item.textContent = `${label}: ${value || 'Unknown'}`;
+        details.append(item);
       }
-
-      ul.appendChild(createMenuItem(`Gender: ${person.gender}`));
-      ul.appendChild(createMenuItem(`Age: ${person.age}`));
-      ul.appendChild(createMenuItem(`Eye Color: ${person.eye_color}`));
-      ul.appendChild(createMenuItem(`Hair Color: ${person.hair_color}`));
-
-      container.appendChild(card);
-      card.appendChild(name);
-      card.appendChild(ul);
-    });
-  } else {
-    const errorMessage = document.createElement('marquee');
-    errorMessage.setAttribute('scrollamount', '20');
-    errorMessage.textContent = `Sorry, it's not working this time. Try again later!`;
-    app.appendChild(errorMessage);
+      card.append(heading, details);
+      root.append(card);
+    }
+    status.textContent = `${characters.length} characters loaded.`;
+  } catch {
+    status.textContent = 'Characters could not be loaded. Check your connection and try again.';
+    retry.hidden = false;
   }
-};
-
-request.send();
+}
+retry.addEventListener('click', loadCharacters);
+loadCharacters();

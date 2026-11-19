@@ -8,11 +8,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <link rel="stylesheet" href="styles.css">
   <title>Toggle Sidebar</title>
+  <link rel="stylesheet" href="../demo.css">
 </head>
 
 <body>
-  <a href="#" class="btn">Click Me!</a>
-  <div class="sidebar is-hidden">
+  <h1>Sidebar navigation</h1><button type="button" class="btn" aria-expanded="false" aria-controls="sidebar">Open navigation</button>
+  <nav id="sidebar" aria-label="Sample navigation" class="sidebar is-hidden" inert>
     <ul>
       <li><a href="#">Home</a></li>
       <li><a href="#">About</a></li>
@@ -20,9 +21,10 @@
       <li><a href="#">Articles</a></li>
       <li><a href="#">Contacts</a></li>
     </ul>
-  </div>
+  </nav>
 
   <script src="scripts.js"></script>
+<nav class="demo-navigation" aria-label="Demo navigation"><a href="../../">← All demos</a><a href="https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/toggle-sidebar">View source</a></nav>
 </body>
 
 </html>

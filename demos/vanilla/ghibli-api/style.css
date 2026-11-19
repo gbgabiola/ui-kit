@@ -68,3 +68,9 @@ ul {
     flex: 1 1 calc(33% - 2rem);
   }
 }
+
+main { max-width: 1200px; margin: auto; padding: 1rem; }
+.card { flex: 1 1 260px; min-width: 0; color: #414141; padding-bottom: 1rem; }
+.card h2 { background: #132b27; color: #fff; margin: 0; padding: 1rem; }
+.card ul { list-style: none; padding: 1rem; }
+#retry { padding: .8rem 1.2rem; border: 0; border-radius: .5rem; background: #132b27; color: #fff; cursor: pointer; }

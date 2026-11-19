@@ -50,3 +50,6 @@
   padding: 0 4px;
   cursor: not-allowed;
 }
+
+#email { width: min(500px, 100% - 2rem); padding: clamp(1rem, 6vw, 3rem); overflow-wrap: anywhere; }
+#confidential, #top-secret { margin-left: 0; max-width: 100%; }

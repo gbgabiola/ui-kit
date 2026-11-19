@@ -1,88 +1,49 @@
-var buttonColors = ["red", "blue", "green", "yellow"];
+const colors = ['red', 'blue', 'green', 'yellow'];
+const buttons = [...document.querySelectorAll('.container button')];
+const start = document.querySelector('#start');
+const title = document.querySelector('#level-title');
+const status = document.querySelector('#game-status');
+let pattern = [];
+let position = 0;
+let active = false;
 
-var gamePattern = [];
-var userClickedPattern = [];
-
-var started = false;
-var level = 0;
-
-$(document).keydown(function() {
-  if (!started) {
-    $("#level-title").text("Level " + level);
-    nextSequence();
-    started = true;
-  }
+function sound(color) { new Audio(`sounds/${color}.mp3`).play().catch(() => {}); }
+function flash(color) {
+  const button = document.getElementById(color);
+  button.classList.add('pressed');
+  sound(color);
+  setTimeout(() => button.classList.remove('pressed'), 300);
+}
+function lock(locked) { buttons.forEach((button) => { button.disabled = locked; }); }
+function next() {
+  position = 0;
+  pattern.push(colors[Math.floor(Math.random() * colors.length)]);
+  title.textContent = `Level ${pattern.length}`;
+  status.textContent = 'Watch the next color.';
+  lock(true);
+  setTimeout(() => {
+    flash(pattern[pattern.length - 1]);
+    setTimeout(() => { lock(false); status.textContent = 'Your turn. Repeat the sequence.'; }, 400);
+  }, 600);
+}
+start.addEventListener('click', () => {
+  pattern = [];
+  active = true;
+  start.disabled = true;
+  next();
 });
-
-$(".btn").click(function() {
-  // var userChosenColor = e.target.id;
-  var userChosenColor = $(this).attr("id");
-  userClickedPattern.push(userChosenColor);
-  // console.log(userClickedPattern);
-  
-  playSound(userChosenColor);
-  animatePress(userChosenColor);
-
-  checkAnswer(userClickedPattern.length - 1);
-});
-
-// Check Answer
-function checkAnswer(currentLevel) {
-  // console.log("game pattern is " + gamePattern[currentLevel]);
-  // console.log("user clicked pattern is " + userClickedPattern[currentLevel]);
-  if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
-    // console.log("success");
-    if (userClickedPattern.length === gamePattern.length) {
-      setTimeout(function() {
-        nextSequence();
-      }, 1000);
-    }
-  } else {
-    // console.log("wrong");
-    playSound("wrong");
-    $("body").addClass("game-over");
-    $("#level-title").text("Game Over, Press Any Key to Restart");
-    
-    setTimeout(function() {
-      $("body").removeClass("game-over");
-    }, 200);
-
-    startOver(); // restart the game
+buttons.forEach((button) => button.addEventListener('click', () => {
+  if (!active) return;
+  flash(button.id);
+  if (button.id !== pattern[position]) {
+    active = false;
+    lock(true);
+    sound('wrong');
+    status.textContent = `Game over at level ${pattern.length}. Start a new game to try again.`;
+    start.disabled = false;
+    start.textContent = 'Start again';
+    return;
   }
-}
-
-// nextSequence function
-function nextSequence() {
-  userClickedPattern = [];
-  level++;
-  $("#level-title").text("Level " + level);
-
-  var randomNumber = Math.floor(Math.random() * 4);
-  var randomChosenColor = buttonColors[randomNumber];
-  gamePattern.push(randomChosenColor);
-
-  // $("#" + randomChosenColor).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
-  $("#" + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100);
-  playSound(randomChosenColor);
-}
-
-// playSound function
-function playSound(name) {
-  var audio = new Audio("sounds/" + name + ".mp3");
-  audio.play();
-}
-
-// Animation when pressed
-function animatePress(currentColor) {
-  $("#" + currentColor).addClass("pressed");
-  setTimeout(function() {
-    $("#" + currentColor).removeClass("pressed");
-  }, 100);
-}
-
-// Restart the Game
-function startOver() {
-  level = 0;
-  gamePattern = [];
-  started = false;
-}
+  position += 1;
+  if (position === pattern.length) next();
+}));

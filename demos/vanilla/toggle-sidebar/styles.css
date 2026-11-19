@@ -52,3 +52,7 @@
 .is-hidden {
   transform: translateX(300px);
 }
+
+body { font-family: system-ui, sans-serif; padding: 2rem 1rem 6rem; }
+button.btn { font: inherit; border: 0; border-radius: .5rem; cursor: pointer; }
+.sidebar { width: min(300px, 80vw); padding-top: 1rem; }

@@ -49,3 +49,9 @@ a:hover { opacity: .8; }
   background: gray;
   box-shadow: 0 0 20px #fff;
 }
+#start { border: 0; border-radius: .5rem; padding: .8rem 1.2rem; background: #fef2bf; color: #011f3f; cursor: pointer; font: 600 1rem system-ui, sans-serif; }
+#game-status { font: 1rem/1.6 system-ui, sans-serif; padding: 0 1rem; }
+.container { width: min(100%, 600px); }
+.btn { width: clamp(85px, 25vw, 180px); height: clamp(85px, 25vw, 180px); margin: .5rem; cursor: pointer; }
+.btn:disabled { cursor: default; }
+#level-title { font-size: clamp(1.1rem, 4vw, 3rem); line-height: 1.7; margin: 2rem 1rem; }

@@ -1,3 +1,4 @@
+function rollDice() {
 var randomNum1 = Math.floor(Math.random() * 6) + 1; // Random 1-6
 var randomNum2 = Math.floor(Math.random() * 6) + 1;
 
@@ -14,3 +15,6 @@ if (randomNum1 > randomNum2) {
 } else {
   h1.innerHTML = "Draw!";
 }
+}
+document.querySelector("#roll").addEventListener("click", rollDice);
+rollDice();

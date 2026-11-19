@@ -7,33 +7,27 @@
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <title>The Simon Game</title>
+  <link rel="stylesheet" href="../demo.css">
 </head>
 <body>
-  <h1 id="level-title">Press Any Key to Start</h1>
+  <h1 id="level-title">Repeat the sequence</h1>
 
+  <button id="start" type="button">Start game</button><p id="game-status" role="status">Press Start game, then repeat the highlighted colors.</p>
   <div class="container">
     <div class="row">
-      <div type="button" id="green" class="btn green">
-
-      </div>
-      <div type="button" id="red" class="btn red">
-
-      </div>
+      <button type="button" id="green" class="btn green" aria-label="Green" disabled></button>
+      <button type="button" id="red" class="btn red" aria-label="Red" disabled></button>
     </div>
 
     <div class="row">
-      <div type="button" id="yellow" class="btn yellow">
-
-      </div>
-      <div type="button" id="blue" class="btn blue">
-
-      </div>
+      <button type="button" id="yellow" class="btn yellow" aria-label="Yellow" disabled></button>
+      <button type="button" id="blue" class="btn blue" aria-label="Blue" disabled></button>
     </div>
   </div>
 
   <footer>www 🟥 <a href="https://genesisgabiola.netlify.com/">genesisgabiola</a> 🟦 com</footer>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="game.js"></script>
+<nav class="demo-navigation" aria-label="Demo navigation"><a href="../../">← All demos</a><a href="https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/simon-game">View source</a></nav>
 </body>
 </html>

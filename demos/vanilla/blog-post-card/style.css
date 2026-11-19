@@ -74,3 +74,6 @@ body {
 .read-more:hover {
   background-color: #4f46e5;
 }
+
+body { min-height: 100vh; height: auto; padding: 2rem 1rem 6rem; box-sizing: border-box; }
+.blog-post-card { width: min(380px, 100%); }
