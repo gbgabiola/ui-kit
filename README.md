@@ -1,6 +1,8 @@
 # UI Kit
 
-`@gbgabiola/ui` is a React 19 and TypeScript component library. It includes `TextInput`, `ThemeToggle`, `ThemePaletteSelect`, and `Navbar`.
+[![README views](https://hits.sh/github.com/gbgabiola/ui-kit.svg?label=README%20views&color=006a60)](https://hits.sh/github.com/gbgabiola/ui-kit/)
+
+`@gbgabiola/ui` is a React 19 and TypeScript component library. It includes form controls, theme controls, navigation, pricing tables, progress indicators, and reusable page blocks.
 
 ## Local development
 
@@ -15,6 +17,28 @@ pnpm storybook
 Open [Storybook](http://localhost:6006). **Guides** includes the MDX setup guide, **Components** groups forms and theme controls, **Blocks** contains the navbar, and **Examples** includes the palette playground. Each public component has a generated Docs page.
 
 Storybook resolves the UI package from source, so edits appear without rebuilding the package. Run `pnpm build` to verify or generate the distributable package.
+
+## Demo gallery
+
+Browse the [live gallery](https://gbgabiola.github.io/ui-kit/) for interactive
+components and 17 standalone demos, or run `pnpm demo` and open
+`http://localhost:5173/ui-kit/`. The gallery uses the library's components and
+supports search, category filters, eight palettes, and light/dark modes.
+`pnpm build:demo` produces the GitHub Pages site in `apps/demo/dist`.
+
+The standalone HTML/CSS/JavaScript projects live in `demos/vanilla`. Their
+original Sandbox history, including locally retained branch tips, is reachable
+from the import merge. `demos/history.json` records every imported ref.
+Run `pnpm verify:demo-history` in a full clone to check ancestry and original
+file preservation, then `pnpm test:demo` to test the built gallery and demos.
+GitHub issue and pull request records belong to their original repository.
+
+Pull requests run the demo checks inside **Test and build Storybook**.
+After its verification job succeeds on `main`, the **Deploy demo gallery** job
+publishes the same commit to GitHub Pages. Configure Settings → Pages → Source as GitHub
+Actions. Demo and documentation changes follow the normal PR workflow and
+use a merge commit when preserving imported history. They need a package
+Changeset only when they change the distributed library.
 
 ## Test and publish Storybook
 

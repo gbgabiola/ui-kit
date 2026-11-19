@@ -1,0 +1,39 @@
+{
+  "source": "https://github.com/gbgabiola/sandbox",
+  "main": "0c1ee8eac7ff799dbd0f3a40f18f9ce8c833dd2b",
+  "refs": [
+    {
+      "ref": "refs/sandbox/local/heads/main",
+      "commit": "0c1ee8eac7ff799dbd0f3a40f18f9ce8c833dd2b"
+    },
+    {
+      "ref": "refs/sandbox/local/remotes/HEAD",
+      "commit": "0c1ee8eac7ff799dbd0f3a40f18f9ce8c833dd2b"
+    },
+    {
+      "ref": "refs/sandbox/local/remotes/blog-post-card",
+      "commit": "f1ffd62bc1fd99cf19e512fba752d6c57e6445cb"
+    },
+    {
+      "ref": "refs/sandbox/local/remotes/confidential-email",
+      "commit": "22c9cb6148aa5946837161cbec912d62873b4b22"
+    },
+    {
+      "ref": "refs/sandbox/local/remotes/feature-selection-componnent",
+      "commit": "6ff322daa6c98f528005599e0040defc5f84e573"
+    },
+    {
+      "ref": "refs/sandbox/local/remotes/main",
+      "commit": "0c1ee8eac7ff799dbd0f3a40f18f9ce8c833dd2b"
+    },
+    {
+      "ref": "refs/sandbox/local/remotes/pricing-plans",
+      "commit": "f0cc721d7bf95daefed3d18d2c2c81efd53ae0ba"
+    },
+    {
+      "ref": "refs/sandbox/remote/heads/main",
+      "commit": "0c1ee8eac7ff799dbd0f3a40f18f9ce8c833dd2b"
+    }
+  ],
+  "importCommit": "9117825a63f317c3b3e7056c82cc835baf512df7"
+}
