@@ -2,8 +2,6 @@
 
 A sleek, responsive, and secure message card UI engineered for data-privacy layouts.
 
-![Repository Views](https://visitor-badge.laobi.icu/badge?page_id=gbgabiola.sandbox)
-
 ## 🛠️ Tech Stack
 
 * HTML5
@@ -13,9 +11,9 @@ A sleek, responsive, and secure message card UI engineered for data-privacy layo
 
 ## 📸 Preview
 
-[![Confidential Email Component Preview](./img/screenshot.png "Confidential Email Component Preview")](https://gbgabiola.github.io/sandbox/confidential-email)
+[![Confidential Email Component Preview](./img/screenshot.png "Confidential Email Component Preview")](https://gbgabiola.github.io/ui-kit/vanilla/confidential-email)
 
-Visit the [Live Preview](https://gbgabiola.github.io/sandbox/confidential-email)
+Visit the [Live Preview](https://gbgabiola.github.io/ui-kit/vanilla/confidential-email)
 
 ## 🚀 Getting Started
 
@@ -23,11 +21,11 @@ To explore, run, or debug the project locally on your machine:
 
 1. **Clone this workspace:**
    ```sh
-   git clone https://github.com/gbgabiola/sandbox.git
+   git clone https://github.com/gbgabiola/ui-kit.git
    ```
 2. **Change into this directory:**
    ```sh
-   cd sandbox/confidential-email
+   cd ui-kit/demos/vanilla/confidential-email
    ```
 3. **Run a local server:**<br />
    Open the root workspace using VS Code and launch the **Live Server** extension, or open individual `index.html` files directly inside your preferred web browser.
@@ -42,7 +40,7 @@ Contributions and suggestions are welcome.
 
 If you find a bug or have an idea for improvement, open an issue in the project's GitHub repository:
 
-[Open an Issue](https://github.com/gbgabiola/sandbox/issues/new)
+[Open an Issue](https://github.com/gbgabiola/ui-kit/issues/new)
 
 When reporting an issue, please include:
 

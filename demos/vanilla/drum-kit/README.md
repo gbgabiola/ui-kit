@@ -10,7 +10,7 @@ Drum Kit also known as drum set but using keyboard press or by clicking the part
 
 ![Drum Kit Screenshot](img/screenshot.png "Drum Kit Screenshot")
 
-Visit the [live preview](https://genesisgabiola.github.io/sandbox/drum-kit).
+Visit the [live preview](https://gbgabiola.github.io/ui-kit/vanilla/drum-kit).
 
 ## Future Improvements:
 
@@ -22,7 +22,7 @@ Visit the [live preview](https://genesisgabiola.github.io/sandbox/drum-kit).
 
 Choose what you prefer:
 
-- Open an [issue](https://github.com/genesisgabiola/sandbox/issues).
+- Open an [issue](https://github.com/gbgabiola/ui-kit/issues).
 - Contact me on [twitter](http://twitter.com/genesisgabiola).
 
 Any queries, suggestions, issues to report or critics are welcome :) You can freely connect to me.

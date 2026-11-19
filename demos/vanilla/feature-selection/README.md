@@ -2,8 +2,6 @@
 
 A clean, semantic user interface module for multi-item selection in billing or configuration workflows.
 
-![Repository Views](https://visitor-badge.laobi.icu/badge?page_id=gbgabiola.sandbox)
-
 ## 🛠️ Tech Stack
 
 * HTML5
@@ -13,9 +11,9 @@ A clean, semantic user interface module for multi-item selection in billing or c
 
 ## 📸 Preview
 
-[![Feature Selection Preview](./img/screenshot.png "Feature Selection Preview")](https://gbgabiola.github.io/sandbox/feature-selection)
+[![Feature Selection Preview](./img/screenshot.png "Feature Selection Preview")](https://gbgabiola.github.io/ui-kit/vanilla/feature-selection)
 
-Visit the [Live Preview](https://gbgabiola.github.io/sandbox/feature-selection)
+Visit the [Live Preview](https://gbgabiola.github.io/ui-kit/vanilla/feature-selection)
 
 ## 🚀 Getting Started
 
@@ -23,11 +21,11 @@ To explore, run, or debug the project locally on your machine:
 
 1. **Clone this workspace:**
    ```sh
-   git clone https://github.com/gbgabiola/sandbox.git
+   git clone https://github.com/gbgabiola/ui-kit.git
    ```
 2. **Change into this directory:**
    ```sh
-   cd sandbox/feature-selection
+   cd ui-kit/demos/vanilla/feature-selection
    ```
 3. **Run a local server:**<br />
    Open the root workspace using VS Code and launch the **Live Server** extension, or open individual `index.html` files directly inside your preferred web browser.
@@ -42,7 +40,7 @@ Contributions and suggestions are welcome.
 
 If you find a bug or have an idea for improvement, open an issue in the project's GitHub repository:
 
-[Open an Issue](https://github.com/gbgabiola/sandbox/issues/new)
+[Open an Issue](https://github.com/gbgabiola/ui-kit/issues/new)
 
 When reporting an issue, please include:
 

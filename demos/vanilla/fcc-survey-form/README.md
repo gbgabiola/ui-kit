@@ -6,12 +6,12 @@ This project demonstrates semantic HTML5 elements and custom CSS3 styling. It wa
 
 ## 🚀 Live Links
 
-- **Production Site:** [View Live on GitHub Pages](https://gbgabiola.github.io/sandbox/fcc-survey-form)
+- **Production Site:** [View Live on GitHub Pages](https://gbgabiola.github.io/ui-kit/vanilla/fcc-survey-form)
 - **Interactive Playground:** [Explore CodePen Sandbox](https://codepen.io/gbgabiola/full/mdJXoow)
 
 ## 📸 Preview
 
-[![FCC Survey Form Screenshot](img/screenshot.png "FCC Survey Form Screenshot")](https://gbgabiola.github.io/sandbox/fcc-survey-form)
+[![FCC Survey Form Screenshot](img/screenshot.png "FCC Survey Form Screenshot")](https://gbgabiola.github.io/ui-kit/vanilla/fcc-survey-form)
 
 ## ✨ Key Features & Technical Goals
 
@@ -29,7 +29,7 @@ This project demonstrates semantic HTML5 elements and custom CSS3 styling. It wa
 
 Contributions, bug reports, and design suggestions are highly welcome!
 
-- **Technical Issues:** Feel free to open a detailed bug report or feature request via [GitHub Issues](https://github.com/gbgabiola/sandbox/issues).
+- **Technical Issues:** Feel free to open a detailed bug report or feature request via [GitHub Issues](https://github.com/gbgabiola/ui-kit/issues).
 - **Get in touch:** Connect or chat with me on [LinkedIn](https://www.linkedin.com/in/gbgabiola) for collaborations.
 
 ## 🎓 Acknowledgements
