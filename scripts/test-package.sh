@@ -29,6 +29,10 @@ else
   archive="$source_archive"
 fi
 
+if [[ "$local_pack" == true ]]; then
+  node scripts/verify-package.mjs "$archive"
+fi
+
 # Use the React, type, and Vite versions already locked for Storybook.
 node --input-type=module - "$consumer" "$archive" <<'JS'
 import { copyFileSync, writeFileSync } from 'node:fs';

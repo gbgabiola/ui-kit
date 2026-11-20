@@ -134,6 +134,12 @@ Start short-lived branches such as `feat/component-name` or `fix/issue-name` fro
 
 5. Check **Actions → Publish UI package release** and verify that the tarball downloads from the GitHub release. If the release already exists and needs its tarball, run the workflow manually from `main` and enter the existing tag. It builds the package from that tag and attaches the tarball.
 
+The release workflow verifies the archive before publishing and downloads the
+published asset to verify its version, license notice, exports, types, and
+stylesheet. Local `pnpm test:package` runs the same archive check for a source
+pack. To inspect a downloaded archive against the matching checkout, run
+`node scripts/verify-package.mjs /path/to/package.tgz`.
+
 During initial development, use patch bumps for compatible fixes and minor bumps for features or breaking changes. Record breaking changes and migration steps in the changelog. After `1.0.0`, use major bumps for breaking changes to documented exports, props, or theme variables. The package starts private and is available as a tarball.
 
 ## License
