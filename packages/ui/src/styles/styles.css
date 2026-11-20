@@ -661,3 +661,28 @@
   outline: 2px solid var(--uik-accent, #254bb3);
   outline-offset: 2px;
 }
+
+.uik-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-block-size: 2.75rem;
+  border-color: var(--uik-accent, #254bb3);
+  font-weight: 650;
+  text-align: center;
+}
+
+.uik-action-button[data-variant='primary'] {
+  background: var(--uik-accent, #254bb3);
+  color: var(--uik-surface, #fff);
+}
+
+.uik-action-button[data-variant='secondary'] {
+  background: transparent;
+  color: var(--uik-accent, #254bb3);
+}
+
+.uik-action-button:enabled:hover {
+  filter: brightness(0.95);
+}

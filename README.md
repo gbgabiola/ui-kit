@@ -2,7 +2,9 @@
 
 [![README views](https://hits.sh/github.com/gbgabiola/ui-kit.svg?label=README%20views&color=006a60)](https://hits.sh/github.com/gbgabiola/ui-kit/)
 
-`@gbgabiola/ui` is a React 19 and TypeScript component library. It includes form controls, theme controls, navigation, pricing tables, progress indicators, and reusable page blocks.
+`@gbgabiola/ui` is a React 19 and TypeScript component library. It includes `Button`, form controls, theme controls, navigation, pricing tables, progress indicators, and reusable page blocks.
+
+`Button` is available in source builds and is queued for the next minor package release.
 
 ## Local development
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  ContentCard, Hero, Navbar, ProgressBar, SiteFooter, TextInput,
+  Button, ContentCard, Hero, Navbar, ProgressBar, SiteFooter, TextInput,
   ThemePaletteSelect, ThemeToggle, type Theme, type ThemePalette,
 } from '@gbgabiola/ui';
 import '@gbgabiola/ui/styles.css';
@@ -83,7 +83,7 @@ function Gallery() {
             {visible.map((demo) => <ContentCard key={demo.slug} headingLevel={3} eyebrow={demo.category} title={demo.title}
               description={demo.description} actions={<a className="uik-button" href={`${import.meta.env.BASE_URL}vanilla/${demo.slug}/`}>Open {demo.title}<span aria-hidden="true"> ↗</span></a>} />)}
           </div>
-          {visible.length === 0 && <div className="empty"><p>No demos match these filters.</p><button type="button" className="uik-button" onClick={() => { setQuery(''); setCategory('All demos'); }}>Clear filters</button></div>}
+          {visible.length === 0 && <div className="empty"><p>No demos match these filters.</p><Button variant="secondary" onClick={() => { setQuery(''); setCategory('All demos'); }}>Clear filters</Button></div>}
         </section>
       </main>
       <SiteFooter brand="UI Kit" description="Reusable components and frontend experiments by Genesis Gabiola."
