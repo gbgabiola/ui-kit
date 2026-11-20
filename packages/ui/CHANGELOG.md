@@ -1,5 +1,11 @@
 # @gbgabiola/ui
 
+## 0.7.1
+
+### Patch Changes
+
+- 6ac8cee: Include the MIT license and copyright notice in the package archive and declare its license metadata.
+
 ## 0.7.0
 
 ### Minor Changes
