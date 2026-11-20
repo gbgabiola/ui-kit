@@ -82,3 +82,15 @@ for (const viewport of [
     await expect(pricing).toHaveScreenshot(`pricing-table-${viewport.name}.png`, screenshotOptions);
   });
 }
+
+for (const viewport of [
+  { name: 'desktop', width: 900, height: 600 },
+  { name: 'mobile', width: 390, height: 650 },
+]) {
+  test(`button variants on ${viewport.name}`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.goto('/iframe.html?id=components-actions-button--dark-walnut&viewMode=story');
+    await expect(page.getByRole('group', { name: 'Button variants' })).toBeVisible();
+    await expect(page.locator('#storybook-root')).toHaveScreenshot(`button-variants-${viewport.name}.png`, screenshotOptions);
+  });
+}

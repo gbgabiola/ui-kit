@@ -82,6 +82,7 @@ for (const key of [
   assert.equal(typeof ui[key], 'function', `Missing runtime export: ${key}`);
 }
 if (process.env.UI_KIT_LOCAL_PACK === 'true') {
+  assert.equal(typeof ui.Button, 'function', 'Missing runtime export: Button');
   assert.equal(typeof ui.PricingTable, 'function', 'Missing runtime export: PricingTable');
   assert.equal(typeof ui.ProgressBar, 'function', 'Missing runtime export: ProgressBar');
   assert.equal(typeof ui.Sidebar, 'function', 'Missing runtime export: Sidebar');

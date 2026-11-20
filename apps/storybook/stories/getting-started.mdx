@@ -16,6 +16,28 @@ export function EmailField() {
 }
 ```
 
+## Buttons
+
+Use `Button` for actions. It defaults to `type="button"`. Set `type="submit"`
+for a form submission, and `variant="secondary"` for an outlined action.
+Native props such as `disabled`, `name`, `value`, event handlers, and `ref`
+are forwarded to the button.
+
+```tsx
+import { Button } from '@gbgabiola/ui';
+
+export function DraftActions({ onSave }: { onSave: () => void }) {
+  return (
+    <>
+      <Button onClick={onSave}>Save draft</Button>
+      <Button variant="secondary" disabled>Unavailable</Button>
+    </>
+  );
+}
+```
+
+Use an anchor with `href` for navigation.
+
 ## Set the theme
 
 Apply `className="uik-theme"` to a wrapper. Set `data-theme` to `light` or `dark` and `data-palette` to a palette such as `classic` or `teal`. Use `ThemeToggle` and `ThemePaletteSelect` to change the two settings independently.
