@@ -40,6 +40,7 @@ jobs:
             echo "::error::Expected a stable version tag such as v0.4.0."
             exit 1
           fi
+          cp scripts/verify-package.mjs "$RUNNER_TEMP/verify-package.mjs"
           git switch --detach "refs/tags/$RELEASE_TAG"
           if ! git merge-base --is-ancestor HEAD origin/main; then
             echo "::error::The release tag must point to a commit on main."
@@ -70,6 +71,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Pack UI package
         run: pnpm --filter @gbgabiola/ui pack --pack-destination "$RUNNER_TEMP"
+      - name: Verify package archive
+        run: node "$RUNNER_TEMP/verify-package.mjs" "$RUNNER_TEMP/gbgabiola-ui-${RELEASE_TAG#v}.tgz"
       - name: Publish release asset
         env:
           GH_TOKEN: ${{ github.token }}
@@ -86,3 +89,13 @@ jobs:
             gh release create "$RELEASE_TAG" "$asset" --verify-tag \
               --title "@gbgabiola/ui $RELEASE_TAG" --generate-notes
           fi
+      - name: Verify published release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          asset="gbgabiola-ui-${RELEASE_TAG#v}.tgz"
+          destination="$RUNNER_TEMP/published-package"
+          mkdir -p "$destination"
+          gh release download "$RELEASE_TAG" --pattern "$asset" --dir "$destination"
+          node "$RUNNER_TEMP/verify-package.mjs" "$destination/$asset"
