@@ -16,8 +16,7 @@ if (location.hash === '#components') history.replaceState(null, '', '#demos');
 
 function AppearanceControls() {
   const appearance = useAppearance();
-  return <div className="appearance-controls"><ThemePaletteSelect palette={appearance.palette} onPaletteChange={(palette) => changeAppearance({ palette })} />
-    <Button variant="secondary" disabled={appearance.preference === 'system'} onClick={() => changeAppearance({ theme: 'system' })}>Use system theme</Button></div>;
+  return <div className="appearance-controls"><ThemePaletteSelect palette={appearance.palette} onPaletteChange={(palette) => changeAppearance({ palette })} /></div>;
 }
 function Gallery() {
   const appearance = useAppearance();
