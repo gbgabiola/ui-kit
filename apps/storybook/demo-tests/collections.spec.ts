@@ -150,6 +150,8 @@ for (const viewport of [{ name: 'desktop', width: 1440, height: 1000 }, { name: 
       await page.evaluate(() => document.fonts.ready);
       await expect(page).toHaveScreenshot(`${name}-${viewport.name}.png`, {
         animations: 'disabled',
+        // Linux font builds can differ by a few rasterized text-edge pixels.
+        maxDiffPixels: 100,
         style: '* { font-family: "DejaVu Sans", sans-serif !important; caret-color: transparent !important; }',
       });
     });
