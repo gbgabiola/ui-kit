@@ -1,4 +1,5 @@
 const progressBar = document.querySelector('.progress-bar');
+const label = document.querySelector('.progress-label');
 const start = document.querySelector('.start');
 const reset = document.querySelector('.reset');
 let timer;
@@ -7,7 +8,7 @@ let value = 0;
 function render() {
   progressBar.style.opacity = '1';
   progressBar.style.width = value + '%';
-  progressBar.textContent = value + '%';
+  label.textContent = value + '%';
   progressBar.parentElement.setAttribute('aria-valuenow', String(value));
 }
 start.addEventListener('click', () => {

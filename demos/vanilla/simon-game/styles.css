@@ -1,12 +1,12 @@
 body {
-  background: #011f3f;
+  background: var(--demo-page);
   text-align: center;
   line-height: 1.5;
 }
 
 #level-title {
   margin: 5%;
-  color: #fef2bf;
+  color: var(--uik-text);
   font-family: 'Press Start 2P', cursive;
   font-size: 2rem;
 }
@@ -22,13 +22,13 @@ body {
   width: 200px;
   height: 200px;
   margin: 15px;
-  border: 10px solid #000;
+  border: 10px solid var(--uik-border);
   border-radius: 20%;
 }
 
 footer, a {
   margin-top: 3rem;
-  color: #fef2bf;
+  color: var(--uik-text);
   text-decoration: none;
 }
 
@@ -49,7 +49,7 @@ a:hover { opacity: .8; }
   background: gray;
   box-shadow: 0 0 20px #fff;
 }
-#start { border: 0; border-radius: .5rem; padding: .8rem 1.2rem; background: #fef2bf; color: #011f3f; cursor: pointer; font: 600 1rem system-ui, sans-serif; }
+#start { border: 0; border-radius: .5rem; padding: .8rem 1.2rem; background: var(--uik-text); color: var(--demo-page); cursor: pointer; font: 600 1rem system-ui, sans-serif; }
 #game-status { font: 1rem/1.6 system-ui, sans-serif; padding: 0 1rem; }
 .container { width: min(100%, 600px); }
 .btn { width: clamp(85px, 25vw, 180px); height: clamp(85px, 25vw, 180px); margin: .5rem; cursor: pointer; }

@@ -21,7 +21,8 @@
     "demo": "pnpm build && pnpm --filter ui-kit-demo dev",
     "build:demo": "pnpm build && pnpm --filter ui-kit-demo build",
     "test:demo": "pnpm --filter ui-kit-demo typecheck && pnpm --filter ui-kit-storybook exec playwright test --config playwright.demo.config.ts",
-    "verify:demo-history": "node scripts/verify-demo-history.mjs"
+    "verify:demos": "node scripts/verify-demos.mjs",
+    "previews:demos": "node scripts/generate-demo-previews.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.0"

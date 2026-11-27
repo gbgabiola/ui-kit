@@ -1,7 +1,7 @@
 :root {
-  --text-accent: #2b6cb0;
-  --text-muted: #4a5568;
-  --border-divider: rgba(0, 0, 0, 0.08);
+  --text-accent: var(--uik-accent);
+  --text-muted: var(--uik-muted);
+  --border-divider: var(--uik-border);
 
   --font-size-meta: 14px;
   --font-size-sub: 13px;
@@ -15,7 +15,7 @@
 }
 
 body {
-  background-color: rosybrown;
+  background-color: var(--demo-page);
   font-family: Arial, sans-serif;
   min-height: 100vh;
   display: flex;
@@ -45,7 +45,7 @@ hr {
 
 .business-card {
   width: 300px;
-  background-color: #ffffff;
+  background-color: var(--demo-card);
   padding: 20px;
   text-align: center;
   font-size: 16px;
@@ -54,7 +54,7 @@ hr {
   margin-right: auto;
   border: 1px solid var(--border-divider);
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px var(--uik-border);
 }
 
 .profile-image {
@@ -70,7 +70,7 @@ hr {
 .full-name {
   font-size: 22px;
   font-weight: 700;
-  color: #1a202c;
+  color: var(--uik-text);
   letter-spacing: -0.02em;
 }
 
@@ -85,7 +85,7 @@ hr {
 
 .company {
   font-size: var(--font-size-meta);
-  color: #718096;
+  color: var(--uik-muted);
 }
 
 .contact-text {
@@ -109,7 +109,7 @@ hr {
   font-size: var(--font-size-sub);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #a0aec0;
+  color: var(--uik-muted);
   margin-bottom: 12px;
 }
 

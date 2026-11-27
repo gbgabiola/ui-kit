@@ -38,8 +38,8 @@ jobs:
       - run: pnpm test:coverage
       - run: pnpm build:storybook
       - run: pnpm test:visual
-      - run: pnpm verify:demo-history
       - run: pnpm build:demo
+      - run: pnpm verify:demos
       - run: pnpm test:demo
       - name: Upload demo site
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'

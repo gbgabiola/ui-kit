@@ -4,12 +4,12 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #151b29;
+  background-color: var(--demo-page);
 }
 
 button {
   background: none;
-  color: #ffa260;
+  color: var(--uik-accent);
   border: 2px solid;
   padding: 1em 1.5em;
   font-size: 1em;
@@ -18,9 +18,9 @@ button {
 }
 
 button:hover {
-  color: white;
-  border-color: #f1ff5c;
-  box-shadow: 0 0.5em 0.5em -0.4em #f1ff5c;
+  color: var(--uik-text);
+  border-color: var(--uik-accent);
+  box-shadow: 0 0.5em 0.5em -0.4em var(--uik-accent);
   transform: translateY(-0.25em);
   cursor: pointer;
 }

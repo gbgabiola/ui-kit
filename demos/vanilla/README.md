@@ -1,8 +1,7 @@
 # Standalone demos
 
-These 17 HTML, CSS, and JavaScript demos were imported from Sandbox with their
-original commit history. Use the UI Kit gallery to browse and open them.
-
+Browse these 17 HTML, CSS, and JavaScript demos in the UI Kit gallery.
 Run `pnpm demo` from the repository root. Each demo keeps its own directory and
-assets. Shared navigation and keyboard focus styles live in `demo.css`.
-The original MIT license is retained in this directory.
+assets. Shared appearance, navigation, focus, and embedded-preview styles live
+in `demo.css` and `../appearance.js`. Palette tokens come from the UI package.
+The MIT license is retained in this directory.

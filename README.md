@@ -28,18 +28,24 @@ components and 17 standalone demos, or run `pnpm demo` and open
 supports search, category filters, eight palettes, and light/dark modes.
 `pnpm build:demo` produces the GitHub Pages site in `apps/demo/dist`.
 
-The standalone HTML/CSS/JavaScript projects live in `demos/vanilla`. Their
-original Sandbox history, including locally retained branch tips, is reachable
-from the import merge. `demos/history.json` records every imported ref.
-Run `pnpm verify:demo-history` in a full clone to check ancestry and original
-file preservation, then `pnpm test:demo` to test the built gallery and demos.
-GitHub issue and pull request records belong to their original repository.
+The Components collection links to documentation for all 14 React components.
+The Demos collection includes eight HTML/CSS examples and nine HTML/CSS/JavaScript
+examples, with combined technology, category, and search filters. Cards use light
+and dark preview images. Detail pages share the gallery theme and isolate each
+interactive example in a same-origin iframe. Standalone URLs remain available.
+
+Run `pnpm build:demo`, `pnpm verify:demos`, then `pnpm test:demo` to check the
+catalog, static routes, assets, interactions, themes, accessibility, and visual
+baselines. To regenerate preview images after a visual change, first run
+`pnpm build:storybook` and `pnpm build:demo`, then `pnpm previews:demos`, inspect
+the images, and rebuild the demo site. Preview generation uses fixed viewports,
+reduced motion, isolated storage, seeded randomness, and a local API fixture.
 
 Pull requests run the demo checks inside **Test and build Storybook**.
 After its verification job succeeds on `main`, the **Deploy demo gallery** job
 publishes the same commit to GitHub Pages. Configure Settings → Pages → Source as GitHub
 Actions. Demo and documentation changes follow the normal PR workflow and
-use a merge commit when preserving imported history. They need a package
+need a package
 Changeset only when they change the distributed library.
 
 ## Test and publish Storybook
