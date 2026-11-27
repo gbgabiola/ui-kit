@@ -2,9 +2,9 @@
 
 /* CSS Variables */
 :root {
-  --primary-color: #00f260;
-  --secondary-color: #11998e;
-  --light-color: #f4f4f4;
+  --primary-color: var(--uik-accent);
+  --secondary-color: var(--uik-accent);
+  --light-color: var(--demo-card);
 }
 
 * {
@@ -44,7 +44,7 @@ body {
   justify-content: center;
 
   height: 3rem;
-  background: linear-gradient(to right, #00f260, #11998e);
+  background: linear-gradient(to right, var(--uik-accent), var(--uik-accent));
   color: var(--light-color);
   border-radius: 10rem;
   opacity: 0;
@@ -60,7 +60,7 @@ body {
   min-width: 50%;
   padding: 1rem 2.5rem;
   margin: 0 1rem;
-  background: linear-gradient(to left, #38ef7d, #11998e);
+  background: linear-gradient(to left, var(--uik-accent), var(--uik-accent));
   color: var(--light-color);
   border: none;
   border-radius: 10rem;
@@ -75,11 +75,11 @@ body {
 }
 
 .start {
-  background: linear-gradient(to right, #38ef7d, #11998e);
+  background: linear-gradient(to right, var(--uik-accent), var(--uik-accent));
 }
 
 .reset {
-  background: linear-gradient(to left, #38ef7d, #11998e);
+  background: linear-gradient(to left, var(--uik-accent), var(--uik-accent));
 }
 
 @media screen and (max-width: 900px) {
@@ -105,3 +105,6 @@ body {
 .btn-container .btn { min-width: 0; margin: 0; height: auto; line-height: 1.4; padding: .8rem 1rem; }
 .btn:disabled { opacity: .6; cursor: wait; }
 h1 { margin-bottom: 2rem; }
+
+.progress { position: relative; }
+.progress-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 0 .4rem; border-radius: .25rem; background: var(--demo-card); color: var(--uik-text); }

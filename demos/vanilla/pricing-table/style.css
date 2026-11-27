@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  background-color: #60a9ff;
+  background-color: var(--demo-page);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,7 +12,7 @@ body {
 }
 
 .panel {
-  background-color: white;
+  background-color: var(--demo-card);
   border-radius: 10px;
   padding: 15px 25px;
   width: 100%;
@@ -24,7 +24,7 @@ body {
 }
 
 .pricing-plan {
-  border-bottom: 1px solid #e1f1ff;
+  border-bottom: 1px solid var(--uik-border);
 }
 
 .pricing-plan:last-child {
@@ -37,18 +37,18 @@ body {
 }
 
 .pricing-header {
-  color: #888;
+  color: var(--uik-muted);
   font-weight: 600;
   letter-spacing: 1px;
 }
 
 .pricing-features {
   margin: 50px 0 25px;
-  color: #016ff9;
+  color: var(--uik-accent);
 }
 
 .pricing-features-item:last-child {
-  border-bottom: 1px solid #e1f1ff;
+  border-bottom: 1px solid var(--uik-border);
 }
 
 .pricing-features-item {
@@ -57,11 +57,11 @@ body {
   font-size: 12px;
   line-height: 1.5;
   padding: 15px 0;
-  border-top: 1px solid #e1f1ff;
+  border-top: 1px solid var(--uik-border);
 }
 
 .pricing-price {
-  color: #016ff9;
+  color: var(--uik-accent);
   display: block;
   font-size: 32px;
   font-weight: 700;
@@ -69,9 +69,9 @@ body {
 }
 
 .pricing-button {
-  border: 1px solid #9dd1ff;
+  border: 1px solid var(--uik-border);
   border-radius: 10px;
-  color: #348efe;
+  color: var(--uik-accent);
   display: inline-block;
   padding: 15px 35px;
   text-decoration: none;
@@ -81,17 +81,17 @@ body {
 
 .pricing-button:hover,
 .pricing-button:focus {
-  background-color: #e1f1ff;
+  background-color: var(--uik-border);
 }
 
 .pricing-button.is-featured {
-  background-color: #48aaff;
-  color: white;
+  background-color: var(--uik-accent);
+  color: var(--demo-card);
 }
 
 .pricing-button.is-featured:hover,
 .pricing-button.is-featured:focus {
-  background-color: #269aff;
+  background-color: var(--uik-accent);
 }
 
 @media (min-width: 900px) {
@@ -101,7 +101,7 @@ body {
 
   .pricing-plan {
     border-bottom: none;
-    border-right: 1px solid #e1f1ff;
+    border-right: 1px solid var(--uik-border);
     padding: 25px 50px;
   }
 

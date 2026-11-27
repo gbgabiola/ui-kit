@@ -1,11 +1,11 @@
 :root {
-  --bg-main: #ffffff;
-  --bg-card: #f8fafc;
-  --bg-checked: #2563eb;
-  --border-light: #e2e8f0;
-  --border-dark: #cbd5e1;
-  --text-main: #0f172a;
-  --text-sub: #64748b;
+  --bg-main: var(--demo-page);
+  --bg-card: var(--demo-card);
+  --bg-checked: var(--uik-accent);
+  --border-light: var(--uik-border);
+  --border-dark: var(--uik-border);
+  --text-main: var(--uik-text);
+  --text-sub: var(--uik-muted);
 }
 
 * {
@@ -118,5 +118,5 @@ h1 {
 
 .feature-card:has(input:checked) {
   border-color: var(--bg-checked);
-  background-color: #f0f5ff;
+  background-color: var(--demo-selected);
 }

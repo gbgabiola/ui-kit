@@ -5,7 +5,7 @@
 }
 
 body {
-  background: #393E46;
+  background: var(--demo-page);
 }
 
 .dice {
@@ -15,14 +15,14 @@ body {
 
 h1 {
   margin: 30px;
-  color: #4ECCA3;
+  color: var(--uik-accent);
   font-family: 'Lobster', cursive;
   font-size: 5rem;
-  text-shadow: 5px 0 #232931;
+  text-shadow: 5px 0 transparent;
 }
 
 p {
-  color: #4ECCA3;
+  color: var(--uik-accent);
   font-family: 'Indie Flower', cursive;
   font-size: 2rem;
 }
@@ -31,14 +31,14 @@ img { width: 80%; }
 
 footer {
   margin-top: 5%;
-  color: #eee;
+  color: var(--uik-muted);
   font-family: 'Indie Flower', cursive;
   text-align: center;
 }
 
 footer a {
-  color: #eee;
+  color: var(--uik-muted);
   text-decoration: none;
 }
 
-footer a:hover { color: #4ECCA3; }
+footer a:hover { color: var(--uik-accent); }

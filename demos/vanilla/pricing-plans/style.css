@@ -1,8 +1,8 @@
 :root {
-  --primary-accent: #4f46e5;
-  --text-main: #1f2937;
-  --text-muted: #4b5563;
-  --border-default: #cbd5e1;
+  --primary-accent: var(--uik-accent);
+  --text-main: var(--uik-text);
+  --text-muted: var(--uik-muted);
+  --border-default: var(--uik-border);
   --radius-ui: 12px;
 }
 
@@ -50,9 +50,9 @@ h2 {
   flex-direction: column;
   justify-content: space-between;
   flex: 0 0 200px;
-  border: 2px solid black;
+  border: 2px solid var(--uik-border);
 
-  background: #ffffff;
+  background: var(--demo-card);
   padding: 30px 20px;
   text-align: center;
   border-radius: var(--radius-ui);
@@ -71,7 +71,7 @@ h2 {
   font-weight: 800;
   margin: 16px 0;
   padding-bottom: 16px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--uik-border);
 }
 
 .features {
@@ -93,10 +93,10 @@ h2 {
   margin-right: 8px;
 }
 .check {
-  color: #059669;
+  color: var(--demo-success);
 }
 .cross {
-  color: #dc2626;
+  color: var(--uik-danger);
 }
 
 .basic-plan {
@@ -107,7 +107,7 @@ h2 {
 .pro-plan {
   order: 1;
   flex-grow: 2;
-  background: #f8fafc;
+  background: var(--demo-selected);
   border-color: var(--primary-accent);
 }
 
@@ -123,8 +123,8 @@ h2 {
 .btn {
   display: inline-block;
   text-decoration: none;
-  background: #2563eb;
-  color: #ffffff;
+  background: var(--uik-accent);
+  color: var(--demo-card);
   font-weight: 600;
   padding: 12px;
   border-radius: 8px;
@@ -133,13 +133,13 @@ h2 {
 }
 
 .btn:hover {
-  background-color: #1d4ed8;
+  background-color: var(--uik-accent);
 }
 .pro-plan .btn {
   background-color: var(--primary-accent);
 }
 .pro-plan .btn:hover {
-  background-color: #4338ca;
+  background-color: var(--uik-accent);
 }
 
 @media screen and (max-width: 1000px) {
