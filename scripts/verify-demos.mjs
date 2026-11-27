@@ -3,12 +3,17 @@ import { readFile, stat, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '..');
 const output = resolve(root, 'apps/demo/dist');
+const entry = await readFile(resolve(output, 'index.html'), 'utf8');
+assert.ok(entry.indexOf('<meta charset') >= 0 && entry.indexOf('<meta charset') < 1024);
+assert.ok(entry.includes('window.UIKitAppearance') && entry.indexOf('window.UIKitAppearance') < entry.indexOf('</head>'));
+
 const demos = JSON.parse(await readFile(resolve(root, 'demos/catalog.json')));
 const components = JSON.parse(await readFile(resolve(root, 'demos/components.json')));
 const exports = await readFile(resolve(root, 'packages/ui/src/index.ts'), 'utf8');
 const stories = JSON.parse(await readFile(resolve(root, 'apps/storybook/storybook-static/index.json')));
 assert.equal(demos.length, 17);
 assert.equal(components.length, 14);
+assert.equal(new Set([...demos, ...components].map((item) => item.slug)).size, 31);
 assert.equal(demos.filter((item) => item.implementation === 'html-css').length, 8);
 assert.equal(demos.filter((item) => item.implementation === 'html-css-js').length, 9);
 for (const items of [demos, components]) {
@@ -33,6 +38,11 @@ for (const items of [demos, components]) {
       assert.ok(html.includes(`<title>${item.title} · UI Kit</title>`));
       assert.ok((await stat(resolve(output, 'vanilla', item.slug, 'index.html'))).isFile());
     } else {
+      assert.ok((await stat(resolve(root, item.source))).isFile());
+      const html = await readFile(resolve(output, 'demos', item.slug, 'index.html'), 'utf8');
+      assert.ok(html.includes(`<title>${item.title} · UI Kit</title>`));
+      const example = await readFile(resolve(output, 'examples', item.slug, 'index.html'), 'utf8');
+      assert.ok(example.includes(`<title>${item.title} preview · UI Kit</title>`));
       assert.match(exports, new RegExp(`\\b${item.title}\\b`));
       assert.ok(stories.entries[item.story] && stories.entries[item.docs], `Missing Storybook target for ${item.title}`);
     }
@@ -42,6 +52,6 @@ for (const asset of ['appearance.js', 'theme.css', 'vanilla/demo.css']) assert.o
 // Publish only the catalog, interactive examples, and assets used by the gallery.
 assert.deepEqual((await readdir(output)).sort(), [
   'appearance.js', 'assets', 'catalog.json', 'components.json', 'demos',
-  'index.html', 'previews', 'theme.css', 'vanilla',
+  'examples', 'index.html', 'previews', 'theme.css', 'vanilla',
 ].sort());
-console.log('Verified 14 components, 17 demos, 62 previews, source links, static routes, and published assets.');
+console.log('Verified 31 demo pages, 14 interactive React examples, 62 previews, source links, and published assets.');

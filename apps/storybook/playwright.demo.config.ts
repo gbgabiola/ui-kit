@@ -7,6 +7,7 @@ export default defineConfig({
   use: {
     baseURL: process.env.DEMO_BASE_URL || 'http://127.0.0.1:6008/ui-kit/',
     browserName: 'chromium',
+    colorScheme: 'dark',
     trace: 'retain-on-failure',
   },
   webServer: process.env.DEMO_BASE_URL ? undefined : {

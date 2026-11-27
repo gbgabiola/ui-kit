@@ -22,24 +22,26 @@ Storybook resolves the UI package from source, so edits appear without rebuildin
 
 ## Demo gallery
 
-Browse the [live gallery](https://gbgabiola.github.io/ui-kit/) for interactive
-components and 17 standalone demos, or run `pnpm demo` and open
+Browse 31 interactive demos in the [live gallery](https://gbgabiola.github.io/ui-kit/), or run `pnpm demo` and open
 `http://localhost:5173/ui-kit/`. The gallery uses the library's components and
-supports search, category filters, eight palettes, and light/dark modes.
+supports search, technology and category filters, eight palettes, and light/dark modes.
 `pnpm build:demo` produces the GitHub Pages site in `apps/demo/dist`.
 
-The Components collection links to documentation for all 14 React components.
-The Demos collection includes eight HTML/CSS examples and nine HTML/CSS/JavaScript
-examples, with combined technology, category, and search filters. Cards use light
-and dark preview images. Detail pages share the gallery theme and isolate each
-interactive example in a same-origin iframe. Open a demo card to use its preview,
-change appearance, or view its source. Standalone URLs remain available for
-embedding and existing links.
+One gallery includes 14 React component demos, eight HTML/CSS examples, and nine
+HTML/CSS/JavaScript examples. Every card opens an interactive detail page. React
+demos also link to their Storybook documentation and component source. Standalone
+URLs remain available for embedding and existing links.
+
+Appearance starts with the system's light or dark preference and follows system
+changes until you choose a theme with the sun/moon switch. Your choice is saved
+for future visits. Changing a palette keeps system mode active. Choose **Use
+system theme** to follow the system again. Appearance remains usable when browser
+storage is unavailable. The gallery and its previews share this behavior.
 
 Run `pnpm build:demo`, `pnpm verify:demos`, then `pnpm test:demo` to check the
 catalog, static routes, assets, interactions, themes, accessibility, and visual
 baselines. To regenerate preview images after a visual change, first run
-`pnpm build:storybook` and `pnpm build:demo`, then `pnpm previews:demos`, inspect
+`pnpm build:demo`, then `pnpm previews:demos`, inspect
 the images, and rebuild the demo site. Preview generation uses fixed viewports,
 reduced motion, isolated storage, seeded randomness, and a local API fixture.
 
@@ -47,8 +49,7 @@ Pull requests run the demo checks inside **Test and build Storybook**.
 After its verification job succeeds on `main`, the **Deploy demo gallery** job
 publishes the same commit to GitHub Pages. Configure Settings → Pages → Source as GitHub
 Actions. Demo and documentation changes follow the normal PR workflow and
-need a package
-Changeset only when they change the distributed library.
+need a package Changeset only when they change the distributed library.
 
 ## Test and publish Storybook
 
