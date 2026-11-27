@@ -27,6 +27,7 @@ Use Node 26.13.1 LTS and pnpm 12.23.0.
 pnpm install --frozen-lockfile
 pnpm demo       # Gallery at http://localhost:5173/ui-kit/
 pnpm storybook  # Component documentation at http://localhost:6006
+pnpm lint       # Workspace correctness and React hook checks
 ```
 
 Start a feature branch, then create a component with one command:

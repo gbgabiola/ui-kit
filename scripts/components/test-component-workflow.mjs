@@ -47,6 +47,7 @@ try {
   assert.ok(catalog.some((item) => item.slug === 'componentworkflowprobe'));
   assert.ok((await readFile(resolve(fixture, 'README.md'), 'utf8')).includes('/demos/componentworkflowprobe/'));
   assert.ok((await readFile(resolve(fixture, '.changeset/add-component-workflow-probe.md'), 'utf8')).includes('"@gbgabiola/ui": minor'));
+  pnpm('lint');
   pnpm('build:storybook');
   pnpm('verify:demos');
   server = await serve(resolve(fixture, 'apps/demo/dist'));

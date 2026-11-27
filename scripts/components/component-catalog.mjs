@@ -3,7 +3,7 @@ import { readFile, readdir, stat } from 'node:fs/promises';
 import { resolve, relative, sep } from 'node:path';
 import { createRequire } from 'node:module';
 
-const require = createRequire(new URL('../../apps/demo/package.json', import.meta.url));
+const require = createRequire(new URL('../../package.json', import.meta.url));
 const ts = require('typescript');
 const storyRequire = createRequire(new URL('../../apps/storybook/package.json', import.meta.url));
 const { toId, storyNameFromExport } = storyRequire('storybook/internal/csf');

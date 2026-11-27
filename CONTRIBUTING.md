@@ -9,7 +9,7 @@ TypeScript stays on 6.0.3 because catalog discovery and Storybook documentation 
 - `packages/ui`: published components, blocks, and styles.
 - `apps/demo`: gallery pages, shared layout, component examples, themes, and gallery browser tests.
 - `apps/storybook`: component documentation, interaction tests, and Storybook snapshots.
-- `demos/vanilla`, `demos/shared`, and `demos/previews`: standalone examples, their shared runtime, and generated thumbnails.
+- `demos/native`, `demos/shared`, and `demos/previews`: standalone examples, their shared runtime, and generated thumbnails.
 - `examples/react-consumer`: packed-package integration example and browser tests.
 - `scripts/components`, `scripts/demos`, `scripts/package`, and `scripts/shared`: tooling grouped by responsibility. Root package commands remain the supported entry points.
 
@@ -40,6 +40,7 @@ pnpm build:demo
 ## Validate changes
 
 ```sh
+pnpm lint
 pnpm test:tooling
 pnpm test:component-workflow
 pnpm demos:check
@@ -84,11 +85,15 @@ Review versioning for every change. `pnpm check:version` checks the committed ch
 
 5. Verify **Publish UI package release** succeeded and download the release archive. The workflow checks version, license, exports, types, and styles before and after upload. Run `pnpm test:package /path/to/downloaded-package.tgz` for a consumer check. Do not move existing tags. For an existing tag with a missing asset, run the release workflow manually from main with that tag.
 
+## Linting
+
+Run `pnpm lint` before committing, or `pnpm lint:fix` for safe automatic fixes. The flat ESLint config covers JavaScript, TypeScript, React hooks, browser demos, tests, and Node tooling. Generated builds, coverage, and dependencies are excluded. Browser accessibility checks share a typed axe helper; application, library, and test code retain the recommended TypeScript rules.
+
 ## Demo workspace
 
 `/demos/<slug>/` is the gallery's canonical demo URL. HTML demos run as native documents; React demos render directly and load preview code only on demo routes. Both use `demos/shared/workspace.css` and the same metadata-driven floating controls from `demos/shared/appearance.js`. The title, description, technology, and source/documentation links come from the catalog. The gallery header/footer stay on the collection page.
 
-The build plugin in `apps/demo/build/` emits static pages and serves the same routes in development. Existing `/vanilla/<slug>/` and `/examples/<slug>/` URLs keep working with the same workspace. `?embedded=1` hides metadata and controls for thumbnail generation. No iframe sizing or appearance-message protocol is needed.
+The build plugin in `apps/demo/build/` emits static pages and serves the same routes in development. Only `/demos/<slug>/` is published. Removed routes return 404 without redirects or gallery fallback. Native sources, READMEs, and unused captures are not published. `?embedded=1` hides metadata and controls for thumbnail generation. No iframe sizing or appearance-message protocol is needed.
 
 ## Themes
 
