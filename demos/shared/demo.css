@@ -21,10 +21,6 @@ button, input[type='submit'], .read-more, .pricing-card .btn, .pricing-button.is
 .read-more:hover, .pricing-card .btn:hover, .pricing-button.is-featured:hover { color: var(--demo-page); background-color: var(--uik-accent); filter: brightness(1.1); }
 button:disabled { cursor: default; }
 :focus-visible { outline: 3px solid var(--uik-accent); outline-offset: 4px; }
-.demo-navigation { position: fixed; z-index: 10000; inset: auto 1rem 1rem auto; display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; padding: .5rem; border: 1px solid var(--uik-border); border-radius: .9rem; background: var(--demo-card); box-shadow: 0 4px 20px #0003; font: 600 14px/1.4 system-ui, sans-serif; }
-.demo-navigation a, .demo-navigation button, .demo-navigation select { display: inline-flex; align-items: center; min-height: 40px; margin: 0; padding: .5rem .8rem; border: 1px solid var(--uik-border); border-radius: .5rem; background: var(--demo-page); color: var(--uik-accent); text-decoration: none; font-size: 14px; letter-spacing: normal; width: auto; }
-.demo-navigation a:hover { background: var(--demo-selected); }
-.demo-theme-toggle { min-width: 40px; }
 #roll { display: block; margin: 1.5rem auto; padding: .8rem 1.4rem; border-radius: .5rem; }
 #retry, #start { padding: .8rem 1.2rem; border-radius: .5rem; }
 body:has(#survey-form)::before { background: var(--demo-page); }
@@ -63,9 +59,7 @@ body:has(#loan-form) h1, body:has(#task-form) h1 { margin-top: 0; font-size: 2re
 .collection { list-style: none; padding: 0; }
 .collection-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .75rem; border-bottom: 1px solid var(--uik-border); }
 .collection-item button { border-radius: .4rem; padding: .35rem .7rem; }
-html[data-embedded] .demo-navigation { display: none; }
-html[data-embedded], html[data-embedded] body { height: auto; min-height: 0; }
-html[data-embedded] body { min-height: 448px; margin: 0; padding-top: 2rem; padding-bottom: 2rem; }
+html[data-embedded], html[data-embedded] body { height: auto; min-height: 100%; }
+html[data-embedded] body { min-height: 100svh; margin: 0; padding-top: 2rem; padding-bottom: 2rem; }
 html[data-embedded] .business-card { margin-top: 0; }
-@media (max-width: 480px) { .demo-navigation { inset-inline: .75rem; justify-content: center; } body { padding-bottom: 9rem; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }

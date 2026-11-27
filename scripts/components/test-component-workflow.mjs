@@ -46,8 +46,8 @@ try {
   browser = await chromium.launch();
   const page = await browser.newPage({ colorScheme: 'dark' });
   await page.goto(`${server.url}/ui-kit/demos/componentworkflowprobe/`);
-  await page.frameLocator('iframe').getByText('Component Workflow Probe preview', { exact: true }).waitFor();
-  assert.equal(await page.getByRole('heading', { level: 1 }).textContent(), 'ComponentWorkflowProbe');
+  await page.getByText('Component Workflow Probe preview', { exact: true }).waitFor();
+  assert.equal(await page.locator('#demo-title').textContent(), 'ComponentWorkflowProbe');
   console.log('Scaffold: source, export, story, Changeset, README, previews, build, and real interactive route passed.');
   const port = new URL(server.url).port;
   await server.close(); server = undefined;
@@ -56,6 +56,14 @@ try {
   development.stdout.on('data', (data) => { logs = (logs + data.toString()).slice(-8000); });
   development.stderr.on('data', (data) => { logs = (logs + data.toString()).slice(-8000); });
   await waitFor(async () => { try { return (await fetch(`http://127.0.0.1:${port}/ui-kit/`)).ok; } catch { return false; } }, 'development server');
+  const standalone = JSON.parse(await readFile(resolve(fixture, 'demos/catalog.json'), 'utf8'))[0];
+  await page.goto(`http://127.0.0.1:${port}/ui-kit/demos/${standalone.slug}/`);
+  await page.locator('#demo-title').waitFor();
+  assert.equal(await page.locator('#demo-title').textContent(), standalone.title);
+  assert.equal(await page.locator('iframe').count(), 0);
+  assert.equal(await page.locator('script[type="module"]').count(), 0);
+  await page.getByRole('link', { name: 'All demos', exact: false }).click();
+  console.log('Development: native demo metadata, assets, controls, and canonical routes work without the gallery runtime.');
   await page.goto(`http://127.0.0.1:${port}/ui-kit/`);
   await page.getByRole('link', { name: 'Open ComponentWorkflowProbe', exact: false }).waitFor();
   for (const [from, to] of [
@@ -70,7 +78,7 @@ try {
   await waitFor(async () => (await readFile(resolve(fixture, 'README.md'), 'utf8')).includes('/demos/componentwatchprobe/'), 'automatic README update');
   await page.getByRole('link', { name: 'Open ComponentWatchProbe', exact: false }).waitFor({ timeout: 60000 });
   await page.getByRole('link', { name: 'Open ComponentWatchProbe', exact: false }).click();
-  await page.frameLocator('iframe').getByText('Component Watch Probe preview', { exact: true }).waitFor({ timeout: 60000 });
+  await page.getByText('Component Watch Probe preview', { exact: true }).waitFor({ timeout: 60000 });
   console.log('Development: adding an export, example, and story updated the UI and README without a catalog edit or package rebuild.');
   assert.ok(!logs.includes('Error: Add a demo entry'), logs);
 } finally {

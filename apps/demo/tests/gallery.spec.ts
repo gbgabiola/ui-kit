@@ -26,8 +26,8 @@ test('gallery search, category filters, appearance persistence, and keyboard acc
   await page.getByLabel('Color palette').selectOption('walnut');
   await page.getByRole('button', { name: 'Dark mode', exact: true }).click();
   await page.reload();
-  await expect(page.locator('.gallery')).toHaveAttribute('data-palette', 'walnut');
-  await expect(page.locator('.gallery')).toHaveAttribute('data-theme', 'light');
+  await expect(page.locator('html')).toHaveAttribute('data-palette', 'walnut');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await page.getByRole('slider').focus();
   await page.keyboard.press('End');
   await expect(page.getByRole('progressbar')).toHaveAttribute('value', '100');
@@ -119,7 +119,7 @@ test('Ghibli request failure has a working retry', async ({ page }) => {
 test('Simon game has touch and keyboard controls', async ({ page }) => {
   await page.goto('vanilla/simon-game/');
   await page.getByRole('button', { name: 'Start game', exact: true }).click();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Level 1');
+  await expect(page.getByRole('heading', { name: 'Level 1', exact: true })).toHaveText('Level 1');
   await expect(page.getByRole('button', { name: 'Green', exact: true })).toBeEnabled();
 });
 

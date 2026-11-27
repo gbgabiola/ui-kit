@@ -84,6 +84,12 @@ Review versioning for every change. `pnpm check:version` checks the committed ch
 
 5. Verify **Publish UI package release** succeeded and download the release archive. The workflow checks version, license, exports, types, and styles before and after upload. Run `pnpm test:package /path/to/downloaded-package.tgz` for a consumer check. Do not move existing tags. For an existing tag with a missing asset, run the release workflow manually from main with that tag.
 
+## Demo workspace
+
+`/demos/<slug>/` is the gallery's canonical demo URL. HTML demos run as native documents; React demos render directly and load preview code only on demo routes. Both use `demos/shared/workspace.css` and the same metadata-driven floating controls from `demos/shared/appearance.js`. The title, description, technology, and source/documentation links come from the catalog. The gallery header/footer stay on the collection page.
+
+The build plugin in `apps/demo/build/` emits static pages and serves the same routes in development. Existing `/vanilla/<slug>/` and `/examples/<slug>/` URLs keep working with the same workspace. `?embedded=1` hides metadata and controls for thumbnail generation. No iframe sizing or appearance-message protocol is needed.
+
 ## Themes
 
 Import `@gbgabiola/ui/styles.css` and wrap components in `.uik-theme` with `data-theme="light"` or `"dark"` and `data-palette`. Palettes are Classic, Ocean, Teal, Forest, Plum, Walnut, Ember, and Crimson. The consuming app owns theme state; the gallery starts with the system preference and saves sun/moon choices.

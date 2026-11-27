@@ -32,23 +32,29 @@ for (const items of [demos, components]) {
     if (items === demos) {
       assert.ok(['html-css', 'html-css-js'].includes(item.implementation));
       const source = await readFile(resolve(root, 'demos/vanilla', item.slug, 'index.html'), 'utf8');
-      assert.ok(source.includes(`https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/${item.slug}`));
       assert.ok(source.includes('../../shared/appearance.js') && source.includes('../../theme.css'));
       const html = await readFile(resolve(output, 'demos', item.slug, 'index.html'), 'utf8');
       assert.ok(html.includes(`<title>${item.title} · UI Kit</title>`));
-      assert.ok((await stat(resolve(output, 'vanilla', item.slug, 'index.html'))).isFile());
+      assert.ok(html.includes(`<base href="/ui-kit/vanilla/${item.slug}/">`));
+      assert.ok(!html.includes('/assets/index-'), 'Native demos must not load the React gallery');
+      const legacy = await readFile(resolve(output, 'vanilla', item.slug, 'index.html'), 'utf8');
+      for (const page of [html, legacy]) {
+        const data = JSON.parse(page.match(/id="uik-demo-metadata">(.*?)<\/script>/s)[1]);
+        assert.equal(data.title, item.title); assert.equal(data.description, item.description);
+        assert.equal(data.sourceHref, `https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/${item.slug}`);
+      }
     } else {
       assert.ok((await stat(resolve(root, item.source))).isFile());
       const html = await readFile(resolve(output, 'demos', item.slug, 'index.html'), 'utf8');
       assert.ok(html.includes(`<title>${item.title} · UI Kit</title>`));
       const example = await readFile(resolve(output, 'examples', item.slug, 'index.html'), 'utf8');
-      assert.ok(example.includes(`<title>${item.title} preview · UI Kit</title>`));
+      assert.ok(example.includes(`<title>${item.title} · UI Kit</title>`));
       assert.match(exports, new RegExp(`\\b${item.title}\\b`));
       assert.ok(stories.entries[item.story] && stories.entries[item.docs], `Missing Storybook target for ${item.title}`);
     }
   }
 }
-for (const asset of ['shared/appearance.js', 'theme.css', 'shared/demo.css']) assert.ok((await stat(resolve(output, asset))).size > 0);
+for (const asset of ['shared/appearance.js', 'theme.css', 'shared/demo.css', 'shared/workspace.css']) assert.ok((await stat(resolve(output, asset))).size > 0);
 // Publish only the catalog, interactive examples, and assets used by the gallery.
 assert.deepEqual((await readdir(output)).sort(), [
   'shared', 'assets', 'catalog.json', 'components.json', 'demos',

@@ -1,9 +1,10 @@
-import type { DemoModule } from './catalog/demo-entry';
-import { useAppearance } from './theme/appearance';
+import '../styles/component-preview.css';
+import type { DemoModule } from '../catalog/demo-entry';
+import { useAppearance } from '../theme/appearance';
 
-const examples = Object.values(import.meta.glob<DemoModule>('./examples/*.tsx', { eager: true }));
+const examples = Object.values(import.meta.glob<DemoModule>('../examples/*.tsx', { eager: true }));
 
-export function ComponentExample({ slug }: { slug: string }) {
+export default function ComponentPreview({ slug }: { slug: string }) {
   const appearance = useAppearance();
   const demo = examples.find(({ meta }) => meta.component.toLowerCase() === slug);
   if (!demo) throw new Error(`Unknown component demo: ${slug}`);

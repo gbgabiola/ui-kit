@@ -13,6 +13,8 @@ export default mergeConfig(viteConfig, defineConfig({
     }),
   ],
   test: {
+    // Bound concurrent browser startup and accessibility scans on small runners.
+    maxWorkers: 2,
     browser: {
       enabled: true,
       headless: true,
