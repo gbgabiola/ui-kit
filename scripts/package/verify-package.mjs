@@ -3,7 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
 
 const archive = process.argv[2];
-assert(archive, 'Usage: node scripts/verify-package.mjs <tarball>');
+assert(archive, 'Usage: node scripts/package/verify-package.mjs <tarball>');
 const expected = JSON.parse(readFileSync('packages/ui/package.json', 'utf8'));
 function readEntry(path) {
   return execFileSync('tar', ['-xOf', archive, `package/${path}`], { encoding: 'utf8' });

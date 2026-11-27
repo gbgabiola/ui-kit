@@ -1,6 +1,17 @@
 # Contributing
 
-Use Node 24 LTS and pnpm 11.25.0. Start from an updated `main` on a short-lived `feat/` or `fix/` branch.
+Use Node 26.13.1 LTS and pnpm 12.23.0. Start from an updated `main` on a short-lived `feat/` or `fix/` branch.
+
+TypeScript stays on 6.0.3 because catalog discovery and Storybook documentation use its compiler API; TypeScript 7 removes that API. Reassess this constraint when upgrading those integrations.
+
+## Workspace layout
+
+- `packages/ui`: published components, blocks, and styles.
+- `apps/demo`: gallery pages, shared layout, component examples, themes, and gallery browser tests.
+- `apps/storybook`: component documentation, interaction tests, and Storybook snapshots.
+- `demos/vanilla`, `demos/shared`, and `demos/previews`: standalone examples, their shared runtime, and generated thumbnails.
+- `examples/react-consumer`: packed-package integration example and browser tests.
+- `scripts/components`, `scripts/demos`, `scripts/package`, and `scripts/shared`: tooling grouped by responsibility. Root package commands remain the supported entry points.
 
 ## Add a component
 
@@ -43,7 +54,7 @@ pnpm verify:demos
 pnpm test:demo
 ```
 
-Use `playwright install --with-deps chromium` on Linux if browser libraries are missing. Run visual comparisons on Linux with DejaVu Sans to match CI. For intended changes, update only the affected baselines, review the PNGs, and commit them. Gallery snapshots use `pnpm --filter ui-kit-storybook exec playwright test --config playwright.demo.config.ts --update-snapshots`.
+Use `playwright install --with-deps chromium` on Linux if browser libraries are missing. Run visual comparisons on Linux with DejaVu Sans to match CI. For intended changes, update only the affected baselines, review the PNGs, and commit them. Gallery snapshots use `pnpm --filter ui-kit-demo exec playwright test --update-snapshots`.
 
 Storybook tests include browser interactions and axe accessibility checks. Coverage is written to `apps/storybook/coverage/`. Package checks install the packed archive in a standalone React consumer. `pnpm example:react` opens that consumer locally; an archive path can be supplied to test a downloaded release.
 

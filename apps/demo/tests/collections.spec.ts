@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-const axePath = createRequire(require.resolve('@storybook/addon-a11y/package.json')).resolve('axe-core/axe.min.js');
+const axePath = require.resolve('axe-core/axe.min.js');
 const library = JSON.parse(readFileSync(new URL('../../../demos/components.json', import.meta.url), 'utf8'));
 const catalog: Array<{ slug: string; title: string }> = JSON.parse(readFileSync(new URL('../../../demos/catalog.json', import.meta.url), 'utf8'));
 
@@ -88,7 +88,7 @@ test('theme updates preserve demo state, resize its frame, and reject unrelated 
   });
   await expect(frame.locator('html')).toHaveAttribute('data-palette', 'plum');
   expect(await page.locator('iframe').evaluate((el) => el.getBoundingClientRect().height)).toBeLessThan(19000);
-  await page.locator('iframe').evaluate((el) => el.contentWindow!.postMessage({ type: 'uik-appearance', theme: 'dark', palette: 'forest' }, 'https://example.com'));
+  await page.locator('iframe').evaluate((el) => (el as HTMLIFrameElement).contentWindow!.postMessage({ type: 'uik-appearance', theme: 'dark', palette: 'forest' }, 'https://example.com'));
   await expect(frame.locator('html')).toHaveAttribute('data-palette', 'plum');
   // The iframe can grow and shrink without tying its document height to the viewport.
   const firstHeight = await page.locator('iframe').evaluate((el) => el.getBoundingClientRect().height);
@@ -154,7 +154,6 @@ for (const viewport of [{ name: 'desktop', width: 1440, height: 1000 }, { name: 
         animations: 'disabled',
         // Linux font builds can differ by a few rasterized text-edge pixels.
         maxDiffPixels: 100,
-        style: '* { font-family: "DejaVu Sans", sans-serif !important; caret-color: transparent !important; }',
       });
     });
   }

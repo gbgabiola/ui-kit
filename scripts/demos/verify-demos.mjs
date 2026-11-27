@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import { readFile, stat, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { componentCatalog } from './component-catalog.mjs';
-import { syncDemos } from './sync-demos.mjs';
-const root = resolve(import.meta.dirname, '..');
+import { componentCatalog } from '../components/component-catalog.mjs';
+import { syncDemos } from '../demos/sync-demos.mjs';
+const root = resolve(import.meta.dirname, '../..');
 const output = resolve(root, 'apps/demo/dist');
 const entry = await readFile(resolve(output, 'index.html'), 'utf8');
 assert.ok(entry.indexOf('<meta charset') >= 0 && entry.indexOf('<meta charset') < 1024);
@@ -33,7 +33,7 @@ for (const items of [demos, components]) {
       assert.ok(['html-css', 'html-css-js'].includes(item.implementation));
       const source = await readFile(resolve(root, 'demos/vanilla', item.slug, 'index.html'), 'utf8');
       assert.ok(source.includes(`https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/${item.slug}`));
-      assert.ok(source.includes('../../appearance.js') && source.includes('../../theme.css'));
+      assert.ok(source.includes('../../shared/appearance.js') && source.includes('../../theme.css'));
       const html = await readFile(resolve(output, 'demos', item.slug, 'index.html'), 'utf8');
       assert.ok(html.includes(`<title>${item.title} · UI Kit</title>`));
       assert.ok((await stat(resolve(output, 'vanilla', item.slug, 'index.html'))).isFile());
@@ -48,10 +48,10 @@ for (const items of [demos, components]) {
     }
   }
 }
-for (const asset of ['appearance.js', 'theme.css', 'vanilla/demo.css']) assert.ok((await stat(resolve(output, asset))).size > 0);
+for (const asset of ['shared/appearance.js', 'theme.css', 'shared/demo.css']) assert.ok((await stat(resolve(output, asset))).size > 0);
 // Publish only the catalog, interactive examples, and assets used by the gallery.
 assert.deepEqual((await readdir(output)).sort(), [
-  'appearance.js', 'assets', 'catalog.json', 'components.json', 'demos',
+  'shared', 'assets', 'catalog.json', 'components.json', 'demos',
   'examples', 'index.html', 'previews', 'theme.css', 'vanilla',
 ].sort());
 console.log(`Verified ${demos.length + components.length} demo pages, ${components.length} React examples, ${(demos.length + components.length) * 2} previews, source links, and published assets.`);

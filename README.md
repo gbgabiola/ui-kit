@@ -21,7 +21,7 @@ import '@gbgabiola/ui/styles.css';
 
 ## Develop
 
-Use Node 24 LTS and pnpm 11.25.0.
+Use Node 26.13.1 LTS and pnpm 12.23.0.
 
 ```sh
 pnpm install --frozen-lockfile

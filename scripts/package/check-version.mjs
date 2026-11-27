@@ -6,6 +6,11 @@ import { fileURLToPath } from 'node:url';
 const levels = ['patch', 'minor', 'major'];
 const version = (text) => { assert.match(text, /^\d+\.\d+\.\d+$/); return text.split('.').map(Number); };
 const compare = (a, b) => a[0] - b[0] || a[1] - b[1] || a[2] - b[2];
+export function distributionPaths(paths, beforeManifest, afterManifest) {
+  const metadata = ({ devDependencies, ...published }) => published;
+  const sameMetadata = JSON.stringify(metadata(beforeManifest)) === JSON.stringify(metadata(afterManifest));
+  return paths.filter((path) => path !== 'packages/ui/package.json' || !sameMetadata);
+}
 export function versionDecision({ before, after, paths, changesets = [], addedExports = false, removedExports = false }) {
   const changed = paths.some((path) => /^packages\/ui\/(?:src\/|package\.json$|LICENSE$)/.test(path));
   if (!changed && before === after) return { required: false, message: 'No distributed UI files changed; no version bump or release is required.' };
@@ -24,15 +29,17 @@ export function versionDecision({ before, after, paths, changesets = [], addedEx
   return { required: true, level, message: `Version ${after} covers the ${level} change. Release only after the merged main checks pass.` };
 }
 if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
-  const root = resolve(import.meta.dirname, '..');
+  const root = resolve(import.meta.dirname, '../..');
   const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
   let base;
   if (process.env.GITHUB_EVENT_NAME === 'pull_request' && process.env.GITHUB_EVENT_PATH) base = JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH, 'utf8')).pull_request.base.sha;
   else { base = git('merge-base', 'origin/main', 'HEAD'); if (base === git('rev-parse', 'HEAD')) base = git('rev-parse', 'HEAD^'); }
   assert.match(base, /^[a-f0-9]{40}$/);
-  const paths = git('diff', '--name-only', base, 'HEAD').split('\n').filter(Boolean);
-  const before = JSON.parse(git('show', `${base}:packages/ui/package.json`)).version;
-  const after = JSON.parse(await readFile(resolve(root, 'packages/ui/package.json'), 'utf8')).version;
+  const beforeManifest = JSON.parse(git('show', `${base}:packages/ui/package.json`));
+  const afterManifest = JSON.parse(await readFile(resolve(root, 'packages/ui/package.json'), 'utf8'));
+  const paths = distributionPaths(git('diff', '--name-only', base, 'HEAD').split('\n').filter(Boolean), beforeManifest, afterManifest);
+  const before = beforeManifest.version;
+  const after = afterManifest.version;
   const changesets = [];
   for (const file of paths.filter((path) => /^\.changeset\/(?!README\.md$).+\.md$/.test(path))) {
     let text;

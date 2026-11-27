@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, ContentCard } from '@gbgabiola/ui';
-import type { DemoMetadata } from '../demo-entry';
+import type { DemoMetadata } from '../catalog/demo-entry';
 
 export const meta = {
   "component": "ContentCard",

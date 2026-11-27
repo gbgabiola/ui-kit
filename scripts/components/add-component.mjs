@@ -3,7 +3,7 @@ import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
-import { syncDemos, workspace } from './sync-demos.mjs';
+import { syncDemos, workspace } from '../demos/sync-demos.mjs';
 
 export async function addComponent({ root = workspace, name, category = 'General', description = `A reusable ${name} component.` }) {
   assert.match(name ?? '', /^[A-Z][A-Za-z0-9]*$/, 'Use a PascalCase component name, such as StatusBadge');
@@ -15,7 +15,7 @@ export async function addComponent({ root = workspace, name, category = 'General
   const exampleText = `${label} preview`;
   const files = {
     [`packages/ui/src/components/${kebab}.tsx`]: `import type { ComponentPropsWithRef } from 'react';\n\nexport type ${name}Props = ComponentPropsWithRef<'div'>;\n\nexport function ${name}({ className, ...props }: ${name}Props) {\n  return <div {...props} className={className ? \`uik-${kebab} \${className}\` : 'uik-${kebab}'} />;\n}\n`,
-    [`apps/demo/src/examples/${kebab}.tsx`]: `import { ${name} } from '@gbgabiola/ui';\nimport type { DemoMetadata } from '../demo-entry';\n\nexport const meta = ${JSON.stringify({ component: name, category, description }, null, 2)} satisfies DemoMetadata;\n\nexport function Example() {\n  return <${name}>${exampleText}</${name}>;\n}\n`,
+    [`apps/demo/src/examples/${kebab}.tsx`]: `import { ${name} } from '@gbgabiola/ui';\nimport type { DemoMetadata } from '../catalog/demo-entry';\n\nexport const meta = ${JSON.stringify({ component: name, category, description }, null, 2)} satisfies DemoMetadata;\n\nexport function Example() {\n  return <${name}>${exampleText}</${name}>;\n}\n`,
     [`apps/storybook/stories/${kebab}.stories.tsx`]: `import { ${name} } from '@gbgabiola/ui';\nimport type { Meta, StoryObj } from '@storybook/react-vite';\nimport { expect } from 'storybook/test';\n\nconst meta = {\n  title: ${JSON.stringify(`Components/${category}/${name}`)},\n  id: ${JSON.stringify(`component-${slug}`)},\n  component: ${name},\n  args: { children: ${JSON.stringify(exampleText)} },\n  decorators: [(Story) => <div className="uik-theme" data-theme="light" data-palette="teal" style={{ padding: '1rem' }}><Story /></div>],\n} satisfies Meta<typeof ${name}>;\nexport default meta;\ntype Story = StoryObj<typeof meta>;\n\nexport const Default: Story = {\n  play: async ({ canvas }) => {\n    await expect(canvas.getByText(${JSON.stringify(exampleText)})).toBeVisible();\n  },\n};\n`,
     [`.changeset/add-${kebab}.md`]: `---\n"@gbgabiola/ui": minor\n---\n\nAdd the ${name} component.\n`,
   };

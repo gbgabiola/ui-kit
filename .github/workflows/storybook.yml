@@ -28,7 +28,7 @@ jobs:
       - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: '24'
+          node-version: '26.13.1'
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter ui-kit-storybook exec playwright install --with-deps chromium
@@ -64,6 +64,8 @@ jobs:
           path: |
             apps/storybook/playwright-report/
             apps/storybook/test-results/
+            apps/demo/test-results/
+            examples/react-consumer/test-results/
       - name: Upload static Storybook
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:

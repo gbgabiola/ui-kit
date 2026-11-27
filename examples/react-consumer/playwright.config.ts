@@ -8,7 +8,7 @@ if (!consumerDir) {
 const baseURL = 'http://127.0.0.1:6008';
 
 export default defineConfig({
-  testDir: './consumer-tests',
+  testDir: './tests',
   outputDir: './test-results/package-consumer',
   forbidOnly: !!process.env.CI,
   reporter: process.env.CI ? 'github' : 'list',

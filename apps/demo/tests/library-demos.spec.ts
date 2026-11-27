@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-const axePath = createRequire(require.resolve('@storybook/addon-a11y/package.json')).resolve('axe-core/axe.min.js');
+const axePath = require.resolve('axe-core/axe.min.js');
 const standalone = JSON.parse(readFileSync(new URL('../../../demos/catalog.json', import.meta.url), 'utf8'));
 const library: Array<{ slug: string; title: string; docs: string; source: string }> = JSON.parse(readFileSync(new URL('../../../demos/components.json', import.meta.url), 'utf8'));
 test.beforeEach(async ({ page }) => {
@@ -192,7 +192,6 @@ for (const viewport of [{ name: 'desktop', width: 1440, height: 1000 }, { name: 
     await expect(page.frameLocator('iframe').getByRole('button', { name: 'Add item' })).toBeVisible();
     await expect(page).toHaveScreenshot(`react-detail-${viewport.name}.png`, {
       animations: 'disabled', maxDiffPixels: 100,
-      style: '* { font-family: "DejaVu Sans", sans-serif !important; caret-color: transparent !important; }',
     });
   });
 }

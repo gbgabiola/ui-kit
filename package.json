@@ -1,36 +1,36 @@
 {
   "name": "ui-kit-workspace",
   "private": true,
-  "packageManager": "pnpm@11.25.0",
+  "packageManager": "pnpm@12.23.0",
   "engines": {
-    "node": "^22.13.0 || >=24.0.0"
+    "node": "^26.13.1"
   },
   "scripts": {
     "build": "pnpm --filter @gbgabiola/ui build",
-    "typecheck": "pnpm --filter ui-kit-storybook typecheck",
+    "typecheck": "pnpm --filter ui-kit-demo --filter ui-kit-storybook typecheck",
     "storybook": "pnpm --filter ui-kit-storybook dev",
     "build:storybook": "pnpm --filter ui-kit-storybook build",
     "test": "pnpm --filter ui-kit-storybook test",
     "test:coverage": "pnpm --filter ui-kit-storybook test:coverage",
-    "example:react": "bash scripts/test-package.sh --dev",
-    "test:package": "bash scripts/test-package.sh",
+    "example:react": "bash scripts/package/test-package.sh --dev",
+    "test:package": "bash scripts/package/test-package.sh",
     "test:visual": "pnpm --filter ui-kit-storybook test:visual",
     "publish:storybook": "pnpm build:storybook && pnpm --filter ui-kit-storybook chromatic",
     "changeset": "changeset",
     "version:packages": "changeset version",
-    "demo": "pnpm demos:sync && pnpm build && pnpm --filter ui-kit-demo dev",
-    "build:demo": "pnpm demos:sync && pnpm build && pnpm --filter ui-kit-demo build",
-    "test:demo": "pnpm --filter ui-kit-demo typecheck && pnpm --filter ui-kit-storybook exec playwright test --config playwright.demo.config.ts",
-    "verify:demos": "node scripts/verify-demos.mjs",
-    "previews:demos": "node scripts/generate-demo-previews.mjs",
-    "demos:sync": "node scripts/sync-demos.mjs",
-    "demos:check": "node scripts/sync-demos.mjs --check",
-    "component:add": "node scripts/add-component.mjs",
+    "demo": "pnpm build && pnpm --filter ui-kit-demo dev",
+    "build:demo": "pnpm build && pnpm --filter ui-kit-demo build",
+    "test:demo": "pnpm --filter ui-kit-demo typecheck && pnpm --filter ui-kit-demo exec playwright test",
+    "verify:demos": "node scripts/demos/verify-demos.mjs",
+    "previews:demos": "node scripts/demos/generate-demo-previews.mjs",
+    "demos:sync": "node scripts/demos/sync-demos.mjs",
+    "demos:check": "node scripts/demos/sync-demos.mjs --check",
+    "component:add": "node scripts/components/add-component.mjs",
     "test:tooling": "node --test scripts/tests/*.test.mjs",
-    "check:version": "node scripts/check-version.mjs",
-    "test:component-workflow": "node scripts/test-component-workflow.mjs"
+    "check:version": "node scripts/package/check-version.mjs",
+    "test:component-workflow": "node scripts/components/test-component-workflow.mjs"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.0"
+    "@changesets/cli": "^3.0.3"
   }
 }

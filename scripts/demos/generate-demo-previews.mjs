@@ -1,6 +1,6 @@
 import { readFile, mkdir } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
-import { root, chromium, serve, prepare, settled } from './demo-browser.mjs';
+import { root, chromium, serve, prepare, settled } from '../shared/demo-browser.mjs';
 const demos = JSON.parse(await readFile(resolve(root, 'demos/catalog.json')));
 const components = JSON.parse(await readFile(resolve(root, 'demos/components.json')));
 const gallery = await serve('apps/demo/dist');
