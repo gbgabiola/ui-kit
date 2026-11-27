@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const axePath = require.resolve('axe-core/axe.min.js');
 const library = JSON.parse(readFileSync(new URL('../../../demos/components.json', import.meta.url), 'utf8'));
-const catalog: Array<{ slug: string; title: string }> = JSON.parse(readFileSync(new URL('../../../demos/catalog.json', import.meta.url), 'utf8'));
+const catalog: Array<{ slug: string; title: string; description: string }> = JSON.parse(readFileSync(new URL('../../../demos/catalog.json', import.meta.url), 'utf8'));
 
 test.beforeEach(async ({ page }) => {
   await page.route(/fonts\.(googleapis|gstatic)\.com/, (route) => route.abort());
@@ -48,57 +48,53 @@ test('one gallery includes every item with mode-specific previews and working de
 });
 
 for (const demo of catalog) {
-  test(`${demo.slug} detail loads directly, refreshes, and embeds the standalone page`, async ({ page, request }) => {
+  test(`${demo.slug} workspace loads directly, refreshes, and keeps the standalone URL working`, async ({ page, request }) => {
     const response = await request.get(`demos/${demo.slug}/`);
     expect(response.ok()).toBe(true);
     expect(await response.text()).toContain(`<title>${demo.title} · UI Kit</title>`);
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`demos/${demo.slug}/`);
     await page.reload();
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(demo.title);
+    await expect(page.locator('#demo-title')).toHaveText(demo.title);
     await expect(page.getByRole('link', { name: 'Open standalone', exact: true })).toHaveCount(0);
-    await expect(page.locator('iframe')).toHaveCount(1);
-    const frame = page.frameLocator('iframe');
-    await expect(frame.locator('html')).toHaveAttribute('data-embedded', 'true');
-    await expect(frame.getByRole('navigation', { name: 'Demo navigation' })).toBeHidden();
-    await expect.poll(() => frame.locator('body').evaluate((body) => body.scrollWidth <= window.innerWidth)).toBe(true);
+    await expect(page.locator('iframe')).toHaveCount(0);
+    await expect(page.getByRole('navigation', { name: 'Demo navigation' })).toBeVisible();
+    await expect(page.locator('.demo-info p')).toHaveText(demo.description);
+    await expect(page.locator('.demo-technology')).not.toBeEmpty();
+    await expect(page.locator('.uik-site-footer')).toHaveCount(0);
+    await page.goto(`vanilla/${demo.slug}/`);
+    await expect(page.locator('#demo-title')).toHaveText(demo.title);
+    await expect(page.getByRole('navigation', { name: 'Demo navigation' })).toHaveCount(1);
+    await expect.poll(() => page.locator('body').evaluate((body) => body.scrollWidth <= window.innerWidth)).toBe(true);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await expect(page.getByRole('link', { name: 'View source', exact: true })).toHaveAttribute('href', `https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/${demo.slug}`);
-    await page.getByRole('link', { name: 'Back to demos' }).click();
+    await page.getByRole('link', { name: 'All demos', exact: false }).click();
     await expect(page.getByRole('article')).toHaveCount(catalog.length + library.length);
   });
 }
 
-test('theme updates preserve demo state, resize its frame, and reject unrelated messages', async ({ page }) => {
+test('theme updates preserve native state and ignore obsolete frame messages', async ({ page }) => {
   await page.goto('demos/task-list/');
-  const frame = page.frameLocator('iframe');
-  await frame.getByLabel('New Task').fill('Keep this task');
-  await frame.getByRole('button', { name: 'Add Task', exact: true }).click();
+  await page.getByLabel('New Task').fill('Keep this task');
+  await page.getByRole('button', { name: 'Add Task', exact: true }).click();
   await page.getByLabel('Color palette').selectOption('plum');
-  await page.getByRole('button', { name: 'Dark mode', exact: true }).click();
-  await expect(frame.locator('html')).toHaveAttribute('data-theme', 'light');
-  await expect(frame.locator('html')).toHaveAttribute('data-palette', 'plum');
-  await expect(frame.getByText('Keep this task', { exact: true })).toBeVisible();
-  await expect.poll(() => page.locator('iframe').evaluate((el) => el.getBoundingClientRect().height)).toBeGreaterThan(480);
+  await page.getByRole('button', { name: 'Switch to light mode' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(page.locator('html')).toHaveAttribute('data-palette', 'plum');
+  await expect(page.getByText('Keep this task', { exact: true })).toBeVisible();
   await page.evaluate(() => {
     window.postMessage({ type: 'uik-height', height: 19000 }, location.origin);
-    window.dispatchEvent(new MessageEvent('message', { origin: 'https://example.com', source: document.querySelector('iframe')!.contentWindow, data: { type: 'uik-height', height: 19000 } }));
-    const iframe = document.querySelector('iframe')!;
-    iframe.contentWindow!.postMessage({ type: 'uik-appearance', theme: 'oops', palette: 'oops' }, location.origin);
+    window.postMessage({ type: 'uik-appearance', theme: 'dark', palette: 'forest' }, location.origin);
   });
-  await expect(frame.locator('html')).toHaveAttribute('data-palette', 'plum');
-  expect(await page.locator('iframe').evaluate((el) => el.getBoundingClientRect().height)).toBeLessThan(19000);
-  await page.locator('iframe').evaluate((el) => (el as HTMLIFrameElement).contentWindow!.postMessage({ type: 'uik-appearance', theme: 'dark', palette: 'forest' }, 'https://example.com'));
-  await expect(frame.locator('html')).toHaveAttribute('data-palette', 'plum');
-  // The iframe can grow and shrink without tying its document height to the viewport.
-  const firstHeight = await page.locator('iframe').evaluate((el) => el.getBoundingClientRect().height);
+  await expect(page.locator('html')).toHaveAttribute('data-palette', 'plum');
+  await expect(page.locator('iframe')).toHaveCount(0);
   for (let i = 0; i < 10; i++) {
-    await frame.getByLabel('New Task').fill(`Task ${i}`);
-    await frame.getByRole('button', { name: 'Add Task', exact: true }).click();
+    await page.getByLabel('New Task').fill(`Task ${i}`);
+    await page.getByRole('button', { name: 'Add Task', exact: true }).click();
   }
-  await expect.poll(() => page.locator('iframe').evaluate((el) => el.getBoundingClientRect().height)).toBeGreaterThan(firstHeight);
-  await frame.getByRole('button', { name: 'Clear Tasks' }).click();
-  await expect.poll(() => page.locator('iframe').evaluate((el) => el.getBoundingClientRect().height)).toBeLessThanOrEqual(firstHeight);
+  await expect(page.locator('.collection-item')).toHaveCount(11);
+  await page.getByRole('button', { name: 'Clear Tasks' }).click();
+  await expect(page.locator('.collection-item')).toHaveCount(0);
 });
 
 test('gallery and standalone pages work when storage is unavailable', async ({ page }) => {
@@ -107,7 +103,7 @@ test('gallery and standalone pages work when storage is unavailable', async ({ p
   });
   await page.goto('./');
   await page.getByRole('button', { name: 'Dark mode', exact: true }).click();
-  await expect(page.locator('.gallery')).toHaveAttribute('data-theme', 'light');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await page.goto('vanilla/progress-bar/');
   await page.getByRole('button', { name: 'Switch to light mode' }).click();
   await page.getByLabel('Color palette').selectOption('forest');
@@ -144,7 +140,7 @@ for (const theme of ['light', 'dark']) {
 }
 
 for (const viewport of [{ name: 'desktop', width: 1440, height: 1000 }, { name: 'mobile', width: 390, height: 844 }]) {
-  for (const [name, path] of [['gallery', './'], ['detail', 'demos/progress-bar/']]) {
+  for (const [name, path] of [['gallery', './'], ['detail', 'demos/progress-bar/'], ['blog', 'demos/blog-post-card/']]) {
     test(`${name} appearance on ${viewport.name}`, async ({ page }) => {
       await page.setViewportSize(viewport);
       await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -164,12 +160,38 @@ test('keyboard navigation opens a detail page and operates its preview', async (
   await page.goto('./');
   await page.getByRole('link', { name: 'Open Progress bar', exact: false }).focus();
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Progress bar');
-  const frame = page.frameLocator('iframe');
-  await frame.getByRole('button', { name: 'Start Progress' }).focus();
+  await expect(page.locator('#demo-title')).toHaveText('Progress bar');
+  await page.getByRole('button', { name: 'Start Progress' }).focus();
   await page.keyboard.press('Enter');
-  await expect(frame.getByRole('progressbar')).not.toHaveAttribute('aria-valuenow', '0');
-  await page.getByRole('link', { name: 'Back to demos' }).focus();
+  await expect(page.getByRole('progressbar')).not.toHaveAttribute('aria-valuenow', '0');
+  await page.getByRole('link', { name: 'All demos', exact: false }).focus();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('article')).toHaveCount(catalog.length + library.length);
 });
+
+for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }, { width: 844, height: 390 }]) {
+  test(`full-window workspace stays usable at ${viewport.width} by ${viewport.height}`, async ({ page }) => {
+    await page.setViewportSize(viewport);
+    await page.goto('demos/blog-post-card/');
+    await expect(page.locator('#demo-title')).toHaveText('Blog post card');
+    await expect(page.locator('.demo-technology')).toHaveText('HTML/CSS');
+    const card = page.locator('.blog-post-card');
+    await expect(card).toBeVisible();
+    await expect(page.locator('iframe')).toHaveCount(0);
+    await expect(page.locator('.uik-site-footer')).toHaveCount(0);
+    const geometry = await page.evaluate(() => {
+      const header = document.querySelector('.demo-info')!.getBoundingClientRect();
+      const controls = document.querySelector('.demo-navigation')!.getBoundingClientRect();
+      const card = document.querySelector('.blog-post-card')!.getBoundingClientRect();
+      return { headerBottom: header.bottom, controlsTop: controls.top, controlsBottom: controls.bottom,
+        cardTop: card.top, cardBottom: card.bottom, overflow: document.documentElement.scrollWidth > innerWidth };
+    });
+    expect(geometry.overflow).toBe(false);
+    expect(geometry.cardTop).toBeGreaterThanOrEqual(geometry.headerBottom);
+    expect(geometry.controlsBottom).toBeLessThanOrEqual(viewport.height);
+    await card.getByRole('link', { name: 'Read More' }).focus();
+    await expect(card.getByRole('link', { name: 'Read More' })).toBeFocused();
+    const bottom = await card.getByRole('link', { name: 'Read More' }).evaluate((link) => link.getBoundingClientRect().bottom);
+    expect(bottom).toBeLessThanOrEqual(geometry.controlsTop);
+  });
+}
