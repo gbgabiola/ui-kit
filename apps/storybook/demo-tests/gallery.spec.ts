@@ -13,15 +13,15 @@ test.beforeEach(async ({ page }) => {
 test('gallery search, category filters, appearance persistence, and keyboard access', async ({ page }) => {
   await page.goto('./');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Small pieces. Working ideas.');
-  await expect(page.getByRole('article')).toHaveCount(catalog.length);
+  await expect(page.getByRole('article')).toHaveCount(catalog.length + 14);
   await page.keyboard.press('/');
   await expect(page.getByRole('searchbox')).toBeFocused();
   await page.getByRole('searchbox').fill('pricing');
-  await expect(page.getByRole('article')).toHaveCount(2);
+  await expect(page.getByRole('article')).toHaveCount(3);
   await page.getByRole('button', { name: 'Games', exact: true }).click();
   await expect(page.getByText('No demos match these filters.')).toBeVisible();
   await page.getByRole('button', { name: 'Clear filters' }).click();
-  await expect(page.getByRole('article')).toHaveCount(catalog.length);
+  await expect(page.getByRole('article')).toHaveCount(catalog.length + 14);
   await page.getByLabel('Color palette').selectOption('walnut');
   await page.getByRole('button', { name: 'Dark mode', exact: true }).click();
   await page.reload();

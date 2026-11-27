@@ -428,10 +428,6 @@ body {
   .gallery .gallery-footer-inner { padding-block: 0; }
 }
 
-.collections { display: flex; gap: 1.5rem; border-bottom: 1px solid var(--gallery-border); margin-bottom: 1.5rem; }
-.collections a { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 0; color: var(--uik-muted); text-decoration: none; border-bottom: 3px solid transparent; }
-.collections a[aria-current] { color: var(--uik-accent); border-color: var(--uik-accent); }
-.collections span { font-size: .75rem; }
 .card-preview { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-bottom: 1px solid var(--gallery-border); }
 .demo-grid .uik-content-card { display: flex; flex-direction: column; }
 .demo-grid .uik-card-copy { flex: 1; height: auto; }
@@ -446,5 +442,22 @@ body {
 .detail-copy p { max-width: 65ch; margin: 0; color: var(--uik-muted); }
 .detail-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
 .technology-badge { padding: .2rem .6rem; border: 1px solid var(--gallery-border); border-radius: 999px; color: var(--uik-muted); font-size: .75rem; }
-.detail-heading > .uik-field { flex: 0 0 15rem; }
-@media (max-width: 640px) { .detail-heading > .uik-field { flex-basis: auto; } }
+.detail-heading > .appearance-controls { flex: 0 0 15rem; }
+@media (max-width: 640px) { .detail-heading > .appearance-controls { flex-basis: auto; } }
+
+#demos { border-top: 1px solid var(--gallery-border); }
+.appearance-controls { display: grid; gap: .5rem; }
+.appearance-controls > .uik-button { justify-self: start; font-size: .8rem; }
+body { background: inherit; }
+.component-preview { background: transparent; display: grid; place-items: center; min-height: 448px; padding: 2rem; }
+.component-example { display: grid; gap: 1rem; width: min(100%, 32rem); min-width: 0; }
+.component-example-wide { width: 100%; }
+.component-example p { margin: 0; }
+.component-example input[type='range'] { width: 100%; accent-color: var(--uik-accent); }
+.component-example .uik-content-card { width: 100%; }
+.component-example .uik-theme-toggle { justify-self: start; }
+.example-actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+@media (max-width: 640px) { .component-preview { padding: 1rem; } }
+
+html[data-palette='teal'][data-theme='dark'] { background: #171b21; }
+html[data-palette='teal'][data-theme='light'] { background: #fafaf8; }

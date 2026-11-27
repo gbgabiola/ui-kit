@@ -9,7 +9,8 @@
     "previews": {
       "light": "previews/components/button-light.png",
       "dark": "previews/components/button-dark.png"
-    }
+    },
+    "source": "packages/ui/src/components/button.tsx"
   },
   {
     "slug": "textinput",
@@ -21,7 +22,8 @@
     "previews": {
       "light": "previews/components/textinput-light.png",
       "dark": "previews/components/textinput-dark.png"
-    }
+    },
+    "source": "packages/ui/src/components/text-input.tsx"
   },
   {
     "slug": "textarea",
@@ -33,7 +35,8 @@
     "previews": {
       "light": "previews/components/textarea-light.png",
       "dark": "previews/components/textarea-dark.png"
-    }
+    },
+    "source": "packages/ui/src/components/textarea.tsx"
   },
   {
     "slug": "select",
@@ -45,7 +48,8 @@
     "previews": {
       "light": "previews/components/select-light.png",
       "dark": "previews/components/select-dark.png"
-    }
+    },
+    "source": "packages/ui/src/components/select.tsx"
   },
   {
     "slug": "checkbox",
@@ -57,7 +61,8 @@
     "previews": {
       "light": "previews/components/checkbox-light.png",
       "dark": "previews/components/checkbox-dark.png"
-    }
+    },
+    "source": "packages/ui/src/components/checkbox.tsx"
   },
   {
     "slug": "themetoggle",
@@ -69,7 +74,8 @@
     "previews": {
       "light": "previews/components/themetoggle-light.png",
       "dark": "previews/components/themetoggle-dark.png"
-    }
+    },
+    "source": "packages/ui/src/components/theme-toggle.tsx"
   },
   {
     "slug": "themepaletteselect",
@@ -81,7 +87,8 @@
     "previews": {
       "light": "previews/components/themepaletteselect-light.png",
       "dark": "previews/components/themepaletteselect-dark.png"
-    }
+    },
+    "source": "packages/ui/src/components/theme-palette-select.tsx"
   },
   {
     "slug": "navbar",
@@ -93,7 +100,8 @@
     "previews": {
       "light": "previews/components/navbar-light.png",
       "dark": "previews/components/navbar-dark.png"
-    }
+    },
+    "source": "packages/ui/src/blocks/navbar.tsx"
   },
   {
     "slug": "sidebar",
@@ -105,7 +113,8 @@
     "previews": {
       "light": "previews/components/sidebar-light.png",
       "dark": "previews/components/sidebar-dark.png"
-    }
+    },
+    "source": "packages/ui/src/blocks/sidebar.tsx"
   },
   {
     "slug": "progressbar",
@@ -117,7 +126,8 @@
     "previews": {
       "light": "previews/components/progressbar-light.png",
       "dark": "previews/components/progressbar-dark.png"
-    }
+    },
+    "source": "packages/ui/src/components/progress-bar.tsx"
   },
   {
     "slug": "hero",
@@ -129,7 +139,8 @@
     "previews": {
       "light": "previews/components/hero-light.png",
       "dark": "previews/components/hero-dark.png"
-    }
+    },
+    "source": "packages/ui/src/blocks/hero.tsx"
   },
   {
     "slug": "sitefooter",
@@ -141,7 +152,8 @@
     "previews": {
       "light": "previews/components/sitefooter-light.png",
       "dark": "previews/components/sitefooter-dark.png"
-    }
+    },
+    "source": "packages/ui/src/blocks/site-footer.tsx"
   },
   {
     "slug": "contentcard",
@@ -153,7 +165,8 @@
     "previews": {
       "light": "previews/components/contentcard-light.png",
       "dark": "previews/components/contentcard-dark.png"
-    }
+    },
+    "source": "packages/ui/src/blocks/content-card.tsx"
   },
   {
     "slug": "pricingtable",
@@ -165,6 +178,7 @@
     "previews": {
       "light": "previews/components/pricingtable-light.png",
       "dark": "previews/components/pricingtable-dark.png"
-    }
+    },
+    "source": "packages/ui/src/blocks/pricing-table.tsx"
   }
 ]

@@ -5,7 +5,6 @@ import { createRequire } from 'node:module';
 export const root = resolve(import.meta.dirname, '..');
 const require = createRequire(new URL('../apps/storybook/package.json', import.meta.url));
 export const { chromium } = require('@playwright/test');
-export const axePath = createRequire(require.resolve('@storybook/addon-a11y/package.json')).resolve('axe-core/axe.min.js');
 export const fixture = [{ name: 'Satsuki', age: '11', gender: 'Female', eye_color: 'Brown', hair_color: 'Brown' }];
 export async function serve(directory) {
   const folder = resolve(root, directory);
