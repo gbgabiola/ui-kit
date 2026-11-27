@@ -1,9 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { versionDecision } from '../check-version.mjs';
+import { versionDecision } from '../package/check-version.mjs';
 const initial = { before: '0.7.1', after: '0.7.1', paths: ['packages/ui/src/components/example.tsx'] };
 test('documentation and demo tooling require no package release', () => {
-  assert.equal(versionDecision({ ...initial, paths: ['README.md', 'apps/demo/src/examples/sample.tsx', 'scripts/add-component.mjs'] }).required, false);
+  assert.equal(versionDecision({ ...initial, paths: ['README.md', 'apps/demo/src/examples/sample.tsx', 'scripts/components/add-component.mjs'] }).required, false);
 });
 test('package edits require a new Changeset', () => {
   assert.throws(() => versionDecision(initial), /new patch/);

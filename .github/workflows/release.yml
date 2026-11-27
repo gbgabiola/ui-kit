@@ -40,7 +40,7 @@ jobs:
             echo "::error::Expected a stable version tag such as v0.4.0."
             exit 1
           fi
-          cp scripts/verify-package.mjs "$RUNNER_TEMP/verify-package.mjs"
+          cp scripts/package/verify-package.mjs "$RUNNER_TEMP/verify-package.mjs"
           git switch --detach "refs/tags/$RELEASE_TAG"
           if ! git merge-base --is-ancestor HEAD origin/main; then
             echo "::error::The release tag must point to a commit on main."

@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict';
 import { execFileSync, spawn } from 'node:child_process';
-import { mkdtemp, readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
+import { mkdtemp, readFile, writeFile, mkdir, copyFile, rm } from 'node:fs/promises';
 import { resolve, dirname, basename, sep } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import { tmpdir } from 'node:os';
-import { chromium, serve } from './demo-browser.mjs';
+import { chromium, serve } from '../shared/demo-browser.mjs';
 
-const root = resolve(import.meta.dirname, '..');
+const root = resolve(import.meta.dirname, '../..');
 const fixture = await mkdtemp(resolve(tmpdir(), 'ui-kit-component-workflow-'));
 const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
 let browser; let server; let development; let added = false;
@@ -26,11 +26,11 @@ async function put(file, text) {
 try {
   git('worktree', 'add', '--detach', fixture, 'HEAD'); added = true;
   // Include pending implementation changes during local verification.
-  const paths = new Set([...git('diff', '--name-only').split('\n'), ...git('ls-files', '--others', '--exclude-standard').split('\n')].filter(Boolean));
+  const paths = new Set([...git('diff', 'HEAD', '--name-only').split('\n'), ...git('ls-files', '--others', '--exclude-standard').split('\n')].filter(Boolean));
   for (const file of paths) {
     const target = resolve(fixture, file);
     assert.ok(target.startsWith(fixture + sep));
-    await mkdir(dirname(target), { recursive: true }); await copyFile(resolve(root, file), target);
+    await mkdir(dirname(target), { recursive: true }); try { await copyFile(resolve(root, file), target); } catch (error) { if (error.code !== 'ENOENT') throw error; await rm(target, { force: true }); }
   }
   pnpm('install', '--frozen-lockfile', '--offline');
   pnpm('component:add', 'ComponentWorkflowProbe', '--category', 'Feedback', '--description', 'Temporary component workflow verification.');

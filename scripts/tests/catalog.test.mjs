@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, readFile, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { resolve, dirname, basename } from 'node:path';
-import { syncDemos } from '../sync-demos.mjs';
-import { componentCatalog } from '../component-catalog.mjs';
-import { addComponent } from '../add-component.mjs';
+import { syncDemos } from '../demos/sync-demos.mjs';
+import { componentCatalog } from '../components/component-catalog.mjs';
+import { addComponent } from '../components/add-component.mjs';
 
 async function fixture(t) {
   const root = await mkdtemp(resolve(tmpdir(), 'ui-kit-tools-'));

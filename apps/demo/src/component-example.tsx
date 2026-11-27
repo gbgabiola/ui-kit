@@ -1,5 +1,5 @@
-import type { DemoModule } from './demo-entry';
-import { useAppearance } from './appearance';
+import type { DemoModule } from './catalog/demo-entry';
+import { useAppearance } from './theme/appearance';
 
 const examples = Object.values(import.meta.glob<DemoModule>('./examples/*.tsx', { eager: true }));
 

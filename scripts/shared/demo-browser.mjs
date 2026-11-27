@@ -2,8 +2,8 @@ import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
 import { createRequire } from 'node:module';
-export const root = resolve(import.meta.dirname, '..');
-const require = createRequire(new URL('../apps/storybook/package.json', import.meta.url));
+export const root = resolve(import.meta.dirname, '../..');
+const require = createRequire(new URL('../../apps/storybook/package.json', import.meta.url));
 export const { chromium } = require('@playwright/test');
 export const fixture = [{ name: 'Satsuki', age: '11', gender: 'Female', eye_color: 'Brown', hair_color: 'Brown' }];
 export async function serve(directory) {

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-const axePath = createRequire(require.resolve('@storybook/addon-a11y/package.json')).resolve('axe-core/axe.min.js');
+const axePath = require.resolve('axe-core/axe.min.js');
 const standalone = JSON.parse(readFileSync(new URL('../../../demos/catalog.json', import.meta.url), 'utf8'));
 const library: Array<{ slug: string; title: string; docs: string; source: string }> = JSON.parse(readFileSync(new URL('../../../demos/components.json', import.meta.url), 'utf8'));
 test.beforeEach(async ({ page }) => {

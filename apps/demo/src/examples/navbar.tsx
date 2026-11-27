@@ -1,5 +1,5 @@
 import { Navbar } from '@gbgabiola/ui';
-import type { DemoMetadata } from '../demo-entry';
+import type { DemoMetadata } from '../catalog/demo-entry';
 
 export const meta = {
   "component": "Navbar",

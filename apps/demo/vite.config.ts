@@ -12,7 +12,7 @@ function demoPages(): Plugin {
       order: 'post',
       handler: () => [
         { tag: 'link', attrs: { rel: 'stylesheet', href: '/ui-kit/theme.css' }, injectTo: 'head-prepend' },
-        { tag: 'script', children: readFileSync(resolve(import.meta.dirname, '../../demos/appearance.js'), 'utf8'), injectTo: 'head' },
+        { tag: 'script', children: readFileSync(resolve(import.meta.dirname, '../../demos/shared/appearance.js'), 'utf8'), injectTo: 'head' },
       ],
     },
     configureServer(server) {
@@ -25,7 +25,7 @@ function demoPages(): Plugin {
         if (!inputs.includes(file) && !folders.some((folder) => file.startsWith(folder) && file.endsWith('.tsx'))) return;
         clearTimeout(timer);
         timer = setTimeout(() => {
-          try { execFileSync(process.execPath, [resolve(workspace, 'scripts/sync-demos.mjs')], { cwd: workspace, stdio: 'pipe' }); }
+          try { execFileSync(process.execPath, [resolve(workspace, 'scripts/demos/sync-demos.mjs')], { cwd: workspace, stdio: 'pipe' }); }
           catch (error) { server.config.logger.error(String(error)); }
         }, 150);
       };

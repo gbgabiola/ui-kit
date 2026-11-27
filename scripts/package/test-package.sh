@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-repo=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+repo=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)
 mode=test
 local_pack=false
 if [[ ${1:-} == --dev ]]; then
@@ -30,7 +30,7 @@ else
 fi
 
 if [[ "$local_pack" == true ]]; then
-  node scripts/verify-package.mjs "$archive"
+  node scripts/package/verify-package.mjs "$archive"
 fi
 
 # Use the React, type, and Vite versions already locked for Storybook.
@@ -93,5 +93,5 @@ JS
 ./node_modules/.bin/vite build
 
 # Exercise the production bundle before the temporary consumer is removed.
-cd "$repo/apps/storybook"
-UI_KIT_CONSUMER_DIR="$consumer" ./node_modules/.bin/playwright test --config playwright.consumer.config.ts
+cd "$repo/examples/react-consumer"
+UI_KIT_CONSUMER_DIR="$consumer" ./node_modules/.bin/playwright test

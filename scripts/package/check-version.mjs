@@ -24,7 +24,7 @@ export function versionDecision({ before, after, paths, changesets = [], addedEx
   return { required: true, level, message: `Version ${after} covers the ${level} change. Release only after the merged main checks pass.` };
 }
 if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
-  const root = resolve(import.meta.dirname, '..');
+  const root = resolve(import.meta.dirname, '../..');
   const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
   let base;
   if (process.env.GITHUB_EVENT_NAME === 'pull_request' && process.env.GITHUB_EVENT_PATH) base = JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH, 'utf8')).pull_request.base.sha;

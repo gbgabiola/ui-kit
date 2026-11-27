@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node ../../scripts/sync-demos.mjs && vite --host 127.0.0.1",
-    "build": "node ../../scripts/sync-demos.mjs && vite build",
+    "dev": "node ../../scripts/demos/sync-demos.mjs && vite --host 127.0.0.1",
+    "build": "node ../../scripts/demos/sync-demos.mjs && vite build",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -16,6 +16,8 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "typescript": "~5.9.3",
-    "vite": "^7.3.8"
+    "vite": "^7.3.8",
+    "@playwright/test": "^1.65.0",
+    "axe-core": "^4.11.0"
   }
 }

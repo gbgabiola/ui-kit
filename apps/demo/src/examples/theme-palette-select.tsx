@@ -1,6 +1,6 @@
 import { ThemePaletteSelect } from '@gbgabiola/ui';
-import { changeAppearance, useAppearance } from '../appearance';
-import type { DemoMetadata } from '../demo-entry';
+import { changeAppearance, useAppearance } from '../theme/appearance';
+import type { DemoMetadata } from '../catalog/demo-entry';
 
 export const meta = {
   "component": "ThemePaletteSelect",
