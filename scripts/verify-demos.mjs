@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFile, stat, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { componentCatalog } from './component-catalog.mjs';
+import { syncDemos } from './sync-demos.mjs';
 const root = resolve(import.meta.dirname, '..');
 const output = resolve(root, 'apps/demo/dist');
 const entry = await readFile(resolve(output, 'index.html'), 'utf8');
@@ -11,11 +13,9 @@ const demos = JSON.parse(await readFile(resolve(root, 'demos/catalog.json')));
 const components = JSON.parse(await readFile(resolve(root, 'demos/components.json')));
 const exports = await readFile(resolve(root, 'packages/ui/src/index.ts'), 'utf8');
 const stories = JSON.parse(await readFile(resolve(root, 'apps/storybook/storybook-static/index.json')));
-assert.equal(demos.length, 17);
-assert.equal(components.length, 14);
-assert.equal(new Set([...demos, ...components].map((item) => item.slug)).size, 31);
-assert.equal(demos.filter((item) => item.implementation === 'html-css').length, 8);
-assert.equal(demos.filter((item) => item.implementation === 'html-css-js').length, 9);
+await syncDemos({ root, check: true });
+assert.deepEqual(components, await componentCatalog(root));
+assert.equal(new Set([...demos, ...components].map((item) => item.slug)).size, demos.length + components.length);
 for (const items of [demos, components]) {
   assert.equal(new Set(items.map((item) => item.slug)).size, items.length);
   for (const item of items) {
@@ -54,4 +54,4 @@ assert.deepEqual((await readdir(output)).sort(), [
   'appearance.js', 'assets', 'catalog.json', 'components.json', 'demos',
   'examples', 'index.html', 'previews', 'theme.css', 'vanilla',
 ].sort());
-console.log('Verified 31 demo pages, 14 interactive React examples, 62 previews, source links, and published assets.');
+console.log(`Verified ${demos.length + components.length} demo pages, ${components.length} React examples, ${(demos.length + components.length) * 2} previews, source links, and published assets.`);

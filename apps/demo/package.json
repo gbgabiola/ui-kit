@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
+    "dev": "node ../../scripts/sync-demos.mjs && vite --host 127.0.0.1",
+    "build": "node ../../scripts/sync-demos.mjs && vite build",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

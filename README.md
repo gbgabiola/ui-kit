@@ -2,157 +2,85 @@
 
 [![README views](https://hits.sh/github.com/gbgabiola/ui-kit.svg?label=README%20views&color=006a60)](https://hits.sh/github.com/gbgabiola/ui-kit/)
 
-`@gbgabiola/ui` is a React 19 and TypeScript component library. It includes `Button`, form controls, theme controls, navigation, pricing tables, progress indicators, and reusable page blocks.
+Reusable React 19 and TypeScript components, with working frontend demos.
 
-`Button` is available in source builds and is queued for the next minor package release.
+[Gallery](https://gbgabiola.github.io/ui-kit/) · [Storybook](https://main--6af71445d0632045e7443388.chromatic.com/) · [Releases](https://github.com/gbgabiola/ui-kit/releases)
 
-## Local development
+## Use
+
+Download the package archive from Releases and install it with `pnpm add ./path/to/downloaded-package.tgz`.
+
+```tsx
+import { TextInput } from '@gbgabiola/ui';
+import '@gbgabiola/ui/styles.css';
+
+<div className="uik-theme" data-theme="light" data-palette="teal">
+  <TextInput label="Name" />
+</div>
+```
+
+## Develop
 
 Use Node 24 LTS and pnpm 11.25.0.
 
 ```sh
-corepack enable pnpm  # If pnpm is not already available
 pnpm install --frozen-lockfile
-pnpm storybook
+pnpm demo       # Gallery at http://localhost:5173/ui-kit/
+pnpm storybook  # Component documentation at http://localhost:6006
 ```
 
-Open [Storybook](http://localhost:6006). **Guides** includes the MDX setup guide, **Components** groups forms and theme controls, **Blocks** contains the navbar, and **Examples** includes the palette playground. Each public component has a generated Docs page.
-
-Storybook resolves the UI package from source, so edits appear without rebuilding the package. Run `pnpm build` to verify or generate the distributable package.
-
-## Demo gallery
-
-Browse 31 interactive demos in the [live gallery](https://gbgabiola.github.io/ui-kit/), or run `pnpm demo` and open
-`http://localhost:5173/ui-kit/`. The gallery uses the library's components and
-supports search, technology and category filters, eight palettes, and light/dark modes.
-`pnpm build:demo` produces the GitHub Pages site in `apps/demo/dist`.
-
-One gallery includes 14 React component demos, eight HTML/CSS examples, and nine
-HTML/CSS/JavaScript examples. Every card opens an interactive detail page. React
-demos also link to their Storybook documentation and component source. Standalone
-URLs remain available for embedding and existing links.
-
-Appearance starts with the system's light or dark preference and follows system
-changes until you choose a theme with the sun/moon switch. Your choice is saved
-for future visits. Changing a palette keeps the current theme preference.
-The sun/moon switch is the only theme control. Appearance remains usable when
-browser storage is unavailable. The gallery and its previews share this behavior.
-
-Run `pnpm build:demo`, `pnpm verify:demos`, then `pnpm test:demo` to check the
-catalog, static routes, assets, interactions, themes, accessibility, and visual
-baselines. To regenerate preview images after a visual change, first run
-`pnpm build:demo`, then `pnpm previews:demos`, inspect
-the images, and rebuild the demo site. Preview generation uses fixed viewports,
-reduced motion, isolated storage, seeded randomness, and a local API fixture.
-
-Pull requests run the demo checks inside **Test and build Storybook**.
-After its verification job succeeds on `main`, the **Deploy demo gallery** job
-publishes the same commit to GitHub Pages. Configure Settings → Pages → Source as GitHub
-Actions. Demo and documentation changes follow the normal PR workflow and
-need a package Changeset only when they change the distributed library.
-
-## Test and publish Storybook
+Start a feature branch, then create a component with one command:
 
 ```sh
-pnpm --filter ui-kit-storybook exec playwright install chromium
-pnpm typecheck
-pnpm test
-pnpm test:coverage
-pnpm build:storybook
-pnpm test:visual
+pnpm component:add StatusBadge --category Feedback --description "A status label."
 ```
 
-On Linux, add `--with-deps` to the Chromium install command if system libraries are missing. Run visual comparisons on Linux with DejaVu Sans installed to match CI. When a visual change is intentional, run `pnpm test:visual --update-snapshots`, inspect the PNG changes, and commit the updated baselines.
+This creates a starter component, export, demo, Storybook story, minor Changeset, and previews. Customize the component and example; the gallery and table below update from the example metadata during development and builds. Commit the generated files with your component.
 
-Vitest runs the stories and their interactions in Chromium. Axe accessibility violations fail the tests. Open `apps/storybook/coverage/index.html` for source coverage, or use the LCOV report in the same directory. GitHub Actions runs the checks on pull requests and pushes to `main`, and uploads the coverage and static Storybook artifacts.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for checks, manual additions, merge rules, and releases.
 
-[Chromatic](https://www.chromatic.com/docs/github-actions/) hosts Storybook and runs visual tests against the published stories. To publish locally, set the project token in your shell as `CHROMATIC_PROJECT_TOKEN`, then run `pnpm publish:storybook` from the repository root. The command builds Storybook and uploads the static output. Keep the token in your shell environment or a secret store.
+## Demos
 
-For CI, add the same token as the `CHROMATIC_PROJECT_TOKEN` GitHub Actions secret. A successful push or manual workflow run on `main` publishes the verified static build and runs Chromatic snapshots. Review intended visual changes in Chromatic. The Storybook **Visual Tests** panel can also run and review builds once connected.
+<!-- demos:start -->
 
-## Use the library
+Browse 31 demos. The gallery reflects current source; packaged versions are listed in [Releases](https://github.com/gbgabiola/ui-kit/releases).
 
-Download the package tarball from [GitHub Releases](https://github.com/gbgabiola/ui-kit/releases). Install it in a React 19 app with `pnpm add ./gbgabiola-ui-0.4.0.tgz`. You can also build an archive locally with `pnpm --filter @gbgabiola/ui pack`.
+| Demo | Technology | Category | Documentation |
+| --- | --- | --- | --- |
+| [Blog post card](https://gbgabiola.github.io/ui-kit/demos/blog-post-card/) | HTML/CSS | Layouts | — |
+| [Business card](https://gbgabiola.github.io/ui-kit/demos/business-card/) | HTML/CSS | Layouts | — |
+| [Confidential email](https://gbgabiola.github.io/ui-kit/demos/confidential-email/) | HTML/CSS | Layouts | — |
+| [Dicee](https://gbgabiola.github.io/ui-kit/demos/dicee/) | HTML/CSS/JavaScript | Games | — |
+| [Drum kit](https://gbgabiola.github.io/ui-kit/demos/drum-kit/) | HTML/CSS/JavaScript | Games | — |
+| [Survey form](https://gbgabiola.github.io/ui-kit/demos/fcc-survey-form/) | HTML/CSS | Forms | — |
+| [Feature selection](https://gbgabiola.github.io/ui-kit/demos/feature-selection/) | HTML/CSS | Forms | — |
+| [Ghibli characters](https://gbgabiola.github.io/ui-kit/demos/ghibli-api/) | HTML/CSS/JavaScript | Tools | — |
+| [Hover effects](https://gbgabiola.github.io/ui-kit/demos/hover-effect/) | HTML/CSS | Layouts | — |
+| [Loan calculator](https://gbgabiola.github.io/ui-kit/demos/loan-calculator/) | HTML/CSS/JavaScript | Tools | — |
+| [Number guesser](https://gbgabiola.github.io/ui-kit/demos/number-guesser/) | HTML/CSS/JavaScript | Games | — |
+| [Pricing plans](https://gbgabiola.github.io/ui-kit/demos/pricing-plans/) | HTML/CSS | Layouts | — |
+| [Pricing table](https://gbgabiola.github.io/ui-kit/demos/pricing-table/) | HTML/CSS | Layouts | — |
+| [Progress bar](https://gbgabiola.github.io/ui-kit/demos/progress-bar/) | HTML/CSS/JavaScript | Tools | — |
+| [Simon game](https://gbgabiola.github.io/ui-kit/demos/simon-game/) | HTML/CSS/JavaScript | Games | — |
+| [Task list](https://gbgabiola.github.io/ui-kit/demos/task-list/) | HTML/CSS/JavaScript | Tools | — |
+| [Toggle sidebar](https://gbgabiola.github.io/ui-kit/demos/toggle-sidebar/) | HTML/CSS/JavaScript | Layouts | — |
+| [Button](https://gbgabiola.github.io/ui-kit/demos/button/) | React | Actions | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/components-actions-button--docs) |
+| [TextInput](https://gbgabiola.github.io/ui-kit/demos/textinput/) | React | Forms | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/text-input--docs) |
+| [Textarea](https://gbgabiola.github.io/ui-kit/demos/textarea/) | React | Forms | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/components-forms-textarea--docs) |
+| [Select](https://gbgabiola.github.io/ui-kit/demos/select/) | React | Forms | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/components-forms-select--docs) |
+| [Checkbox](https://gbgabiola.github.io/ui-kit/demos/checkbox/) | React | Forms | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/components-forms-checkbox--docs) |
+| [ThemeToggle](https://gbgabiola.github.io/ui-kit/demos/themetoggle/) | React | Theme | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/theme-toggle--docs) |
+| [ThemePaletteSelect](https://gbgabiola.github.io/ui-kit/demos/themepaletteselect/) | React | Theme | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/components-theme-palette-select--docs) |
+| [Navbar](https://gbgabiola.github.io/ui-kit/demos/navbar/) | React | Navigation | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/navbar--docs) |
+| [Sidebar](https://gbgabiola.github.io/ui-kit/demos/sidebar/) | React | Navigation | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/sidebar--docs) |
+| [ProgressBar](https://gbgabiola.github.io/ui-kit/demos/progressbar/) | React | Feedback | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/components-feedback-progress-bar--docs) |
+| [Hero](https://gbgabiola.github.io/ui-kit/demos/hero/) | React | Blocks | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/blocks-hero--docs) |
+| [SiteFooter](https://gbgabiola.github.io/ui-kit/demos/sitefooter/) | React | Blocks | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/blocks-site-footer--docs) |
+| [ContentCard](https://gbgabiola.github.io/ui-kit/demos/contentcard/) | React | Blocks | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/blocks-content-card--docs) |
+| [PricingTable](https://gbgabiola.github.io/ui-kit/demos/pricingtable/) | React | Blocks | [Docs](https://main--6af71445d0632045e7443388.chromatic.com/?path=/docs/pricing-table--docs) |
 
-Run `pnpm test:package` to pack the current source and test the standalone React consumer in Chromium. Install Chromium first using the Playwright command in the testing section above. To check a downloaded archive, pass its path to `pnpm test:package`.
-
-### React consumer playground
-
-Run `pnpm example:react` from the repo root after installing workspace dependencies. Open [http://localhost:5173](http://localhost:5173) to try the controls, change palettes, and submit a sample form locally. To test a published version, pass the downloaded archive path, for example `pnpm example:react ./gbgabiola-ui-0.4.0.tgz`. The playground installs the archive in a temporary React app and removes that app when the server stops.
-
-```tsx
-import { useState } from 'react';
-import { Navbar, TextInput, ThemePaletteSelect, ThemeToggle, type Theme, type ThemePalette } from '@gbgabiola/ui';
-import '@gbgabiola/ui/styles.css';
-
-export function App() {
-  const [theme, setTheme] = useState<Theme>('light');
-  const [palette, setPalette] = useState<ThemePalette>('classic');
-
-  return (
-    <div className="uik-theme" data-theme={theme} data-palette={palette}>
-      <Navbar
-        brand="Acme"
-        links={[{ href: '/', label: 'Home', current: true }]}
-        actions={<ThemeToggle theme={theme} onThemeChange={setTheme} />}
-      />
-      <ThemePaletteSelect palette={palette} onPaletteChange={setPalette} />
-      <TextInput label="Email" type="email" name="email" autoComplete="email" />
-    </div>
-  );
-}
-```
-
-The default theme switch shows both light and dark icons and highlights the active theme. Set `variant="icon"` for a compact round button that shows the theme it will switch to.
-
-### Theme colors
-
-Every palette works in light and dark mode. Pass the selected value to the theme wrapper as `data-palette`; `ThemePaletteSelect` lets users change it without changing modes. The app owns both settings and can persist them when needed.
-
-| Palette | Colors and inspiration |
-| --- | --- |
-| Classic (default) | Neutral slate with a blue accent |
-| Ocean | Cool blue surfaces and a marine accent |
-| Teal | Neutral surfaces with the teal accent from the [Next.js portfolio](https://github.com/gbgabiola/gbgabiola.github.io/blob/feat/nextjs-v4/src/app/globals.css) |
-| Forest | Green surfaces with a leafy accent |
-| Plum | Cream and plum with gold in dark mode, from [FBCSI](https://github.com/gbgabiola/fbcsi/blob/main/app/globals.css) |
-| Walnut | Warm ivory and brown with muted gold, from [EM Carpentry](https://github.com/gbgabiola/em-carpentry/blob/main/src/app/globals.css) |
-| Ember | Espresso and cream from [Caffeinawa](https://caffeinawa.pages.dev/) with an orange accent inspired by [Omnifood](https://github.com/gbgabiola/omnifood/blob/master/resources/css/style.css) |
-| Crimson | Cool charcoal and red inspired by [Uniflix](https://github.com/gbgabiola/uniflix/blob/main/style.css) |
-
-The [original portfolio](https://github.com/gbgabiola/gbgabiola.github.io/blob/main/src/components/Layout/theme.js) uses red in light mode and teal in dark mode. Crimson and Teal cover those accents as separate choices.
-
-The theme switch follows the palette accent by default. To give it a separate accent, set `--uik-switch-accent` on the theme wrapper or a closer ancestor. For the pill, pair it with `--uik-switch-on-accent` if the default active icon color does not contrast with your accent.
-
-For custom palette colors, override the `--uik-surface`, `--uik-text`, `--uik-muted`, `--uik-border`, `--uik-accent`, and `--uik-danger` CSS variables on the theme wrapper. Set `--uik-radius` to adjust the control radius.
-
-## Development workflow
-
-Start short-lived branches such as `feat/component-name` or `fix/issue-name` from the latest `main`. Open a pull request into `main` and wait for **Test and build Storybook** to pass before merging. Add a Changeset to the same pull request when the change affects library consumers. Storybook tooling and documentation changes only need a Changeset if they affect the package.
-
-## Release a version
-
-1. Once the changes for a release are on `main`, create a branch such as `release/v0.2.0`.
-2. Run `pnpm version:packages` to apply the pending Changesets and update the package version and changelog.
-3. Verify the release with `pnpm typecheck`, `pnpm test:coverage`, `pnpm build:storybook`, `pnpm test:visual`, and `pnpm --filter @gbgabiola/ui pack`. Commit the version changes and open a pull request into `main`.
-4. After merging, confirm that the Storybook workflow passed on the merged commit on `main`. Replace `MERGED_RELEASE_SHA` and the example version below.
-
-   ```sh
-   git fetch origin main
-   git tag -a v0.5.0 MERGED_RELEASE_SHA -m "Release v0.5.0"
-   git push origin refs/tags/v0.5.0
-   ```
-
-5. Check **Actions → Publish UI package release** and verify that the tarball downloads from the GitHub release. If the release already exists and needs its tarball, run the workflow manually from `main` and enter the existing tag. It builds the package from that tag and attaches the tarball.
-
-The release workflow verifies the archive before publishing and downloads the
-published asset to verify its version, license notice, exports, types, and
-stylesheet. Local `pnpm test:package` runs the same archive check for a source
-pack. To inspect a downloaded archive against the matching checkout, run
-`node scripts/verify-package.mjs /path/to/package.tgz`.
-
-During initial development, use patch bumps for compatible fixes and minor bumps for features or breaking changes. Record breaking changes and migration steps in the changelog. After `1.0.0`, use major bumps for breaking changes to documented exports, props, or theme variables. The package starts private and is available as a tarball.
+<!-- demos:end -->
 
 ## License
 
-Licensed under the [MIT License](LICENSE), copyright © 2026 gbgabiola.
+[MIT](LICENSE) © 2026 gbgabiola.

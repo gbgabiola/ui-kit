@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const axePath = createRequire(require.resolve('@storybook/addon-a11y/package.json')).resolve('axe-core/axe.min.js');
+const library = JSON.parse(readFileSync(new URL('../../../demos/components.json', import.meta.url), 'utf8'));
 const catalog: Array<{ slug: string; title: string }> = JSON.parse(readFileSync(new URL('../../../demos/catalog.json', import.meta.url), 'utf8'));
 
 test.beforeEach(async ({ page }) => {
@@ -23,18 +24,18 @@ test('technology, purpose, and search filters combine and reset', async ({ page 
   await technologies.getByRole('button', { name: 'HTML/CSS/JavaScript', exact: true }).click();
   await expect(page.getByRole('article')).toHaveCount(0);
   await page.getByRole('button', { name: 'Clear filters' }).click();
-  await expect(page.getByRole('article')).toHaveCount(31);
+  await expect(page.getByRole('article')).toHaveCount(catalog.length + library.length);
   await technologies.getByRole('button', { name: 'HTML/CSS/JavaScript', exact: true }).click();
   await expect(page.getByRole('article')).toHaveCount(9);
 });
 
 test('one gallery includes every item with mode-specific previews and working demo links', async ({ page, request }) => {
   await page.goto('./#components');
-  await expect(page.getByRole('article')).toHaveCount(31);
+  await expect(page.getByRole('article')).toHaveCount(catalog.length + library.length);
   await expect(page.getByRole('navigation', { name: 'Collections' })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Components', exact: true })).toHaveCount(0);
   await page.getByRole('group', { name: 'Filter demos by technology' }).getByRole('button', { name: 'React', exact: true }).click();
-  await expect(page.getByRole('article')).toHaveCount(14);
+  await expect(page.getByRole('article')).toHaveCount(library.length);
   for (const image of await page.locator('.card-preview').all()) {
     await expect(image).toHaveAttribute('loading', 'lazy');
     const response = await request.get((await image.getAttribute('src'))!);
@@ -64,7 +65,7 @@ for (const demo of catalog) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await expect(page.getByRole('link', { name: 'View source', exact: true })).toHaveAttribute('href', `https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/${demo.slug}`);
     await page.getByRole('link', { name: 'Back to demos' }).click();
-    await expect(page.getByRole('article')).toHaveCount(31);
+    await expect(page.getByRole('article')).toHaveCount(catalog.length + library.length);
   });
 }
 
@@ -171,5 +172,5 @@ test('keyboard navigation opens a detail page and operates its preview', async (
   await expect(frame.getByRole('progressbar')).not.toHaveAttribute('aria-valuenow', '0');
   await page.getByRole('link', { name: 'Back to demos' }).focus();
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('article')).toHaveCount(31);
+  await expect(page.getByRole('article')).toHaveCount(catalog.length + library.length);
 });
