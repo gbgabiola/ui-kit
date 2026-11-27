@@ -411,15 +411,5 @@
 #demos { border-top: 1px solid var(--gallery-border); }
 .appearance-controls { display: grid; gap: .5rem; }
 body { background: inherit; }
-.component-preview { background: transparent; display: grid; place-items: center; min-height: 448px; padding: 2rem; }
-.component-example { display: grid; gap: 1rem; width: min(100%, 32rem); min-width: 0; }
-.component-example-wide { width: 100%; }
-.component-example p { margin: 0; }
-.component-example input[type='range'] { width: 100%; accent-color: var(--uik-accent); }
-.component-example .uik-content-card { width: 100%; }
-.component-example .uik-theme-toggle { justify-self: start; }
-.example-actions { display: flex; flex-wrap: wrap; gap: 1rem; }
-@media (max-width: 640px) { .component-preview { padding: 1rem; } }
-
 html[data-palette='teal'][data-theme='dark'] { background: #171b21; }
 html[data-palette='teal'][data-theme='light'] { background: #fafaf8; }

@@ -1,15 +1,16 @@
-import { allDemos, libraryDemos } from './catalog';
+import { lazy, Suspense } from 'react';
+import { libraryDemos } from './catalog';
 import { base } from './catalog/links';
-import { ComponentExample } from './component-example';
 import { SiteLayout } from './components/site-layout';
 import { GalleryPage } from './pages/gallery-page';
-import { DemoPage } from './pages/demo-page';
+
+const ComponentPreview = lazy(() => import('./components/component-preview'));
 
 export function App() {
   const path = location.pathname.slice(base.length);
-  const detail = allDemos.find((demo) => demo.slug === path.match(/^demos\/([^/]+)\/?$/)?.[1]);
-  const example = libraryDemos.find((demo) => demo.slug === path.match(/^examples\/([^/]+)\/?$/)?.[1]);
+  const slug = path.match(/^(?:demos|examples)\/([^/]+)\/?$/)?.[1];
+  const example = libraryDemos.find((demo) => demo.slug === slug);
   if (location.hash === '#components') history.replaceState(null, '', '#demos');
-  if (example) return <ComponentExample slug={example.slug} />;
-  return <SiteLayout>{detail ? <DemoPage detail={detail} /> : <GalleryPage />}</SiteLayout>;
+  if (example) return <Suspense fallback={<p role="status">Loading demo…</p>}><ComponentPreview slug={example.slug} /></Suspense>;
+  return <SiteLayout><GalleryPage /></SiteLayout>;
 }

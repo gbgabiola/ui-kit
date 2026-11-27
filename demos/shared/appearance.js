@@ -1,4 +1,4 @@
-/* Shared standalone appearance and embedded-preview protocol. */
+/* Shared appearance state and demo workspace controls. */
 (() => {
   const palettes = ['classic', 'ocean', 'teal', 'forest', 'plum', 'walnut', 'ember', 'crimson'];
   const key = 'uik-demo-appearance';
@@ -36,43 +36,52 @@
   function set(change) {
     apply(normalize({ theme: change.theme ?? appearance.preference, palette: change.palette ?? appearance.palette }));
     try { localStorage.setItem(key, JSON.stringify({ theme: appearance.preference, palette: appearance.palette })); } catch { /* Storage is optional. */ }
-    if (embedded && parent !== window) parent.postMessage({ type: 'uik-preference', theme: appearance.preference, palette: appearance.palette }, location.origin);
   }
-  apply(embedded && query.has('theme') ? { ...normalize({ theme: query.get('preference') || query.get('theme'), palette: query.get('palette') }), theme: query.get('theme') === 'light' ? 'light' : 'dark' } : read());
+  apply(read());
   window.UIKitAppearance = { get: () => appearance, set,
     subscribe: (listener) => { listeners.add(listener); return () => listeners.delete(listener); } };
   system.addEventListener('change', () => {
     if (appearance.preference === 'system') apply(normalize({ palette: appearance.palette }));
   });
   window.addEventListener('storage', (event) => { if (event.key === key || event.key === null) apply(read()); });
-  window.addEventListener('message', (event) => {
-    if (!embedded || parent === window || event.origin !== location.origin || event.source !== parent || event.data?.type !== 'uik-appearance') return;
-    if (!['light', 'dark'].includes(event.data.theme) || !palettes.includes(event.data.palette)) return;
-    apply({ theme: event.data.theme, palette: event.data.palette, preference: ['system', 'light', 'dark'].includes(event.data.preference) ? event.data.preference : event.data.theme });
-  });
   document.addEventListener('DOMContentLoaded', () => {
-    if (!embedded && !location.pathname.includes('/vanilla/')) return;
-    if (embedded && parent !== window) {
-      let lastHeight = 0;
-      const report = () => {
-        const height = Math.max(480, Math.ceil(document.body.getBoundingClientRect().height + 32));
-        if (lastHeight !== height) { parent.postMessage({ type: 'uik-height', height }, location.origin); lastHeight = height; }
-      };
-      new ResizeObserver(report).observe(document.body);
-      window.addEventListener('load', report);
-      parent.postMessage({ type: 'uik-ready' }, location.origin);
-      report();
-    } else if (!embedded) {
-      const navigation = document.querySelector('.demo-navigation');
-      const toggle = document.createElement('button');
-      toggle.type = 'button'; toggle.className = 'demo-theme-toggle';
-      toggle.addEventListener('click', () => set({ theme: appearance.theme === 'dark' ? 'light' : 'dark' }));
-      const select = document.createElement('select');
-      select.className = 'demo-palette'; select.setAttribute('aria-label', 'Color palette');
-      palettes.forEach((palette) => select.add(new Option(palette[0].toUpperCase() + palette.slice(1), palette)));
-      select.addEventListener('change', () => set({ palette: select.value }));
-      navigation?.append(select, toggle);
-      apply(appearance);
+    const metadata = document.getElementById('uik-demo-metadata');
+    if (!metadata || embedded) return;
+    const demo = JSON.parse(metadata.textContent);
+    const heading = document.createElement('header');
+    heading.className = 'demo-info';
+    const titleRow = document.createElement('div');
+    titleRow.className = 'demo-title-row';
+    const title = document.createElement('h1');
+    title.id = 'demo-title'; title.textContent = demo.title;
+    const technology = document.createElement('span');
+    technology.className = 'demo-technology'; technology.textContent = demo.technology;
+    titleRow.append(title, technology);
+    const description = document.createElement('p');
+    description.textContent = demo.description;
+    heading.append(titleRow, description);
+    const navigation = document.createElement('nav');
+    navigation.className = 'demo-navigation'; navigation.setAttribute('aria-label', 'Demo navigation');
+    for (const [label, href] of [['← All demos', '/ui-kit/#demos'], ['View source', demo.sourceHref], ...(demo.docsHref ? [['Documentation', demo.docsHref]] : [])]) {
+      const link = document.createElement('a'); link.href = href; link.textContent = label;
+      navigation.append(link);
     }
+    const select = document.createElement('select');
+    select.className = 'demo-palette'; select.setAttribute('aria-label', 'Color palette');
+    palettes.forEach((palette) => select.add(new Option(palette[0].toUpperCase() + palette.slice(1), palette)));
+    select.addEventListener('change', () => set({ palette: select.value }));
+    const toggle = document.createElement('button');
+    toggle.type = 'button'; toggle.className = 'demo-theme-toggle';
+    toggle.addEventListener('click', () => set({ theme: appearance.theme === 'dark' ? 'light' : 'dark' }));
+    navigation.append(select, toggle);
+    document.body.prepend(heading);
+    document.body.append(navigation);
+    apply(appearance);
+    const measure = () => {
+      document.documentElement.style.setProperty('--demo-header-height', `${Math.ceil(heading.getBoundingClientRect().height)}px`);
+      document.documentElement.style.setProperty('--demo-controls-height', `${Math.ceil(navigation.getBoundingClientRect().height)}px`);
+    };
+    const observer = new ResizeObserver(measure);
+    observer.observe(heading); observer.observe(navigation); measure();
   });
 })();
