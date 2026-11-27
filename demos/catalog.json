@@ -3,102 +3,187 @@
     "slug": "blog-post-card",
     "title": "Blog post card",
     "category": "Layouts",
-    "description": "An article preview with a cover image and reading link."
+    "description": "An article preview with a cover image and reading link.",
+    "implementation": "html-css",
+    "previews": {
+      "light": "previews/demos/blog-post-card-light.png",
+      "dark": "previews/demos/blog-post-card-dark.png"
+    }
   },
   {
     "slug": "business-card",
     "title": "Business card",
     "category": "Layouts",
-    "description": "A compact profile and contact layout."
+    "description": "A compact profile and contact layout.",
+    "implementation": "html-css",
+    "previews": {
+      "light": "previews/demos/business-card-light.png",
+      "dark": "previews/demos/business-card-dark.png"
+    }
   },
   {
     "slug": "confidential-email",
     "title": "Confidential email",
     "category": "Layouts",
-    "description": "A typographic email layout with redacted details."
+    "description": "A typographic email layout with redacted details.",
+    "implementation": "html-css",
+    "previews": {
+      "light": "previews/demos/confidential-email-light.png",
+      "dark": "previews/demos/confidential-email-dark.png"
+    }
   },
   {
     "slug": "dicee",
     "title": "Dicee",
     "category": "Games",
-    "description": "Roll two dice and compare the results."
+    "description": "Roll two dice and compare the results.",
+    "implementation": "html-css-js",
+    "previews": {
+      "light": "previews/demos/dicee-light.png",
+      "dark": "previews/demos/dicee-dark.png"
+    }
   },
   {
     "slug": "drum-kit",
     "title": "Drum kit",
     "category": "Games",
-    "description": "Play drum sounds with buttons or your keyboard."
+    "description": "Play drum sounds with buttons or your keyboard.",
+    "implementation": "html-css-js",
+    "previews": {
+      "light": "previews/demos/drum-kit-light.png",
+      "dark": "previews/demos/drum-kit-dark.png"
+    }
   },
   {
     "slug": "fcc-survey-form",
     "title": "Survey form",
     "category": "Forms",
-    "description": "A responsive survey with several input types."
+    "description": "A responsive survey with several input types.",
+    "implementation": "html-css",
+    "previews": {
+      "light": "previews/demos/fcc-survey-form-light.png",
+      "dark": "previews/demos/fcc-survey-form-dark.png"
+    }
   },
   {
     "slug": "feature-selection",
     "title": "Feature selection",
     "category": "Forms",
-    "description": "Choose features using selectable controls."
+    "description": "Choose features using selectable controls.",
+    "implementation": "html-css",
+    "previews": {
+      "light": "previews/demos/feature-selection-light.png",
+      "dark": "previews/demos/feature-selection-dark.png"
+    }
   },
   {
     "slug": "ghibli-api",
     "title": "Ghibli characters",
     "category": "Tools",
-    "description": "Explore character details loaded from the Ghibli API."
+    "description": "Explore character details loaded from the Ghibli API.",
+    "implementation": "html-css-js",
+    "previews": {
+      "light": "previews/demos/ghibli-api-light.png",
+      "dark": "previews/demos/ghibli-api-dark.png"
+    }
   },
   {
     "slug": "hover-effect",
     "title": "Hover effects",
     "category": "Layouts",
-    "description": "Explore image and pointer interaction treatments."
+    "description": "Explore image and pointer interaction treatments.",
+    "implementation": "html-css",
+    "previews": {
+      "light": "previews/demos/hover-effect-light.png",
+      "dark": "previews/demos/hover-effect-dark.png"
+    }
   },
   {
     "slug": "loan-calculator",
     "title": "Loan calculator",
     "category": "Tools",
-    "description": "Estimate payments, including interest-free loans."
+    "description": "Estimate payments, including interest-free loans.",
+    "implementation": "html-css-js",
+    "previews": {
+      "light": "previews/demos/loan-calculator-light.png",
+      "dark": "previews/demos/loan-calculator-dark.png"
+    }
   },
   {
     "slug": "number-guesser",
     "title": "Number guesser",
     "category": "Games",
-    "description": "Guess a number and follow the feedback."
+    "description": "Guess a number and follow the feedback.",
+    "implementation": "html-css-js",
+    "previews": {
+      "light": "previews/demos/number-guesser-light.png",
+      "dark": "previews/demos/number-guesser-dark.png"
+    }
   },
   {
     "slug": "pricing-plans",
     "title": "Pricing plans",
     "category": "Layouts",
-    "description": "Compare service tiers in a responsive layout."
+    "description": "Compare service tiers in a responsive layout.",
+    "implementation": "html-css",
+    "previews": {
+      "light": "previews/demos/pricing-plans-light.png",
+      "dark": "previews/demos/pricing-plans-dark.png"
+    }
   },
   {
     "slug": "pricing-table",
     "title": "Pricing table",
     "category": "Layouts",
-    "description": "Compare features across pricing tiers."
+    "description": "Compare features across pricing tiers.",
+    "implementation": "html-css",
+    "previews": {
+      "light": "previews/demos/pricing-table-light.png",
+      "dark": "previews/demos/pricing-table-dark.png"
+    }
   },
   {
     "slug": "progress-bar",
     "title": "Progress bar",
     "category": "Tools",
-    "description": "Start and reset an accessible progress indicator."
+    "description": "Start and reset an accessible progress indicator.",
+    "implementation": "html-css-js",
+    "previews": {
+      "light": "previews/demos/progress-bar-light.png",
+      "dark": "previews/demos/progress-bar-dark.png"
+    }
   },
   {
     "slug": "simon-game",
     "title": "Simon game",
     "category": "Games",
-    "description": "Repeat an increasingly long sequence of sounds and colors."
+    "description": "Repeat an increasingly long sequence of sounds and colors.",
+    "implementation": "html-css-js",
+    "previews": {
+      "light": "previews/demos/simon-game-light.png",
+      "dark": "previews/demos/simon-game-dark.png"
+    }
   },
   {
     "slug": "task-list",
     "title": "Task list",
     "category": "Tools",
-    "description": "Add, filter, and remove tasks saved in this browser."
+    "description": "Add, filter, and remove tasks saved in this browser.",
+    "implementation": "html-css-js",
+    "previews": {
+      "light": "previews/demos/task-list-light.png",
+      "dark": "previews/demos/task-list-dark.png"
+    }
   },
   {
     "slug": "toggle-sidebar",
     "title": "Toggle sidebar",
     "category": "Layouts",
-    "description": "Open and close navigation with a keyboard or pointer."
+    "description": "Open and close navigation with a keyboard or pointer.",
+    "implementation": "html-css-js",
+    "previews": {
+      "light": "previews/demos/toggle-sidebar-light.png",
+      "dark": "previews/demos/toggle-sidebar-dark.png"
+    }
   }
 ]

@@ -1,0 +1,170 @@
+[
+  {
+    "slug": "button",
+    "title": "Button",
+    "category": "Actions",
+    "description": "Primary and secondary actions with native button behavior.",
+    "story": "components-actions-button--primary",
+    "docs": "components-actions-button--docs",
+    "previews": {
+      "light": "previews/components/button-light.png",
+      "dark": "previews/components/button-dark.png"
+    }
+  },
+  {
+    "slug": "textinput",
+    "title": "TextInput",
+    "category": "Forms",
+    "description": "Labeled text fields with help and validation messages.",
+    "story": "text-input--default",
+    "docs": "text-input--docs",
+    "previews": {
+      "light": "previews/components/textinput-light.png",
+      "dark": "previews/components/textinput-dark.png"
+    }
+  },
+  {
+    "slug": "textarea",
+    "title": "Textarea",
+    "category": "Forms",
+    "description": "A multiline field for longer messages.",
+    "story": "components-forms-textarea--default",
+    "docs": "components-forms-textarea--docs",
+    "previews": {
+      "light": "previews/components/textarea-light.png",
+      "dark": "previews/components/textarea-dark.png"
+    }
+  },
+  {
+    "slug": "select",
+    "title": "Select",
+    "category": "Forms",
+    "description": "A labeled native select control.",
+    "story": "components-forms-select--default",
+    "docs": "components-forms-select--docs",
+    "previews": {
+      "light": "previews/components/select-light.png",
+      "dark": "previews/components/select-dark.png"
+    }
+  },
+  {
+    "slug": "checkbox",
+    "title": "Checkbox",
+    "category": "Forms",
+    "description": "An accessible checkbox with a descriptive label.",
+    "story": "components-forms-checkbox--default",
+    "docs": "components-forms-checkbox--docs",
+    "previews": {
+      "light": "previews/components/checkbox-light.png",
+      "dark": "previews/components/checkbox-dark.png"
+    }
+  },
+  {
+    "slug": "themetoggle",
+    "title": "ThemeToggle",
+    "category": "Theme",
+    "description": "Switch between light and dark appearance.",
+    "story": "theme-toggle--light",
+    "docs": "theme-toggle--docs",
+    "previews": {
+      "light": "previews/components/themetoggle-light.png",
+      "dark": "previews/components/themetoggle-dark.png"
+    }
+  },
+  {
+    "slug": "themepaletteselect",
+    "title": "ThemePaletteSelect",
+    "category": "Theme",
+    "description": "Choose an accent palette for the interface.",
+    "story": "components-theme-palette-select--default",
+    "docs": "components-theme-palette-select--docs",
+    "previews": {
+      "light": "previews/components/themepaletteselect-light.png",
+      "dark": "previews/components/themepaletteselect-dark.png"
+    }
+  },
+  {
+    "slug": "navbar",
+    "title": "Navbar",
+    "category": "Navigation",
+    "description": "Responsive navigation with keyboard-friendly controls.",
+    "story": "navbar--default",
+    "docs": "navbar--docs",
+    "previews": {
+      "light": "previews/components/navbar-light.png",
+      "dark": "previews/components/navbar-dark.png"
+    }
+  },
+  {
+    "slug": "sidebar",
+    "title": "Sidebar",
+    "category": "Navigation",
+    "description": "Collapsible navigation for application layouts.",
+    "story": "sidebar--expanded",
+    "docs": "sidebar--docs",
+    "previews": {
+      "light": "previews/components/sidebar-light.png",
+      "dark": "previews/components/sidebar-dark.png"
+    }
+  },
+  {
+    "slug": "progressbar",
+    "title": "ProgressBar",
+    "category": "Feedback",
+    "description": "Show determinate or indeterminate progress.",
+    "story": "components-feedback-progress-bar--determinate",
+    "docs": "components-feedback-progress-bar--docs",
+    "previews": {
+      "light": "previews/components/progressbar-light.png",
+      "dark": "previews/components/progressbar-dark.png"
+    }
+  },
+  {
+    "slug": "hero",
+    "title": "Hero",
+    "category": "Blocks",
+    "description": "Introduce a page with text, actions, and optional media.",
+    "story": "blocks-hero--text-only",
+    "docs": "blocks-hero--docs",
+    "previews": {
+      "light": "previews/components/hero-light.png",
+      "dark": "previews/components/hero-dark.png"
+    }
+  },
+  {
+    "slug": "sitefooter",
+    "title": "SiteFooter",
+    "category": "Blocks",
+    "description": "Grouped links and flexible footer content.",
+    "story": "blocks-site-footer--grouped-links",
+    "docs": "blocks-site-footer--docs",
+    "previews": {
+      "light": "previews/components/sitefooter-light.png",
+      "dark": "previews/components/sitefooter-dark.png"
+    }
+  },
+  {
+    "slug": "contentcard",
+    "title": "ContentCard",
+    "category": "Blocks",
+    "description": "Present projects, articles, or products.",
+    "story": "blocks-content-card--plain",
+    "docs": "blocks-content-card--docs",
+    "previews": {
+      "light": "previews/components/contentcard-light.png",
+      "dark": "previews/components/contentcard-dark.png"
+    }
+  },
+  {
+    "slug": "pricingtable",
+    "title": "PricingTable",
+    "category": "Blocks",
+    "description": "Compare plans with clear feature lists and actions.",
+    "story": "pricing-table--comparison",
+    "docs": "pricing-table--docs",
+    "previews": {
+      "light": "previews/components/pricingtable-light.png",
+      "dark": "previews/components/pricingtable-dark.png"
+    }
+  }
+]
