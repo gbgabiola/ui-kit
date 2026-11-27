@@ -56,6 +56,8 @@ for (const demo of catalog) {
     await page.goto(`demos/${demo.slug}/`);
     await page.reload();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(demo.title);
+    await expect(page.getByRole('link', { name: 'Open standalone', exact: true })).toHaveCount(0);
+    await expect(page.locator('iframe')).toHaveCount(1);
     const frame = page.frameLocator('iframe');
     await expect(frame.locator('html')).toHaveAttribute('data-embedded', 'true');
     await expect(frame.getByRole('navigation', { name: 'Demo navigation' })).toBeHidden();

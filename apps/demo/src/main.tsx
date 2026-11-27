@@ -90,12 +90,18 @@ function Gallery() {
         actions={<ThemeToggle theme={appearance.theme} onThemeChange={(theme) => setAppearance({ ...appearance, theme })} />} />
       <main id="main" className="gallery-main">
         {detail ? <section className="detail" aria-labelledby="detail-title">
-          <a className="uik-button" href={`${base}#demos`}>← Back to demos</a>
-          <div className="detail-heading"><div><p className="eyebrow">{technologies.find((item) => item.value === detail.implementation)?.label}</p>
-            <h1 id="detail-title">{detail.title}</h1><p>{detail.description}</p></div>
-            <ThemePaletteSelect palette={appearance.palette} onPaletteChange={(palette) => setAppearance({ ...appearance, palette })} /></div>
-          <div className="detail-actions"><a className="uik-button" href={`https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/${detail.slug}`}>View source</a>
-            <a className="uik-button" href={`${base}vanilla/${detail.slug}/`}>Open standalone</a></div>
+          <div className="detail-actions">
+            <a className="uik-button" href={`${base}#demos`}>← Back to demos</a>
+            <a className="uik-button" href={`https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/${detail.slug}`}>View source</a>
+          </div>
+          <div className="detail-heading">
+            <div className="detail-copy">
+              <div className="detail-title-row"><h1 id="detail-title">{detail.title}</h1>
+                <span className="technology-badge">{technologies.find((item) => item.value === detail.implementation)?.label}</span></div>
+              <p>{detail.description}</p>
+            </div>
+            <ThemePaletteSelect palette={appearance.palette} onPaletteChange={(palette) => setAppearance({ ...appearance, palette })} />
+          </div>
           <iframe ref={frame} title={`${detail.title} interactive preview`} className="demo-frame" style={{ height: frameHeight }}
             src={`${base}vanilla/${detail.slug}/?embedded=1&theme=${initialAppearance.current.theme}&palette=${initialAppearance.current.palette}`} />
         </section> : <><section className="intro">

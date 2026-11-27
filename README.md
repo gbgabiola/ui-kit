@@ -32,7 +32,9 @@ The Components collection links to documentation for all 14 React components.
 The Demos collection includes eight HTML/CSS examples and nine HTML/CSS/JavaScript
 examples, with combined technology, category, and search filters. Cards use light
 and dark preview images. Detail pages share the gallery theme and isolate each
-interactive example in a same-origin iframe. Standalone URLs remain available.
+interactive example in a same-origin iframe. Open a demo card to use its preview,
+change appearance, or view its source. Standalone URLs remain available for
+embedding and existing links.
 
 Run `pnpm build:demo`, `pnpm verify:demos`, then `pnpm test:demo` to check the
 catalog, static routes, assets, interactions, themes, accessibility, and visual
