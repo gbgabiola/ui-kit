@@ -1,6 +1,7 @@
 import { defineConfig, type Plugin } from 'vite';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { resolve, sep } from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { allDemos, libraryDemos } from './src/catalog';
 
 function demoPages(): Plugin {
@@ -15,6 +16,25 @@ function demoPages(): Plugin {
       ],
     },
     configureServer(server) {
+      const workspace = resolve(import.meta.dirname, '../..');
+      const inputs = [resolve(workspace, 'packages/ui/src/index.ts'), resolve(workspace, 'demos/catalog.json'), stylesheet];
+      const folders = [resolve(workspace, 'apps/demo/src/examples') + sep, resolve(workspace, 'apps/storybook/stories') + sep];
+      let timer: ReturnType<typeof setTimeout>;
+      const synchronize = (file: string) => {
+        if (file === stylesheet) { server.ws.send({ type: 'full-reload' }); return; }
+        if (!inputs.includes(file) && !folders.some((folder) => file.startsWith(folder) && file.endsWith('.tsx'))) return;
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          try { execFileSync(process.execPath, [resolve(workspace, 'scripts/sync-demos.mjs')], { cwd: workspace, stdio: 'pipe' }); }
+          catch (error) { server.config.logger.error(String(error)); }
+        }, 150);
+      };
+      server.watcher.add([...inputs, ...folders.map((folder) => folder.slice(0, -1))]);
+      for (const event of ['add', 'change', 'unlink'] as const) server.watcher.on(event, synchronize);
+      server.httpServer?.once('close', () => {
+        clearTimeout(timer);
+        for (const event of ['add', 'change', 'unlink'] as const) server.watcher.off(event, synchronize);
+      });
       server.middlewares.use((req, res, next) => {
         if (req.url?.split('?')[0] === '/ui-kit/theme.css') {
           res.setHeader('Content-Type', 'text/css');
@@ -41,4 +61,10 @@ function demoPages(): Plugin {
     },
   };
 }
-export default defineConfig({ base: '/ui-kit/', publicDir: '../../demos', plugins: [demoPages()] });
+export default defineConfig({
+  base: '/ui-kit/', publicDir: '../../demos', plugins: [demoPages()],
+  resolve: { alias: [
+    { find: /^@gbgabiola\/ui$/, replacement: resolve(import.meta.dirname, '../../packages/ui/src/index.ts') },
+    { find: /^@gbgabiola\/ui\/styles\.css$/, replacement: resolve(import.meta.dirname, '../../packages/ui/src/styles/styles.css') },
+  ] },
+});

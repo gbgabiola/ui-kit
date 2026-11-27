@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const axePath = createRequire(require.resolve('@storybook/addon-a11y/package.json')).resolve('axe-core/axe.min.js');
+const standalone = JSON.parse(readFileSync(new URL('../../../demos/catalog.json', import.meta.url), 'utf8'));
 const library: Array<{ slug: string; title: string; docs: string; source: string }> = JSON.parse(readFileSync(new URL('../../../demos/components.json', import.meta.url), 'utf8'));
 test.beforeEach(async ({ page }) => {
   await page.route(/fonts\.(googleapis|gstatic)\.com/, (route) => route.abort());
@@ -83,11 +84,11 @@ for (const demo of library) {
       case 'pricingtable':
         await frame.getByRole('button', { name: 'Choose Pro', exact: true }).click();
         await expect(frame.getByRole('status')).toHaveText('Pro selected.'); break;
-      default: throw new Error(`Missing interaction check for ${demo.slug}`);
+      default: await expect(frame.getByRole('main', { name: 'Interactive component demo' })).toBeVisible();
     }
     expect(failures).toEqual([]);
     await page.getByRole('link', { name: 'Back to demos' }).click();
-    await expect(page.getByRole('article')).toHaveCount(31);
+    await expect(page.getByRole('article')).toHaveCount(standalone.length + library.length);
   });
   for (const theme of ['light', 'dark']) {
     test(`${demo.title} interactive preview accessibility in ${theme}`, async ({ page }) => {

@@ -3,7 +3,8 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const axePath = createRequire(require.resolve('@storybook/addon-a11y/package.json')).resolve('axe-core/axe.min.js');
-const catalog: Array<{ slug: string; title: string }> = JSON.parse(readFileSync(new URL('../../../demos/catalog.json', import.meta.url), 'utf8'));
+const library = JSON.parse(readFileSync(new URL('../../../demos/components.json', import.meta.url), 'utf8'));
+const catalog: Array<{ slug: string; title: string; description: string }> = JSON.parse(readFileSync(new URL('../../../demos/catalog.json', import.meta.url), 'utf8'));
 
 // Keep browser checks independent of font/CDN availability.
 test.beforeEach(async ({ page }) => {
@@ -13,15 +14,15 @@ test.beforeEach(async ({ page }) => {
 test('gallery search, category filters, appearance persistence, and keyboard access', async ({ page }) => {
   await page.goto('./');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Small pieces. Working ideas.');
-  await expect(page.getByRole('article')).toHaveCount(catalog.length + 14);
+  await expect(page.getByRole('article')).toHaveCount(catalog.length + library.length);
   await page.keyboard.press('/');
   await expect(page.getByRole('searchbox')).toBeFocused();
   await page.getByRole('searchbox').fill('pricing');
-  await expect(page.getByRole('article')).toHaveCount(3);
+  await expect(page.getByRole('article')).toHaveCount([...catalog, ...library].filter((demo) => `${demo.title} ${demo.description} ${demo.slug}`.toLowerCase().includes('pricing')).length);
   await page.getByRole('button', { name: 'Games', exact: true }).click();
   await expect(page.getByText('No demos match these filters.')).toBeVisible();
   await page.getByRole('button', { name: 'Clear filters' }).click();
-  await expect(page.getByRole('article')).toHaveCount(catalog.length + 14);
+  await expect(page.getByRole('article')).toHaveCount(catalog.length + library.length);
   await page.getByLabel('Color palette').selectOption('walnut');
   await page.getByRole('button', { name: 'Dark mode', exact: true }).click();
   await page.reload();

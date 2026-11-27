@@ -18,11 +18,17 @@
     "publish:storybook": "pnpm build:storybook && pnpm --filter ui-kit-storybook chromatic",
     "changeset": "changeset",
     "version:packages": "changeset version",
-    "demo": "pnpm build && pnpm --filter ui-kit-demo dev",
-    "build:demo": "pnpm build && pnpm --filter ui-kit-demo build",
+    "demo": "pnpm demos:sync && pnpm build && pnpm --filter ui-kit-demo dev",
+    "build:demo": "pnpm demos:sync && pnpm build && pnpm --filter ui-kit-demo build",
     "test:demo": "pnpm --filter ui-kit-demo typecheck && pnpm --filter ui-kit-storybook exec playwright test --config playwright.demo.config.ts",
     "verify:demos": "node scripts/verify-demos.mjs",
-    "previews:demos": "node scripts/generate-demo-previews.mjs"
+    "previews:demos": "node scripts/generate-demo-previews.mjs",
+    "demos:sync": "node scripts/sync-demos.mjs",
+    "demos:check": "node scripts/sync-demos.mjs --check",
+    "component:add": "node scripts/add-component.mjs",
+    "test:tooling": "node --test scripts/tests/*.test.mjs",
+    "check:version": "node scripts/check-version.mjs",
+    "test:component-workflow": "node scripts/test-component-workflow.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.0"
