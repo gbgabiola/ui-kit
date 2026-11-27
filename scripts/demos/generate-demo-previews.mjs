@@ -13,10 +13,8 @@ try {
       try {
         await prepare(context, theme);
         const page = await context.newPage();
-        if (collection === 'demos') {
-          await page.goto(`${gallery.url}/ui-kit/vanilla/${item.slug}/?embedded=1`, { waitUntil: 'networkidle' });
-        } else {
-          await page.goto(`${gallery.url}/ui-kit/examples/${item.slug}/?embedded=1`, { waitUntil: 'networkidle' });
+        await page.goto(`${gallery.url}/ui-kit/demos/${item.slug}/?embedded=1`, { waitUntil: 'networkidle' });
+        if (collection === 'components') {
           await page.locator('.component-preview').waitFor();
           await page.addStyleTag({ content: '.component-preview { min-height: 640px; }' });
         }

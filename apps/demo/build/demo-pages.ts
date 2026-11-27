@@ -1,8 +1,8 @@
 import type { Plugin } from 'vite';
-import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
-import { resolve, sep } from 'node:path';
+import { readFileSync, mkdirSync, writeFileSync, readdirSync } from 'node:fs';
+import { resolve, sep, extname } from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { allDemos, libraryDemos, technologies, type Demo } from '../src/catalog/index.ts';
+import { allDemos, technologies, type Demo } from '../src/catalog/index.ts';
 
 const root = resolve(import.meta.dirname, '../../..');
 const stylesheet = resolve(root, 'packages/ui/src/styles/styles.css');
@@ -18,15 +18,32 @@ function metadata(html: string, demo: Demo) {
     .replace(/<title>.*?<\/title>/, `<title>${escape(demo.title)} · UI Kit</title>`)
     .replace('</head>', `${description}<link rel="canonical" href="https://gbgabiola.github.io/ui-kit/demos/${demo.slug}/"><link rel="stylesheet" href="/ui-kit/shared/workspace.css"><script type="application/json" id="uik-demo-metadata">${JSON.stringify(value).replaceAll('<', '\\u003c')}</script></head>`);
 }
-function nativePage(demo: Demo, canonical: boolean) {
-  let html = readFileSync(resolve(root, 'demos/vanilla', demo.slug, 'index.html'), 'utf8');
-  if (canonical) {
-    // Preserve relative scripts, CSS assets, and dynamically assigned image URLs.
-    // Hash-only links must stay on the current canonical document.
-    html = html.replace(/href="(#[^"]*)"/g, `href="/ui-kit/demos/${demo.slug}/$1"`)
-      .replace('<head>', `<head><base href="/ui-kit/vanilla/${demo.slug}/">`);
+function nativePage(demo: Demo) {
+  return metadata(readFileSync(resolve(root, 'demos/native', demo.slug, 'index.html'), 'utf8'), demo);
+}
+const contentTypes: Record<string, string> = {
+  '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json', '.png': 'image/png',
+  '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.svg': 'image/svg+xml', '.webp': 'image/webp',
+  '.gif': 'image/gif', '.mp3': 'audio/mpeg', '.ico': 'image/x-icon', '.woff2': 'font/woff2',
+};
+function publicFiles() {
+  const files = new Map<string, string>();
+  const collect = (directory: string, prefix: string) => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const path = resolve(directory, entry.name);
+      const name = `${prefix}/${entry.name}`;
+      if (entry.isDirectory()) collect(path, name);
+      else if (entry.isFile() && contentTypes[extname(entry.name)]) files.set(name, path);
+    }
+  };
+  collect(resolve(root, 'demos/shared'), 'shared');
+  collect(resolve(root, 'demos/previews'), 'previews');
+  for (const demo of allDemos.filter((item) => item.kind === 'native')) {
+    collect(resolve(root, 'demos/native', demo.slug), `demos/${demo.slug}`);
   }
-  return metadata(html, demo);
+  files.set('demos/LICENSE', resolve(root, 'demos/native/LICENSE'));
+  files.set('LICENSE', resolve(root, 'LICENSE'));
+  return files;
 }
 export function demoPages(): Plugin {
   return {
@@ -34,8 +51,8 @@ export function demoPages(): Plugin {
     transformIndexHtml: {
       order: 'post',
       handler: (html, context) => {
-        const slug = context.path.match(/^\/(?:ui-kit\/)?(?:demos|examples)\/([^/]+)/)?.[1];
-        const demo = libraryDemos.find((item) => item.slug === slug);
+        const slug = context.path.match(/^\/(?:ui-kit\/)?demos\/([^/]+)/)?.[1];
+        const demo = allDemos.find((item) => item.slug === slug);
         return { html: demo ? metadata(html, demo) : html, tags: [
           { tag: 'link', attrs: { rel: 'stylesheet', href: '/ui-kit/theme.css' }, injectTo: 'head-prepend' },
           { tag: 'script', children: appearance(), injectTo: 'head' },
@@ -62,36 +79,54 @@ export function demoPages(): Plugin {
         clearTimeout(timer);
         for (const event of ['add', 'change', 'unlink'] as const) server.watcher.off(event, synchronize);
       });
-      server.middlewares.use((req, res, next) => {
-        const path = req.url?.split('?')[0] || '';
-        const match = path.match(/^\/ui-kit\/(demos|vanilla)\/([^/]+)\/?$/);
-        const native = allDemos.find((demo) => demo.kind === 'vanilla' && demo.slug === match?.[2]);
-        if (native) {
-          if (!path.endsWith('/')) { res.writeHead(302, { Location: `${path}/${req.url?.includes('?') ? '?' + req.url.split('?')[1] : ''}` }); res.end(); return; }
-          res.setHeader('Content-Type', 'text/html');
-          res.end(nativePage(native, match![1] === 'demos')); return;
+      const files = publicFiles();
+      server.middlewares.use(async (req, res, next) => {
+        let path: string;
+        try { path = decodeURIComponent((req.url || '').split('?')[0]); }
+        catch { res.writeHead(400); res.end('Invalid URL'); return; }
+        if (!path.startsWith('/ui-kit/')) return next();
+        const relative = path.slice('/ui-kit/'.length);
+        const match = relative.match(/^demos\/([^/]+)\/$/);
+        const demo = allDemos.find((item) => item.slug === match?.[1]);
+        if (demo) {
+          try {
+            const html = demo.kind === 'native' ? nativePage(demo)
+              : await server.transformIndexHtml(path, readFileSync(resolve(root, 'apps/demo/index.html'), 'utf8'));
+            res.setHeader('Content-Type', 'text/html'); res.end(html);
+          } catch (error) { next(error); }
+          return;
         }
-        if (req.url?.split('?')[0] === '/ui-kit/theme.css') {
-          res.setHeader('Content-Type', 'text/css');
-          res.end(readFileSync(stylesheet));
-        } else next();
+        const file = relative === 'theme.css' ? stylesheet : files.get(relative);
+        if (file) {
+          try {
+            const content = readFileSync(file);
+            res.setHeader('Content-Type', contentTypes[extname(file)] || 'text/plain');
+            res.end(content);
+          } catch (error) {
+            if ((error as NodeJS.ErrnoException).code === 'ENOENT') { res.writeHead(404); res.end('Not found'); }
+            else next(error);
+          }
+          return;
+        }
+        // Demo namespaces are explicit; missing paths must never fall back to the gallery.
+        if (/^(?:demos|vanilla|examples|native)(?:\/|$)/.test(relative)) {
+          res.writeHead(404); res.end('Not found'); return;
+        }
+        next();
       });
     },
     generateBundle() {
       this.emitFile({ type: 'asset', fileName: 'theme.css', source: readFileSync(stylesheet, 'utf8') });
+      for (const [fileName, path] of publicFiles()) this.emitFile({ type: 'asset', fileName, source: readFileSync(path) });
     },
     writeBundle(options) {
       const output = resolve(options.dir!);
       const html = readFileSync(resolve(output, 'index.html'), 'utf8');
-      const write = (folder: string, page: string) => {
-        mkdirSync(resolve(output, folder), { recursive: true });
-        writeFileSync(resolve(output, folder, 'index.html'), page);
-      };
       for (const demo of allDemos) {
-        write(`demos/${demo.slug}`, demo.kind === 'vanilla' ? nativePage(demo, true) : metadata(html, demo));
-        if (demo.kind === 'vanilla') write(`vanilla/${demo.slug}`, nativePage(demo, false));
+        const folder = resolve(output, 'demos', demo.slug);
+        mkdirSync(folder, { recursive: true });
+        writeFileSync(resolve(folder, 'index.html'), demo.kind === 'native' ? nativePage(demo) : metadata(html, demo));
       }
-      for (const demo of libraryDemos) write(`examples/${demo.slug}`, metadata(html, demo));
     },
   };
 }

@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
-import { createRequire } from 'node:module';
-const require = createRequire(import.meta.url);
-const axePath = require.resolve('axe-core/axe.min.js');
+import { expectAccessible } from './accessibility';
 const library = JSON.parse(readFileSync(new URL('../../../demos/components.json', import.meta.url), 'utf8'));
 const catalog: Array<{ slug: string; title: string; description: string }> = JSON.parse(readFileSync(new URL('../../../demos/catalog.json', import.meta.url), 'utf8'));
 
@@ -30,7 +28,7 @@ test('technology, purpose, and search filters combine and reset', async ({ page 
 });
 
 test('one gallery includes every item with mode-specific previews and working demo links', async ({ page, request }) => {
-  await page.goto('./#components');
+  await page.goto('./#demos');
   await expect(page.getByRole('article')).toHaveCount(catalog.length + library.length);
   await expect(page.getByRole('navigation', { name: 'Collections' })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Components', exact: true })).toHaveCount(0);
@@ -48,7 +46,7 @@ test('one gallery includes every item with mode-specific previews and working de
 });
 
 for (const demo of catalog) {
-  test(`${demo.slug} workspace loads directly, refreshes, and keeps the standalone URL working`, async ({ page, request }) => {
+  test(`${demo.slug} workspace loads directly, refreshes, without duplicate routes`, async ({ page, request }) => {
     const response = await request.get(`demos/${demo.slug}/`);
     expect(response.ok()).toBe(true);
     expect(await response.text()).toContain(`<title>${demo.title} · UI Kit</title>`);
@@ -62,12 +60,11 @@ for (const demo of catalog) {
     await expect(page.locator('.demo-info p')).toHaveText(demo.description);
     await expect(page.locator('.demo-technology')).not.toBeEmpty();
     await expect(page.locator('.uik-site-footer')).toHaveCount(0);
-    await page.goto(`vanilla/${demo.slug}/`);
     await expect(page.locator('#demo-title')).toHaveText(demo.title);
     await expect(page.getByRole('navigation', { name: 'Demo navigation' })).toHaveCount(1);
     await expect.poll(() => page.locator('body').evaluate((body) => body.scrollWidth <= window.innerWidth)).toBe(true);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    await expect(page.getByRole('link', { name: 'View source', exact: true })).toHaveAttribute('href', `https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/${demo.slug}`);
+    await expect(page.getByRole('link', { name: 'View source', exact: true })).toHaveAttribute('href', `https://github.com/gbgabiola/ui-kit/tree/main/demos/native/${demo.slug}`);
     await page.getByRole('link', { name: 'All demos', exact: false }).click();
     await expect(page.getByRole('article')).toHaveCount(catalog.length + library.length);
   });
@@ -104,7 +101,7 @@ test('gallery and standalone pages work when storage is unavailable', async ({ p
   await page.goto('./');
   await page.getByRole('button', { name: 'Dark mode', exact: true }).click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
-  await page.goto('vanilla/progress-bar/');
+  await page.goto('demos/progress-bar/');
   await page.getByRole('button', { name: 'Switch to light mode' }).click();
   await page.getByLabel('Color palette').selectOption('forest');
   await expect(page.locator('html')).toHaveAttribute('data-palette', 'forest');
@@ -116,25 +113,15 @@ for (const theme of ['light', 'dark']) {
   for (const demo of catalog) {
     test(`${demo.slug} accessibility in ${theme}`, async ({ page }) => {
       await page.addInitScript((theme) => localStorage.setItem('uik-demo-appearance', JSON.stringify({ theme, palette: 'teal' })), theme);
-      await page.goto(`vanilla/${demo.slug}/`);
-      await page.addScriptTag({ path: axePath });
-      const violations = await page.evaluate(async () => {
-        const result = await (window as any).axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa'] } });
-        return result.violations.map((v: any) => ({ id: v.id, nodes: v.nodes.map((n: any) => ({ target: n.target, summary: n.failureSummary })) }));
-      });
-      expect(violations).toEqual([]);
+      await page.goto(`demos/${demo.slug}/`);
+        await expectAccessible(page);
     });
   }
   test(`components and detail accessibility in ${theme}`, async ({ page }) => {
     await page.addInitScript((theme) => localStorage.setItem('uik-demo-appearance', JSON.stringify({ theme, palette: 'teal' })), theme);
     for (const path of ['./', 'demos/progress-bar/']) {
       await page.goto(path);
-      await page.addScriptTag({ path: axePath });
-      const violations = await page.evaluate(async () => {
-        const result = await (window as any).axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa'] } });
-        return result.violations.map((v: any) => ({ id: v.id, targets: v.nodes.map((n: any) => n.target) }));
-      });
-      expect(violations).toEqual([]);
+      await expectAccessible(page);
     }
   });
 }
@@ -195,3 +182,20 @@ for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844
     expect(bottom).toBeLessThanOrEqual(geometry.controlsTop);
   });
 }
+
+for (const prefix of ['vanilla', 'examples', 'native']) {
+  test(`removed ${prefix} URLs return 404 without redirects or gallery fallback`, async ({ request }) => {
+    for (const slug of ['', ...catalog.map((demo) => demo.slug), ...library.map((demo: { slug: string }) => demo.slug)]) {
+      const response = await request.get(`${prefix}/${slug ? slug + '/' : ''}`, { maxRedirects: 0 });
+      expect(response.status(), response.url()).toBe(404);
+      expect(response.headers().location).toBeUndefined();
+      expect(await response.text()).not.toContain('id="uik-demo-metadata"');
+    }
+  });
+}
+
+test('unknown demo routes return 404 instead of the gallery', async ({ request }) => {
+  const response = await request.get('demos/not-a-demo/', { maxRedirects: 0 });
+  expect(response.status()).toBe(404);
+  expect(response.headers().location).toBeUndefined();
+});

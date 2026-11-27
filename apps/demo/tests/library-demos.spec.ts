@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
-import { createRequire } from 'node:module';
-const require = createRequire(import.meta.url);
-const axePath = require.resolve('axe-core/axe.min.js');
+import { expectAccessible } from './accessibility';
 const standalone = JSON.parse(readFileSync(new URL('../../../demos/catalog.json', import.meta.url), 'utf8'));
 const library: Array<{ slug: string; title: string; docs: string; source: string }> = JSON.parse(readFileSync(new URL('../../../demos/components.json', import.meta.url), 'utf8'));
 test.beforeEach(async ({ page }) => {
@@ -95,12 +93,7 @@ for (const demo of library) {
       await page.goto(`demos/${demo.slug}/`);
       await expect(page.getByRole('main', { name: 'Interactive component demo' })).toBeVisible();
         await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
-      await page.addScriptTag({ path: axePath });
-      const violations = await page.evaluate(async () => {
-        const result = await (window as any).axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa'] } });
-        return result.violations.map((v: any) => ({ id: v.id, nodes: v.nodes.map((n: any) => ({ target: n.target, summary: n.failureSummary })) }));
-      });
-      expect(violations).toEqual([]);
+      await expectAccessible(page);
     });
   }
 }
@@ -130,7 +123,7 @@ for (const theme of ['light', 'dark'] as const) {
     await expect(page.locator('html')).toHaveAttribute('data-palette', 'plum');
   });
 }
-for (const path of ['demos/button/', 'demos/progress-bar/', 'vanilla/progress-bar/']) {
+for (const path of ['demos/button/', 'demos/progress-bar/']) {
   test(`${path} follows system changes without saving a manual theme`, async ({ page }) => {
     await page.emulateMedia({ colorScheme: 'light' });
     await page.goto(path);

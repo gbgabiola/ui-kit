@@ -8,9 +8,8 @@ const ComponentPreview = lazy(() => import('./components/component-preview'));
 
 export function App() {
   const path = location.pathname.slice(base.length);
-  const slug = path.match(/^(?:demos|examples)\/([^/]+)\/?$/)?.[1];
+  const slug = path.match(/^demos\/([^/]+)\/?$/)?.[1];
   const example = libraryDemos.find((demo) => demo.slug === slug);
-  if (location.hash === '#components') history.replaceState(null, '', '#demos');
   if (example) return <Suspense fallback={<p role="status">Loading demo…</p>}><ComponentPreview slug={example.slug} /></Suspense>;
   return <SiteLayout><GalleryPage /></SiteLayout>;
 }
