@@ -447,7 +447,6 @@ body {
 
 #demos { border-top: 1px solid var(--gallery-border); }
 .appearance-controls { display: grid; gap: .5rem; }
-.appearance-controls > .uik-button { justify-self: start; font-size: .8rem; }
 body { background: inherit; }
 .component-preview { background: transparent; display: grid; place-items: center; min-height: 448px; padding: 2rem; }
 .component-example { display: grid; gap: 1rem; width: min(100%, 32rem); min-width: 0; }

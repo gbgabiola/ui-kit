@@ -49,7 +49,8 @@ for (const demo of library) {
         await frame.getByRole('button', { name: 'Dark mode', exact: true }).click();
         await expect(page.locator('.gallery')).toHaveAttribute('data-theme', 'light');
         await expect(frame.locator('html')).toHaveAttribute('data-theme', 'light');
-        await frame.getByRole('button', { name: 'Use system theme' }).click();
+        await expect(frame.getByRole('button', { name: 'Use system theme' })).toHaveCount(0);
+        await frame.getByRole('button', { name: 'Dark mode', exact: true }).click();
         await expect(page.locator('.gallery')).toHaveAttribute('data-theme', 'dark'); break;
       case 'themepaletteselect':
         await frame.getByLabel('Color palette').selectOption('forest');
@@ -122,10 +123,11 @@ for (const theme of ['light', 'dark'] as const) {
     await page.emulateMedia({ colorScheme: theme });
     await page.emulateMedia({ colorScheme: other });
     await expect(page.locator('.gallery')).toHaveAttribute('data-theme', theme);
-    await page.getByRole('button', { name: 'Use system theme' }).click();
+    await expect(page.getByRole('button', { name: 'Use system theme' })).toHaveCount(0);
+    await page.getByRole('button', { name: 'Dark mode', exact: true }).click();
     await expect(page.locator('.gallery')).toHaveAttribute('data-theme', other);
     await page.emulateMedia({ colorScheme: theme });
-    await expect(page.locator('.gallery')).toHaveAttribute('data-theme', theme);
+    await expect(page.locator('.gallery')).toHaveAttribute('data-theme', other);
     await expect(page.locator('.gallery')).toHaveAttribute('data-palette', 'plum');
   });
 }
@@ -162,7 +164,7 @@ test('unavailable or invalid storage falls back to system and keeps manual contr
   await expect(page.locator('.gallery')).toHaveAttribute('data-theme', 'light');
   await page.frameLocator('iframe').getByRole('button', { name: 'Dark mode', exact: true }).click();
   await expect(page.locator('.gallery')).toHaveAttribute('data-theme', 'dark');
-  await page.getByRole('button', { name: 'Use system theme' }).click();
+  await page.getByRole('button', { name: 'Dark mode', exact: true }).click();
   await expect(page.frameLocator('iframe').locator('html')).toHaveAttribute('data-theme', 'light');
 });
 

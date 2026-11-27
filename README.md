@@ -34,9 +34,9 @@ URLs remain available for embedding and existing links.
 
 Appearance starts with the system's light or dark preference and follows system
 changes until you choose a theme with the sun/moon switch. Your choice is saved
-for future visits. Changing a palette keeps system mode active. Choose **Use
-system theme** to follow the system again. Appearance remains usable when browser
-storage is unavailable. The gallery and its previews share this behavior.
+for future visits. Changing a palette keeps the current theme preference.
+The sun/moon switch is the only theme control. Appearance remains usable when
+browser storage is unavailable. The gallery and its previews share this behavior.
 
 Run `pnpm build:demo`, `pnpm verify:demos`, then `pnpm test:demo` to check the
 catalog, static routes, assets, interactions, themes, accessibility, and visual
