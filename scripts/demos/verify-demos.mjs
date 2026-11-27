@@ -29,35 +29,44 @@ for (const items of [demos, components]) {
         assert.equal((await readFile(file)).subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
       }
     }
+    const html = await readFile(resolve(output, 'demos', item.slug, 'index.html'), 'utf8');
+    assert.ok(html.includes(`<title>${item.title} · UI Kit</title>`));
+    const data = JSON.parse(html.match(/id="uik-demo-metadata">(.*?)<\/script>/s)[1]);
+    assert.equal(data.title, item.title); assert.equal(data.description, item.description);
     if (items === demos) {
       assert.ok(['html-css', 'html-css-js'].includes(item.implementation));
-      const source = await readFile(resolve(root, 'demos/vanilla', item.slug, 'index.html'), 'utf8');
+      const source = await readFile(resolve(root, 'demos/native', item.slug, 'index.html'), 'utf8');
       assert.ok(source.includes('../../shared/appearance.js') && source.includes('../../theme.css'));
-      const html = await readFile(resolve(output, 'demos', item.slug, 'index.html'), 'utf8');
-      assert.ok(html.includes(`<title>${item.title} · UI Kit</title>`));
-      assert.ok(html.includes(`<base href="/ui-kit/vanilla/${item.slug}/">`));
+      assert.ok(!html.includes('<base'), 'Native assets must use their canonical directory');
       assert.ok(!html.includes('/assets/index-'), 'Native demos must not load the React gallery');
-      const legacy = await readFile(resolve(output, 'vanilla', item.slug, 'index.html'), 'utf8');
-      for (const page of [html, legacy]) {
-        const data = JSON.parse(page.match(/id="uik-demo-metadata">(.*?)<\/script>/s)[1]);
-        assert.equal(data.title, item.title); assert.equal(data.description, item.description);
-        assert.equal(data.sourceHref, `https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/${item.slug}`);
-      }
+      assert.equal(data.sourceHref, `https://github.com/gbgabiola/ui-kit/tree/main/demos/native/${item.slug}`);
     } else {
       assert.ok((await stat(resolve(root, item.source))).isFile());
-      const html = await readFile(resolve(output, 'demos', item.slug, 'index.html'), 'utf8');
-      assert.ok(html.includes(`<title>${item.title} · UI Kit</title>`));
-      const example = await readFile(resolve(output, 'examples', item.slug, 'index.html'), 'utf8');
-      assert.ok(example.includes(`<title>${item.title} · UI Kit</title>`));
       assert.match(exports, new RegExp(`\\b${item.title}\\b`));
       assert.ok(stories.entries[item.story] && stories.entries[item.docs], `Missing Storybook target for ${item.title}`);
     }
   }
 }
 for (const asset of ['shared/appearance.js', 'theme.css', 'shared/demo.css', 'shared/workspace.css']) assert.ok((await stat(resolve(output, asset))).size > 0);
-// Publish only the catalog, interactive examples, and assets used by the gallery.
+// Publish only canonical demo documents and their runtime assets.
 assert.deepEqual((await readdir(output)).sort(), [
-  'shared', 'assets', 'catalog.json', 'components.json', 'demos',
-  'examples', 'index.html', 'previews', 'theme.css', 'vanilla',
+  'LICENSE', 'shared', 'assets', 'demos',
+  'index.html', 'previews', 'theme.css',
 ].sort());
-console.log(`Verified ${demos.length + components.length} demo pages, ${components.length} React examples, ${(demos.length + components.length) * 2} previews, source links, and published assets.`);
+assert.deepEqual((await readdir(resolve(output, 'demos'))).sort(), ['LICENSE', ...demos.map((item) => item.slug), ...components.map((item) => item.slug)].sort());
+async function inspect(folder) {
+  for (const entry of await readdir(folder, { withFileTypes: true })) {
+    const file = resolve(folder, entry.name);
+    if (entry.isDirectory()) await inspect(file);
+    else {
+      assert.ok(!entry.name.endsWith('.md') && !['screenshot.png', 'preview.gif'].includes(entry.name), `Documentation asset leaked: ${file}`);
+      if (/\.(?:html|js|css|json)$/.test(entry.name)) {
+        const text = await readFile(file, 'utf8');
+        assert.ok(!/\/ui-kit\/(?:vanilla|examples|native)\//.test(text), `Removed route leaked: ${file}`);
+        assert.ok(!/http-equiv=["']refresh["']/i.test(text), `Redirect page leaked: ${file}`);
+      }
+    }
+  }
+}
+await inspect(output);
+console.log(`Verified ${demos.length + components.length} canonical demo pages, ${components.length} React examples, ${(demos.length + components.length) * 2} previews, source links, licenses, and published assets.`);

@@ -23,6 +23,13 @@ async function put(file, text) {
   assert.ok(target.startsWith(fixture + sep));
   await mkdir(dirname(target), { recursive: true }); await writeFile(target, text);
 }
+async function stopDevelopment() {
+  if (development && development.exitCode === null) {
+    try { if (process.platform === 'win32') development.kill(); else process.kill(-development.pid, 'SIGTERM'); } catch (error) { if (error.code !== 'ESRCH') throw error; }
+    await waitFor(() => development.exitCode !== null || development.signalCode !== null, 'development server shutdown', 10000);
+  }
+}
+
 try {
   git('worktree', 'add', '--detach', fixture, 'HEAD'); added = true;
   // Include pending implementation changes during local verification.
@@ -63,7 +70,12 @@ try {
   assert.equal(await page.locator('iframe').count(), 0);
   assert.equal(await page.locator('script[type="module"]').count(), 0);
   await page.getByRole('link', { name: 'All demos', exact: false }).click();
-  console.log('Development: native demo metadata, assets, controls, and canonical routes work without the gallery runtime.');
+  for (const path of [`vanilla/${standalone.slug}/`, 'examples/componentworkflowprobe/', `native/${standalone.slug}/`, 'demos/not-a-demo/']) {
+    const response = await fetch(`http://127.0.0.1:${port}/ui-kit/${path}`, { redirect: 'manual' });
+    assert.equal(response.status, 404, path);
+    assert.equal(response.headers.get('location'), null);
+  }
+  console.log('Development: canonical demos work; removed and unknown routes return 404 without redirects.');
   await page.goto(`http://127.0.0.1:${port}/ui-kit/`);
   await page.getByRole('link', { name: 'Open ComponentWorkflowProbe', exact: false }).waitFor();
   for (const [from, to] of [
@@ -84,10 +96,7 @@ try {
 } finally {
   if (browser) await browser.close();
   if (server) await server.close();
-  if (development && development.exitCode === null) {
-    try { if (process.platform === 'win32') development.kill(); else process.kill(-development.pid, 'SIGTERM'); } catch (error) { if (error.code !== 'ESRCH') throw error; }
-    await waitFor(() => development.exitCode !== null || development.signalCode !== null, 'development server shutdown', 10000);
-  }
+  await stopDevelopment();
   assert.equal(dirname(fixture), resolve(tmpdir()));
   assert.ok(basename(fixture).startsWith('ui-kit-component-workflow-'));
   if (added) git('worktree', 'remove', '--force', fixture);

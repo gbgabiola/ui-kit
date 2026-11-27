@@ -4,7 +4,8 @@ import { demoPages } from './build/demo-pages.ts';
 
 export default defineConfig({
   base: '/ui-kit/',
-  publicDir: '../../demos',
+  publicDir: false,
+  appType: 'mpa',
   plugins: [demoPages()],
   resolve: { alias: [
     { find: /^@gbgabiola\/ui$/, replacement: resolve(import.meta.dirname, '../../packages/ui/src/index.ts') },

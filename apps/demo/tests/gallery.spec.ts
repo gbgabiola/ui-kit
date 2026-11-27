@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
-import { createRequire } from 'node:module';
-const require = createRequire(import.meta.url);
-const axePath = require.resolve('axe-core/axe.min.js');
+import { expectAccessible } from './accessibility';
 const library = JSON.parse(readFileSync(new URL('../../../demos/components.json', import.meta.url), 'utf8'));
 const catalog: Array<{ slug: string; title: string; description: string }> = JSON.parse(readFileSync(new URL('../../../demos/catalog.json', import.meta.url), 'utf8'));
 
@@ -44,9 +42,9 @@ for (const demo of catalog) {
     page.on('pageerror', (error) => errors.push(error.message));
     // The live API has a separate failure/retry check below.
     await page.route('https://ghibliapi.vercel.app/people', (route) => route.fulfill({ json: [{ name: 'Satsuki', age: '11' }] }));
-    await page.goto(`vanilla/${demo.slug}/`);
+    await page.goto(`demos/${demo.slug}/`);
     await expect(page.getByRole('navigation', { name: 'Demo navigation' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'View source', exact: true })).toHaveAttribute('href', `https://github.com/gbgabiola/ui-kit/tree/main/demos/vanilla/${demo.slug}`);
+    await expect(page.getByRole('link', { name: 'View source', exact: true })).toHaveAttribute('href', `https://github.com/gbgabiola/ui-kit/tree/main/demos/native/${demo.slug}`);
     await expect.poll(() => page.evaluate(() => [...document.images].filter((image) => !image.complete).length)).toBe(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), 'Demo should fit a mobile viewport').toBe(true);
     expect(failed).toEqual([]);
@@ -57,7 +55,7 @@ for (const demo of catalog) {
 }
 
 test('progress reset cancels active work', async ({ page }) => {
-  await page.goto('vanilla/progress-bar/');
+  await page.goto('demos/progress-bar/');
   await page.getByRole('button', { name: 'Start Progress' }).click();
   await expect(page.getByRole('progressbar')).not.toHaveAttribute('aria-valuenow', '0');
   await page.getByRole('button', { name: 'Reset' }).click();
@@ -67,7 +65,7 @@ test('progress reset cancels active work', async ({ page }) => {
 });
 
 test('sidebar supports keyboard open, Escape, and hidden navigation', async ({ page }) => {
-  await page.goto('vanilla/toggle-sidebar/');
+  await page.goto('demos/toggle-sidebar/');
   const toggle = page.locator('button.btn');
   await toggle.focus();
   await page.keyboard.press('Enter');
@@ -79,7 +77,7 @@ test('sidebar supports keyboard open, Escape, and hidden navigation', async ({ p
 });
 
 test('loan calculator handles zero and positive interest', async ({ page }) => {
-  await page.goto('vanilla/loan-calculator/');
+  await page.goto('demos/loan-calculator/');
   await page.getByLabel('Loan amount').fill('1200');
   await page.getByLabel('Annual interest (%)').fill('0');
   await page.getByLabel('Years to repay').fill('1');
@@ -92,7 +90,7 @@ test('loan calculator handles zero and positive interest', async ({ page }) => {
 });
 
 test('tasks persist and clearing them preserves appearance settings', async ({ page }) => {
-  await page.goto('vanilla/task-list/');
+  await page.goto('demos/task-list/');
   await page.evaluate(() => localStorage.setItem('uik-demo-appearance', 'preserve-me'));
   await page.getByLabel('New Task').fill('Ship the gallery');
   await page.getByRole('button', { name: 'Add Task' }).click();
@@ -110,14 +108,14 @@ test('Ghibli request failure has a working retry', async ({ page }) => {
     requests += 1;
     return requests === 1 ? route.fulfill({ status: 503, body: 'Unavailable' }) : route.fulfill({ json: [{ name: 'Satsuki', age: '11' }] });
   });
-  await page.goto('vanilla/ghibli-api/');
+  await page.goto('demos/ghibli-api/');
   await page.getByRole('button', { name: 'Try again' }).click();
   await expect(page.getByRole('heading', { name: 'Satsuki' })).toBeVisible();
   await expect(page.getByRole('status')).toHaveText('1 characters loaded.');
 });
 
 test('Simon game has touch and keyboard controls', async ({ page }) => {
-  await page.goto('vanilla/simon-game/');
+  await page.goto('demos/simon-game/');
   await page.getByRole('button', { name: 'Start game', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Level 1', exact: true })).toHaveText('Level 1');
   await expect(page.getByRole('button', { name: 'Green', exact: true })).toBeEnabled();
@@ -152,18 +150,13 @@ for (const theme of ['light', 'dark']) {
   test(`gallery accessibility in ${theme} mode`, async ({ page }) => {
     await page.addInitScript((theme) => localStorage.setItem('uik-demo-appearance', JSON.stringify({ theme, palette: 'teal' })), theme);
     await page.goto('./');
-    await page.addScriptTag({ path: axePath });
-    const violations = await page.evaluate(async () => {
-      const result = await (window as any).axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa'] } });
-      return result.violations.map((violation: any) => ({ id: violation.id, nodes: violation.nodes.map((node: any) => node.target) }));
-    });
-    expect(violations).toEqual([]);
+    await expectAccessible(page);
   });
 }
 
 test('invalid guesses preserve attempts and a finished game can restart', async ({ page }) => {
   await page.addInitScript(() => { Math.random = () => 0; });
-  await page.goto('vanilla/number-guesser/');
+  await page.goto('demos/number-guesser/');
   const guess = page.getByLabel('Your guess');
   await guess.fill('11');
   await page.locator('#guess-btn').click();
