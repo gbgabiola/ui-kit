@@ -3,6 +3,10 @@ import { readFile, stat, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '..');
 const output = resolve(root, 'apps/demo/dist');
+const entry = await readFile(resolve(output, 'index.html'), 'utf8');
+assert.ok(entry.indexOf('<meta charset') >= 0 && entry.indexOf('<meta charset') < 1024);
+assert.ok(entry.includes('window.UIKitAppearance') && entry.indexOf('window.UIKitAppearance') < entry.indexOf('</head>'));
+
 const demos = JSON.parse(await readFile(resolve(root, 'demos/catalog.json')));
 const components = JSON.parse(await readFile(resolve(root, 'demos/components.json')));
 const exports = await readFile(resolve(root, 'packages/ui/src/index.ts'), 'utf8');

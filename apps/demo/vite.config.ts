@@ -11,7 +11,7 @@ function demoPages(): Plugin {
       order: 'post',
       handler: () => [
         { tag: 'link', attrs: { rel: 'stylesheet', href: '/ui-kit/theme.css' }, injectTo: 'head-prepend' },
-        { tag: 'script', attrs: { src: '/ui-kit/appearance.js' }, injectTo: 'head-prepend' },
+        { tag: 'script', children: readFileSync(resolve(import.meta.dirname, '../../demos/appearance.js'), 'utf8'), injectTo: 'head' },
       ],
     },
     configureServer(server) {

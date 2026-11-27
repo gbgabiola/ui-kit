@@ -168,6 +168,8 @@ test('unavailable or invalid storage falls back to system and keeps manual contr
 
 
 test('system appearance is applied before the application bundle renders', async ({ page }) => {
+  // The gallery bootstrap must not depend on a cached standalone helper.
+  await page.route('**/appearance.js', (route) => route.fulfill({ contentType: 'text/javascript', body: '' }));
   await page.emulateMedia({ colorScheme: 'light' });
   let release!: () => void;
   const ready = new Promise<void>((resolve) => { release = resolve; });
