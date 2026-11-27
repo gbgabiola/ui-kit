@@ -7,7 +7,7 @@ This project demonstrates semantic HTML5 elements and custom CSS3 styling. It wa
 ## 🚀 Live Links
 
 - **Production Site:** [View Live on GitHub Pages](https://gbgabiola.github.io/ui-kit/vanilla/fcc-survey-form)
-- **Interactive Playground:** [Explore CodePen Sandbox](https://codepen.io/gbgabiola/full/mdJXoow)
+- **Interactive Playground:** [CodePen demo](https://codepen.io/gbgabiola/full/mdJXoow)
 
 ## 📸 Preview
 
