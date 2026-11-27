@@ -20,7 +20,7 @@ export async function serve(directory) {
     } catch { response.writeHead(404); response.end('Not found'); }
   });
   await new Promise((done) => server.listen(0, '127.0.0.1', done));
-  return { url: `http://127.0.0.1:${server.address().port}`, close: () => new Promise((done) => server.close(done)) };
+  return { url: `http://127.0.0.1:${server.address().port}`, close: () => new Promise((done) => { server.close(done); server.closeAllConnections(); }) };
 }
 export async function prepare(context, theme) {
   await context.route('**/*', (route) => {

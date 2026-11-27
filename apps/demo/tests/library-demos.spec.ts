@@ -192,7 +192,6 @@ for (const viewport of [{ name: 'desktop', width: 1440, height: 1000 }, { name: 
     await expect(page.frameLocator('iframe').getByRole('button', { name: 'Add item' })).toBeVisible();
     await expect(page).toHaveScreenshot(`react-detail-${viewport.name}.png`, {
       animations: 'disabled', maxDiffPixels: 100,
-      style: '* { font-family: "DejaVu Sans", sans-serif !important; caret-color: transparent !important; }',
     });
   });
 }

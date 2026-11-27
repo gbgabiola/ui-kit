@@ -1,6 +1,8 @@
 # Contributing
 
-Use Node 24 LTS and pnpm 11.25.0. Start from an updated `main` on a short-lived `feat/` or `fix/` branch.
+Use Node 26.13.1 LTS and pnpm 12.23.0. Start from an updated `main` on a short-lived `feat/` or `fix/` branch.
+
+TypeScript stays on 6.0.3 because catalog discovery and Storybook documentation use its compiler API; TypeScript 7 removes that API. Reassess this constraint when upgrading those integrations.
 
 ## Workspace layout
 

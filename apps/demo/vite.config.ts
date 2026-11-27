@@ -2,7 +2,7 @@ import { defineConfig, type Plugin } from 'vite';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { resolve, sep } from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { allDemos, libraryDemos } from './src/catalog';
+import { allDemos, libraryDemos } from './src/catalog/index.ts';
 
 function demoPages(): Plugin {
   const stylesheet = resolve(import.meta.dirname, '../../packages/ui/src/styles/styles.css');

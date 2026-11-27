@@ -13,25 +13,25 @@
   },
   "dependencies": {
     "@gbgabiola/ui": "workspace:*",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.6.0",
-    "@playwright/test": "^1.65.0",
-    "@storybook/addon-a11y": "10.6.7",
-    "@storybook/addon-docs": "10.6.7",
-    "@storybook/addon-vitest": "10.6.7",
-    "@storybook/react-vite": "10.6.7",
-    "@types/node": "^24.19.2",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "@vitest/browser-playwright": "^4.1.12",
-    "@vitest/coverage-v8": "^4.1.12",
-    "chromatic": "18.14.3",
-    "storybook": "10.6.7",
-    "typescript": "~5.9.3",
-    "vite": "^7.3.8",
-    "vitest": "^4.1.12"
+    "@playwright/test": "^1.65.1",
+    "@storybook/addon-a11y": "10.6.9",
+    "@storybook/addon-docs": "10.6.9",
+    "@storybook/addon-vitest": "10.6.9",
+    "@storybook/react-vite": "10.6.9",
+    "@types/node": "^26.6.11",
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "@vitest/browser-playwright": "^5.1.2",
+    "@vitest/coverage-v8": "^5.1.2",
+    "chromatic": "18.15.3",
+    "storybook": "10.6.9",
+    "typescript": "~6.0.3",
+    "vite": "^8.4.0",
+    "vitest": "^5.1.2"
   }
 }
